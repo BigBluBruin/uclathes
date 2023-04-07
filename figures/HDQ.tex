@@ -1,0 +1,39 @@
+\begin{tikzpicture}[scale = 1.2]
+    \begin{axis}[every axis plot post/.append style={
+      mark=none,domain=-4:4,samples=50,smooth},
+    clip=false,
+    axis y line=none,
+    axis x line*=bottom,
+    ymin=0,
+    xtick=\empty,
+    ]
+    %\draw[help lines, color=gray!30, dashed] (-4.9,0) grid (4.9,0.5);
+    \draw[->, thick] (-5,0)--(5,0) node[right]{$x$};
+    \draw[->, thick] (0,0)--(0,0.5) node[above]{$p(y|x)$};
+    \draw[very thick, dashed, color = red] (0,0)--(0,0.45);
+    \node [below, color = red] at (0,0) {{$\xi_2$}};
+    \draw[very thick, dashed, color = blue] (0.9400,0)--(0.9400,0.45);
+    \node [below, color = blue] at (0.9400,0) {{$\xi_3$}};
+    \draw[very thick, dashed, color = blue] (-0.9400,0)--(-0.9400,0.45);
+    \node [below, color = blue] at (-0.9400,0) {{$\xi_1$}};
+    \draw[very thick, dashed, color = gray] (4,0)--(4,0.45);
+    \node [below, color = gray] at (4,0) {{$\xi_4$}};
+    \draw[very thick, dashed, color = gray] (-4,0)--(-4,0.45);
+    \node [below, color = gray] at (-4,0) {{$\xi_0$}};
+    \addplot [color=black] {\gauss{1}{0.8944}};
+    \addplot [color=black] {\gauss{-1}{0.8944}};
+    \draw[ thick, dashed, color = red ] (2.5,0.55)--(3.2,0.55) node[right]{bit level 0};
+    \draw[ thick, dashed, color = blue ] (2.5,0.51)--(3.2,0.51) node[right]{bit level 1};
+    \node [above, color = red] at (-2.5,0.44) {0};
+    \node [above, color = blue] at (-2.15,0.44) {0};
+    \node [above, color = red] at (-0.6,0.44) {0};
+    \node [above, color = blue] at (-0.30,0.44) {1};
+    
+    
+    \node [above, color = blue] at (2.5,0.44) {1};
+    \node [above, color = red] at (2.25,0.44) {1};
+    \node [above, color = blue] at (0.6,0.44) {0};
+    \node [above, color = red] at (0.30,0.44) {1};
+    
+    \end{axis}
+    \end{tikzpicture}
