@@ -1,0 +1,26 @@
+\begin{algorithm}
+    \label{alg: OSA}
+    \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}\SetKwProg{Init}{initialization:}{}{}
+    
+    \Input{$\Pr\left(X,Y\right), X\in\{0,1\}, Y\in\{0,...,N-1\}$; $l_s$}
+    \Output{$\Pr(X,T)$}
+    $j\leftarrow0$, 
+    $\Pr(X_0,T_j)\leftarrow P(X_0,Y_0)$,
+    $\Pr(X_1,T_j)\leftarrow P(X_1,Y_0)$, 
+    $l\leftarrow  \log\frac{\Pr(X_0,Y_0)}{\Pr(X_1,Y_0)}$
+    
+    \For{$i\gets1$ \KwTo $N-1$ }{
+          \eIf{$(\log\frac{P(X_0,T_i)}{P(X_1,T_i)}-l)\leq l_s$}
+        {
+        $P(X_0,T_j)\leftarrow\Pr(X_0,T_j)+\Pr(X_0,Y_i)$, 
+        $P(X_1,T_j)\leftarrow\Pr(X_1,T_j)+\Pr(X_1,Y_i)$
+        }
+        {
+        $j\leftarrow j+1$\\
+        $\Pr(X_0,T_j)\leftarrow\Pr(X_0,Y_i)$, $\Pr(X_1,T_j)\leftarrow\Pr(X_1,Y_i)$\\
+        $l\leftarrow\log\frac{\Pr(X_0,Y_i)}{\Pr(X_1,Y_i)}$
+        }
+        }
+    \caption{One Step Annealing Algorithm (OSA) }\label{sec: MIMDDE}
+\end{algorithm}
+    

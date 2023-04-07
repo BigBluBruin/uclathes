@@ -3,46 +3,50 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Linfang_Thesis.aux
 The style file: uclathes.bst
 Database file #1: bio.bib
+Warning--to sort, need author or key in 80211spec
+Warning--to sort, need author or key in cls_tool
 UCLA thesis.bst Version 0.92 BETA (3/28/91).
 Bugs to wales@CS.UCLA.EDU
-You've used 33 entries,
+Warning--empty author in 80211spec
+You've used 73 entries,
             2546 wiz_defined-function locations,
-            779 strings with 11087 characters,
-and the built_in function-call counts, 16347 in all, are:
-= -- 1620
-> -- 783
-< -- 14
-+ -- 301
-- -- 218
-* -- 1343
-:= -- 2465
-add.period$ -- 99
-call.type$ -- 33
-change.case$ -- 208
-chr.to.int$ -- 32
-cite$ -- 33
-duplicate$ -- 679
-empty$ -- 1173
-format.name$ -- 333
-if$ -- 3343
-int.to.chr$ -- 2
+            981 strings with 18523 characters,
+and the built_in function-call counts, 36523 in all, are:
+= -- 3582
+> -- 1858
+< -- 35
++ -- 729
+- -- 533
+* -- 2953
+:= -- 5511
+add.period$ -- 218
+call.type$ -- 73
+change.case$ -- 484
+chr.to.int$ -- 64
+cite$ -- 78
+duplicate$ -- 1512
+empty$ -- 2560
+format.name$ -- 789
+if$ -- 7479
+int.to.chr$ -- 10
 int.to.str$ -- 0
-missing$ -- 65
-newline$ -- 168
-num.names$ -- 99
-pop$ -- 216
+missing$ -- 143
+newline$ -- 366
+num.names$ -- 213
+pop$ -- 541
 preamble$ -- 1
-purify$ -- 307
+purify$ -- 703
 quote$ -- 0
-skip$ -- 618
+skip$ -- 1376
 stack$ -- 0
-substring$ -- 1041
-swap$ -- 158
-text.length$ -- 14
-text.prefix$ -- 82
+substring$ -- 2174
+swap$ -- 367
+text.length$ -- 35
+text.prefix$ -- 186
 top$ -- 2
-type$ -- 264
-warning$ -- 0
-while$ -- 165
-width$ -- 38
-write$ -- 430
+type$ -- 580
+warning$ -- 3
+while$ -- 347
+width$ -- 78
+write$ -- 940
+(There were 3 warnings)

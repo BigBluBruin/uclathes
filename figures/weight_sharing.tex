@@ -1,0 +1,26 @@
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+
+\begin{table}[t]
+    \centering
+    \small
+    \caption{Various Node-Degree-Based Weight Sharing Schemes and Required Number of Parameters per Iteration for Two Example Codes}
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \multirow{2}{*}{Type} & \multirow{2}{*}{$\beta^{(t)}_{*}$}                                    & \multirow{2}{*}{$\alpha^{(t)}_{*}$}                & \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}The Number of Required\\  Parameters per Iteration\end{tabular}}                        \\ \cline{4-5} 
+                          &                                                                       &                                                    & (16200,7200) DVBS-2 code & (3096,1032)  PBRL code \\ \hline
+    \multicolumn{5}{|c|}{No Weight Sharing\cite{Nachmani2016-bs}}                                                                                                                                                                                                                                                     \\ \hline
+    $0$            & $\beta^{(t)}_{(c_i,v_j)}$                                             & 1                                                  & $4.8*10^5$                                                          & $1.60*10^4$                                                      \\ \hline
+    \multicolumn{5}{|c|}{Weight Sharing Based on Node Degree}                                                                                                                                                                                                                                   \\ \hline
+    1                     & $\beta^{(t)}_{(\text{deg}{(c_i)},\text{deg}{(v_j)})}$                                 & 1                                                  & 13                                                                  & 41                                                               \\ \hline
+    2                     & $\beta^{(t)}_{(\text{deg}{(c_i)})}$                                          & $\alpha^{(t)}_{(\text{deg}{(v_j)})}$                      & 8                                                                   & 15                                                               \\ \hline
+    3                     & $\beta^{(t)}_{(\text{deg}{(c_i)})}$                                          & 1                                                  & 4                                                                   & 8                                                                \\ \hline
+    4                     & 1                                                                  & $\alpha^{(t)}_{(\text{deg}{(v_j)})}$                      & 4                                                                   & 7                                                                \\ \hline
+    \multicolumn{5}{|c|}{Weight Sharing Based on Protomatrix}                                                                                                                                                                                                                                   \\ \hline
+    5\cite{dai2021learning}          & $\beta^{(t)}_{\left( \floor{\frac{i}{f}},\floor{\frac{j}{f}}\right)}$ & 1                                                  & $-$                                                                 & 101                                                              \\ \hline
+    6                     & $\beta^{(t)}_{\left( \floor{\frac{i}{f}}\right)}$                     & 1                                                  & $-$                                                                 & 17                                                               \\ \hline
+    7                     & 1                                                                       & $\alpha^{(t)}_{\left( \floor{\frac{j}{f}}\right)}$ & $-$                                                                 & 25                                                               \\ \hline
+    \multicolumn{5}{|c|}{Weight sharing based on Iteration  \cite {Lian2019-jh,Abotabl2019-wt}}                                                                                                                                                                                                          \\ \hline
+    8                     & $\beta^{(t)}$                                                         & 1                                                  & 1                                                                   & 1                                                                \\ \hline
+    \end{tabular}\label{tab:weight_sharing}
+    \end{table}

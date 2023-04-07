@@ -1,0 +1,17 @@
+
+% \usepackage{multirow}
+\begin{table}[t]
+\caption{Optimized Convolutional Code  and CRC Pairs. All the parameters are optimized while SNR equals 11 dB.}
+  \label{tab:OptimCodes}
+\centering
+\begin{tabular}{cc|c|c|c|c|c|}
+\cline{3-7}
+       &      & $H^{0}(D)$ & $H^{1}(D)$ & $H^{2}(D)$ & $p(x)$ & \begin{tabular}[c]{@{}l@{}}FER\\ bound\end{tabular} \\ \hline
+\multicolumn{1}{|l|}{\multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}$\nu=3$\\ $m=2$\end{tabular}}} & Ung. & 13           & 04           & 00           & 7      & 6.65e-4   \\ \cline{2-7} 
+\multicolumn{1}{|l|}{}                                                                         & Opt. & 13           & 06           & 00           & 5      & 5.80e-4   \\ \hline
+\multicolumn{1}{|l|}{\multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}$\nu=5$\\ $m=2$\end{tabular}}} & Ung. & 45           & 10           & 00           & 5      & 8.20e-5   \\ \cline{2-7} 
+\multicolumn{1}{|l|}{}                                                                         & Opt. & 43           & 26           & 00           & 5      & 6.58e-5   \\ \hline
+\multicolumn{1}{|l|}{\multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}$\nu=7$\\ $m=2$\end{tabular}}} & Ung. & 235          & 126          & 000          & 5      & 1.15e-5   \\ \cline{2-7} 
+\multicolumn{1}{|l|}{}                                                                         & Opt. & 211          & 142          & 000          & 5      & 8.96e-6   \\ \hline
+\end{tabular}
+\end{table}

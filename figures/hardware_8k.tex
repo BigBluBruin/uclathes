@@ -1,0 +1,14 @@
+\begin{table}[t]
+    \small
+    \caption{\label{tab: hardware_usage} Hardware Usage of Various Decoding Structure for (9472,8192) QC-LDPC Code }
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Decoding Structure  & LUTs                                            & Registers                                       & BRAMS                                           & Routed Nets                                     \\ \hline
+    OMS(6,8) (baseline) & 21127                                           & 12966                                           & 17                                              & 29202                                           \\ \hline
+    RCQ(4,8)          & 20355(\textcolor{mygreen}{$\downarrow 3.6\%$} ) & 13967(\textcolor{red}{$\uparrow 7.0\%$})        & 17.5(\textcolor{red}{$\uparrow .03\%$})         & 28916(\textcolor{mygreen}{$\downarrow 1\%$})    \\ \hline
+    RCQ(3,8)          & 17865(\textcolor{mygreen}{$\downarrow 15.4\%$}) & 12098(\textcolor{mygreen}{$\downarrow 6.7\%$})  & 17(\textcolor{blue}{$-$})                       & 25332\textcolor{mygreen}{($\downarrow 13.3\%$}) \\ \hline
+    W-OMS-RCQ(4,8)         & 17645(\textcolor{mygreen}{$\downarrow 16.5\%$} ) & 13297(\textcolor{red}{$\uparrow 2.6\%$}) & 17(\textcolor{blue}{$-$}) & 25361(\textcolor{mygreen}{$\downarrow 13.2\%$} )\\ \hline
+    W-OMS-RCQ(3,8)         & 16306(\textcolor{mygreen}{$\downarrow 22.82\%$} ) & 12104(\textcolor{mygreen}{$\downarrow 6.65\%$}) & 17(\textcolor{blue}{$-$}) & 23252(\textcolor{mygreen}{$\downarrow 20.38\%$} )\\ \hline
+    \end{tabular}
+    \end{table}
