@@ -107,7 +107,8 @@
 
  
 \dedication     {\textsl{To my parents, Genqi and Xiangqun. \\
-                To my wife, my dear Hanzhi (Stephanie). \\}}
+                To my wife, my dear Hanzhi (Stephanie). \\
+                To Ona ...}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -115,36 +116,36 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\vitaitem   {1974--1975}
-                {Campus computer center ``User Services'' programmer and
-                consultant, Stanford Center for Information Processing,
-                Stanford University, Stanford, California.}
-\vitaitem   {1974--1975}
-                {Programmer, Housing Office, Stanford University.
-                Designed a major software system for assigning
-                students to on-campus housing.
-                With some later improvements, it is still in use.}
-\vitaitem   {1975}
-                {B.S.~(Mathematics) and A.B.~(Music),
-                Stanford University.}
-\vitaitem   {1977}
-                {M.A.~(Music), UCLA, Los Angeles, California.}
-\vitaitem   {1977--1979}
-                {Teaching Assistant, Computer Science Department, UCLA.
-                Taught sections of Engineering 10 (beginning computer
-                programming course) under direction of Professor Leon
-                Levine.
-                During summer 1979, taught a beginning programming
-                course as part of the Freshman Summer Program.}
-\vitaitem   {1979}
-                {M.S.~(Computer Science), UCLA.}
-\vitaitem   {1979--1980}
-                {Teaching Assistant, Computer Science Department, UCLA.}
-\vitaitem   {1980--1981}
-                {Research Assistant, Computer Science Department, UCLA.}
-\vitaitem   {1981--present}
-                {Programmer/Analyst, Computer Science Department, UCLA.}
-
+\vitaitem   {2016}
+{B.S. in Telecommunications Engineering, \\
+    Harbin Institute of Technology, Weihai, China.}
+\vitaitem   {2018}
+{M.S. in Telecommunications Engineering, \\
+    Harbin Institute of Technology, Harbin, China.}
+\vitaitem   {2018-2023}
+{Graduate Research Assitant, \\
+    University of California, Los Angeles}
+\vitaitem   {2019}
+{Research Engineering Intern,\\
+    SK Hynix.}
+\vitaitem   {2020}
+{Teaching Assitant, \\
+    University of California, Los Angeles}
+\vitaitem   {2020}
+{Research Engineering Intern, \\
+    Samsung Semiconductor, Inc.}
+\vitaitem   {2021}
+{Teaching Assitant, \\
+    University of California, Los Angeles}
+\vitaitem   {2022}
+{Research Engineering Intern, \\
+    Samsung Semiconductor, Inc.}
+\vitaitem   {2023}
+{Teaching Assitant, \\
+    University of California, Los Angeles}
+\vitaitem   {2023}
+{Research Engineering Intern, \\
+    Mediatek.}        
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \publication    {\textsl{MADHOUS Reference Manual.}
@@ -2020,6 +2021,236 @@ Shannon's proof of the channel coding theorem \cite{shannon1948mathematical} gen
 %Additionally, various decoders for the CRC-TCM-PAS system are studied in this paper.
 Simulation results show that the optimized CRC-TCM-PAS system with MCDM exceeds the RCU bound for a variety of rates and outperforms the PAS systems with various FEC codes studied in \cite{cocskun2019efficient}.
 
+
+\chapter{Rate-Matched Turbo Autoencoder: A Deep Learning Based Multi-Rate Channel Autoencoder}
+
+\section{Introduction}
+Channel codes  are important components of modern digital communication systems since they enhance transmission reliability. Capacity-approaching channel codes, such as low-density parity-check (LDPC) code\cite{gallager1962low}, polar code\cite{Arikan_polar}, and turbo code\cite{turbo}, have been used as standards for fourth-generation (4G) or fifth-generation (5G) wireless communication systems \cite{3gpp.36.212, 3gpp2017study}.
+
+Recently, there has been a growing interest in designing channel codes using deep learning. For example, \cite{nachimain_ldpc_neural_decoder,wang_n2dnms,polar_neural_decoder} used deep neural networks to improve the error correction performances of the decoders for LDPC and polar codes.
+The other research direction is designing the neural channel codes \cite{makkuva2021ko,chahine_tae_interleaver,clausius_strcutre_tae,jamali_productae,jiang_rnn_cae,saber_list_tae,jiang2019turbo,zhang2021design}. Neural channel codes apply the autoencoder framework \cite{vincent2008extracting} to the code design, i.e., the encoder and decoder are replaced with neural networks. The neural encoder and decoder can  thus be learned by optimizing the weights and biases of the neural networks. 
+%Such channel codes are often referred as to channel autoencoders.
+
+In \cite{jiang2019turbo}, Jiang \emph{et al.} proposed the turbo autoencoder (TAE). TAE mimics the structure of the traditional turbo code but replaces the convolutional code encoders and soft-input-soft-output decoders with neural networks. TAE delivers a comparable bit error rate (BER) to the state-of-art codes such as LDPC and Polar codes. 
+
+Some techniques have been proposed to further improve the performance of TAE. Chahine \emph{et al.} in \cite{chahine_tae_interleaver} and Yildiz \emph{et al.} in \cite{TAE_interleaver} optimized the interleaver of the TAE. In \cite{saber_list_tae}, Saber \emph{et al.} proposed a list autoencoder that allows the decoder to generate multiple decoded message words, and choose the one that passes the cyclic redundancy check. 
+
+In wireless communication systems, in order to adapt to the channel conditions, rate matching is widely used to match the number of transmitted code symbols to a desired rate. For the linear block codes, rate matching is realized by creating a new code with desired rate from a mother code using one or more bit-level operations such as extending, puncturing, and expurgating\cite{blahut2003algebraic}. It is crucial for the rate matched code to provide excellent error correction performances across different rates. In this work, we study the rate-matching problem of TAE and propose rate matching schemes to optimize the performance across multiple rates. In our proposed framework, the rate-matched TAE employs a ($3k,k$) TAE as the mother code, and adjusts the code rate by using a combination of freezing message bits, repeating code symbols, and puncturing code symbols. 
+
+\section{Contribution}
+The contributions of this paper are summarized as follows:
+
+\begin{itemize}
+    \item \textit{Rate-matched TAE.} The rate-matched TAE supports any message word length that is less than or equal to the message word length of the mother TAE and any arbitrary code length. We refer to the conventional TAE that is optimized for the message word length $k$ and code word length $3k$ as mismatched TAE. The rate-matched TAE shares the same encoder and decoder structure with mismatched TAE but is trained to jointly optimize the performance across all the rates of interest. The proposed rate matching operations in this paper can be generalized to any AE model. 
+    \item \textit{Training signal-to-noise ratios (SNRs) optimization.} As reported in \cite{jiang2019turbo}, the variance of the noise added to the code words during the training process plays an important role for the code performance. With rate-matched TAE, different code rates require noise with different SNRs. To determine the training SNRs for each rate, a heuristic algorithm is proposed that uses test loss as a performance metric.
+    \item \textit{Puncturing pattern investigation.} It is well-known that puncturing patterns affect the performance of the classical turbo codes. We propose and evaluate three puncturing patterns, namely, head, tail, and uniform puncturing, for the rate-matched TAE.
+\end{itemize}
+
+
+\subsection{Organization}
+The remainder of this paper is organized as follows: Section \ref{sec: auto_enc} presents the encoder and decoder of TAE. Section \ref{sec: rate_matched_TAE} gives the framework of the rate-matched TAE; this section also presents the algorithm for determining the training SNRs for each considered code rate. Section \ref{sec: simulation} gives the simulation results of rate-matched TAE.  Section \ref{sec: conclusion_5} concludes the paper. 
+
+\section{Turbo Autoencoder}\label{sec: auto_enc}
+TAE is a deep-learning-based channel code with comparable error correction performance with state-of-art codes like LDPC and Polar codes for short to moderate block lengths, e.g., $K=100$ \cite{jiang2019turbo}. 
+In this section, we present the encoder and decoder of TAE. 
+
+\subsection{TAE Encoder}
+Let $\mathbf{u}$ be a length-$k$ message word to be transmitted. A continuous rate-$\frac{1}{3}$ TAE encodes $\mathbf{u}$ as follows:
+\begin{align*}
+   \mathbf{x}_1&=h\left(f_{{\boldsymbol\theta}_1}(\mathbf{u})\right), \\
+   \mathbf{x}_2&=h\left(f_{{\boldsymbol\theta}_2}(\mathbf{u})\right), \\
+   \mathbf{x}_3&=h\left(f_{{\boldsymbol\theta}_3}(\mathbf{\pi(u)})\right),
+\end{align*}
+where $\pi(\cdot)$ is an interleaver. $f_{{\boldsymbol\theta}_i}(\cdot)\in\mathbb{R}^{k}$ is a the output of a neural network model with learnable parameters  ${\boldsymbol\theta}_i$, $i=1,2,3$. The model corresponding to each $f_{\boldsymbol\theta_i}(\cdot)$ is comprised of an  $l_{\text{enc}}$-layer convolutional neural network (CNN) with  $f_{\text{enc}}$  kernels of size $s_{\text{enc}}$ and a fully-connected neural network (FCNN) to match the output size. The code words of TAE are real-valued, so the TAE can be seen as a coded modulation scheme. Let $\mathbf{x}_i=[x_{i,1},x_{i,2},\allowbreak\ldots,x_{i,k}]$ for $i=1,2,3$. The function $h(\cdot)$ is the power normalization function \cite{jiang2019turbo} such that:
+\begin{align}
+    \frac{1}{k}\sum_{j=1}^{k}x_{i,j}&=0,&
+    \frac{1}{k}\sum_{j=1}^{k}x^2_{i,j}&=1\label{equ: power_normalization},
+\end{align} 
+for $i=1,2,3$. 
+
+We use $\mathbf{x}=f_{\pi,{\boldsymbol\theta}}(\mathbf{u})$ to denote the TAE encoder function, where $\mathbf{x}=[\mathbf{x}_1,\mathbf{x}_2,\mathbf{x}_3]\in\mathbb{R}^{n}$ is the length-$n$ code word, and $n=3k$. Denoting a code with message word length $k$ and code length $n$ as an $(n,k)$ code, the code rate is defined as $r=k/n$. The TAE is a rate $1/3$ code \cite{jiang2019turbo}.
+\begin{figure*}[t] 
+    \centering
+      \includegraphics[width=1\linewidth]{figures/structure.pdf}
+      \caption{The diagram of rate-matched TAE transmission system. The base code is a rate-$1/3$ TAE, and various rates are realized by freezing data symbols, repeating code symbols, or puncturing code symbols.}
+      \label{fig: rate_match_framework}
+\end{figure*}
+
+\subsection{TAE Decoder}
+Let $\mathbf{y}=[y_1,\ldots,y_n]$ be the channel observation at receiver when transmitting a code word $\mathbf{x}$. Considering an  additive white Gaussian noise (AWGN) channel,
+\begin{align*}
+    y_i=x_i+z_i,
+\end{align*}
+where $i=1,...,n$ and $z_i$ is a realization of Gaussian distribution $\mathcal{N}(0,\sigma^2)$. Since \eqref{equ: power_normalization} guarantees that the averaged symbol power of $\mathbf{x}$ equals to 1, the SNR in dB is conveniently defined as $10\mathrm{log}_{10} {1}/{\sigma^2}$.
+
+For the rate-${1}/{3}$ TAE, $\mathbf{y}$ can be uniformly split into three sub-vectors, i.e., $\mathbf{y}=[\mathbf{y}_1,\mathbf{y}_2,\mathbf{y}_3]$, where $\mathbf{y}_i$ is the  channel observation corresponding to $\mathbf{x}_i$. The TAE decoder is an iterative decoder with $T$ iterations. In iteration $t$, the decoder accepts an information matrix $\mathbf{P}_{t-1}$, from the previous iteration, and combines it with the channel observations, and computes the information matrix $\mathbf{P}_{t}$ that is either used to feed the next iteration or estimate code words. $\mathbf{P}_{t}$ is calculated as follows: 
+\begin{align}  \mathbf{Q}_{t,1}&=g_{{\boldsymbol\phi}_{t,1}}(\mathbf{y}_1,\mathbf{y}_2,\mathbf{P}_{t-1})-\mathbf{P}_{t-1},\\
+    \mathbf{Q}_{t,2}&=\left\{\begin{matrix}
+     g_{{\boldsymbol\phi}_{t,2}}(\pi(\mathbf{y}_1),\mathbf{y}_3,\pi(\mathbf{Q}_{t,1}))-\pi(\mathbf{Q}_{t,1})& t<T \\ 
+     g_{{\boldsymbol\phi}_{t,2}}(\pi(\mathbf{y}_1),\mathbf{y}_3,\pi(\mathbf{Q}_{t,1})) &  t=T  \\
+    \end{matrix}\quad,\right.\\ % \mathbf{Q}_{t,2}&=g_{{\boldsymbol\phi}_{t,2}}(\pi(\mathbf{y}_1),\mathbf{y}_3,\pi(\mathbf{Q}_{t,1})),\\
+    \mathbf{P}_{t}&=\pi^{-1}(\mathbf{Q}_{t,2}),
+    \end{align}
+    where $\mathbf{Q}_{t,i}\in\mathbb{R}^{k\times f}$ for $t=1,...,T$, $i=1,2$, and $f$ is the information feature size for each code bit. $\mathbf{P}_t\in\mathbb{R}^{k\times f}$ for $t=0,\ldots T-1$, and $\mathbf{P}_T\in\mathbb{R}^{k}$. Also, $\pi^{-1}(\cdot)$ is the inverse interleaving operation. Each $g_{\boldsymbol{\phi}_{t,j}}(\cdot)$ consists of  an  $l_{\text{dec}}$-layer CNN with  $f_{\text{dec}}$  kernels of size $s_{\text{dec}}$ and an FCNN to match the output size.
+    
+    After $T$ iterations, the soft estimation for the  message word $\mathbf{u}$ is calculated using element-wise sigmoid operation;
+    \begin{align}
+        \hat{\mathbf{u}}=\text{sigmoid}\left(\mathbf{P}_T\right).
+    \end{align}
+    We use $\hat{\mathbf{u}}=g_{\pi,{\boldsymbol\phi}}(\mathbf{y})$ to denote the TAE decoder function.
+
+    \section{Rate-Matched TAE}\label{sec: rate_matched_TAE}
+
+
+    \subsection{Motivation}
+    In practical applications such as 4G and 5G communication, it is desired to accommodate multiple code rates and lengths to adapt to channel varying conditions or the available transmission resources. One straightforward way to accommodate different rates is to design and employ multiple encoder and decoder pairs, one for each rate. However, this comes at the price of excessive hardware complexity and must be avoided. An alternative solution is to have a single encoder and decoder pair, and perform rate matching to match the code rate and length to the desired ones. Typically, an $(n,k)$ mother code with rate $r=k/n$ is designed, and a $(n^*,k^*)$ code with rate $r^*=k^*/n^*$ is constructed via rate matching of the mother code.
+   
+   
+   To obtain a new linear block code with the desired code rate $r^*$, there are several rate matching operations that can be performed on the generator matrix $\mathbf{G}$ of a mother code. Some of these operations are listed in the following table. We refer readers to \cite[Chapter 3.6]{blahut2003algebraic} for more details.
+
+   \input{figures/operations.tex}
+  
+Although TAE is a non-linear code, and cannot be described by a generator matrix, similar operations can be used to obtain new codes from the TAE. We present a framework for a mother $(3k,k)$ TAE to match the desired code rate $r^*={k^*}/{n^*}$ for $k^*<k$. The TAE that is designed to support multiple rates is referred to as rate-matched TAE. 
+
+\subsection{Rate-matched TAE Structure}\label{sec: rm_tae_structure}
+Fig. \ref{fig: rate_match_framework} depicts the rate matching operation for the $(3k,k)$ TAE to an $(n^*,k^*)$ code with desired code rate $r^*={k^*}/{n^*}$. The rate-matching process can be summarized as follows:
+
+\subsubsection{Zero Padding and Encoding} Let $\mathbf{u}^*\in\mathbb{F}_2^{k^*}$ ($k^*\leq k$) be the transmitted message word. Since the message word length of the mother TAE is $k$, $0$'s are padded to both sides of $\mathbf{u^*}$ to satisfy the input length requirement, i.e.,
+\begin{align}\label{equ: padding}
+    \mathbf{u}=[\underbrace{0~0\ldots 0}_{\left\lfloor\frac{\delta}{2}\right\rfloor }~\mathbf{u^*}~ \underbrace{0~0\ldots 0}_{\left\lceil\frac{\delta}{2}\right\rceil } ],
+\end{align}
+where $\delta=k-k^*$. In \eqref{equ: padding}, $\delta$ positions of $\mathbf{u}$ are frozen, and the remaining $k^*$ positions are filled with message bits. After zero padding, the TAE encoder encodes $\mathbf{u}$ to the code word $\mathbf{x}$ by $\mathbf{x}=f_{\pi,{\boldsymbol\theta}}(\mathbf{u})$.
+
+\subsubsection{Repeating and Puncturing} The length of the mother TAE code word,   $\mathbf{x}=[\mathbf{x}_1,\mathbf{x}_2,\mathbf{x}_3]$, is $n$. To obtain a length-$n^*$ code word, we first extend the code word to length $pn$ using $p$ repetitions of $\mathbf{x}$, i.e.,
+$$
+    \tilde{\mathbf{x}}
+    =[\mathbf{x}^{(1)},...,\mathbf{x}^{(p)}]\label{equ: rep}
+    =[\mathbf{x}_1^{(1)},\mathbf{x}_2^{(1)},\mathbf{x}_3^{(1)},\ldots, \mathbf{x}_1^{(p)},\mathbf{x}_2^{(p)},\mathbf{x}_3^{(p)}],
+$$
+where $\mathbf{x}^{(i)}=\mathbf{x}$ and $\mathbf{x}_{j}^{(i)}=\mathbf{x}_j$ for $i=1,\ldots,p$ and $j=1,2,3$.
+The number of repetition times, $p$, is calculated as
+\begin{align}\label{equ: repe_time}
+    p=\left\lceil{n^*}/{n}\right\rceil.  
+\end{align}
+In order to obtain the length-$n^*$ code word $\mathbf{x}^*$, $\beta=pn-n^*$ code symbols in $\tilde{\mathbf{x}}$ are punctured. \eqref{equ: repe_time} guarantees that $\beta<n$. Without loss of generality, we consider puncturing symbols in $\mathbf{x}^{(p)}$. 
+In this paper, we consider the following three heuristic puncturing patterns. 
+
+\begin{itemize}
+    \item \textit{Head Puncturing.} The first $\beta$ symbols of $\mathbf{x}^{(p)}$, $x^{(p)}_{1},\ldots,\allowbreak x^{(p)}_{\beta}$, are punctured, where $x_i^{(p)}$ denotes the $i^{\text{th}}$ symbol in the vector $\mathbf{x}^{(p)}$.
+    \item \textit{Tail Puncturing.} The last $\beta$ symbols of $\mathbf{x}^{(p)}$,  $x^{(p)}_{n-\beta+1},\ldots,\allowbreak x^{(p)}_{n}$, are punctured.
+    \item \textit{Uniform Puncturing.} The first $\left\lfloor {\beta}/{3} \right\rfloor$ symbols of $\mathbf{x}_{1}^{(p)}$ and $\mathbf{x}_{2}^{(p)}$, and the first $\beta-2\left\lfloor {\beta}/{3} \right\rfloor$ symbols of $\mathbf{x}_{3}^{(p)}$ are punctured.
+\end{itemize}
+
+\subsubsection{Symbol-Wise Averaging and Decoding} Let $\mathbf{y}^*$ be the channel observation after transmission of $\mathbf{x}^*$ over AWGN channel. We perform symbol-wise averaging to obtain the input to the decoder, $\mathbf{y}$, i.e.,
+\begin{align}
+    y_i=\left\{\begin{matrix}
+      \frac{1}{p_i}\sum_{j=1}^{p_i}y^{(j)}_i,&  p_i>0\\ 
+      0, &  p_i=0 \\
+     \end{matrix}\quad, i=1,\ldots,n. \right.\label{equ: quantization_mag}
+\end{align}
+$y_i^{(j)}$ is the receiver observation associated with $x^{(j)}_i$, and $p_i$ is the repetition number of code symbol $x_i$. Due to puncturing, we have $p_i\leq p$ for $i=1,\ldots, n$. 0's are filled to those positions with no transmitted symbols.
+
+The decoder takes $\mathbf{y}$ as input, and calculates $\hat{\mathbf{u}}=g_{\pi,{\boldsymbol\phi}}(\mathbf{y})$. Finally, the soft estimation of $\mathbf{u}^*$, denoted by $\hat{\mathbf{u}}^*$, is given by
+\begin{align}
+    \hat{\mathbf{u}}^*= \left[\hat{u}_{\left\lfloor{\delta}/{2}\right\rfloor+1}\ldots \hat{u}_{\left\lfloor{\delta}/{2}\right\rfloor+k^*}\right].
+\end{align} 
+
+\subsection{Training Methodology}
+Consider a rate-matched TAE that supports $q$ different rates, $r_1,\ldots, r_q$, where $r_i$ is specified by $k_i$ and $n_i$. As will be illustrated in Sec. \ref{sec: simulation}, the TAE that is designed  for message word length $k$ and $r=1/3$ may not work well for all $q$ rates. To optimize the performance across all rates, we train the rate-matched TAE with the batches that contain all $q$ rates.
+\begin{figure*}[t] 
+    \centering
+      \includegraphics[width=1\linewidth]{figures/training_process.pdf}
+      \caption{Training schedule for the rate-matched TAE.}
+      \label{fig: training_process}
+\end{figure*}
+Fig. \ref{fig: training_process} visualizes the training process of rate-matched TAE. As shown in Fig. \ref{fig: training_process}, each batch contains $q$ sub-batches, $\mathbf{U}_1,\ldots, \mathbf{U}_q$, where $\mathbf{U}_j\in\mathbb{F}_2^{b\times k_j}$ contains $b$ randomly generated length-$k_j$ message words. We denote the batch size by $B=qb$. With the rate-matched TAE encoder, $\mathbf{U}_j$ is mapped to $\mathbf{X}^*_j\in\mathbb{R}^{b\times n_j}$ that contains $b$ code words of length $n_j$.
+
+At the receiver end, the channel observation $\mathbf{Y}^*_{j}$ is generated by adding the randomly sampled noise $\mathbf{N}_j$ to $\mathbf{X}^*_j$, i.e.,
+\begin{align}
+    \mathbf{Y}^{*}_j=\mathbf{X}^{*}_j+\mathbf{N}_j.
+\end{align}
+The corresponding element to the $c^{\text{th}}$ column and $i^{\text{th}}$ row  in $\mathbf{N}_j$ is drawn from $\mathcal{N}(0,\tilde{\sigma}_{c,i}^2)$, where $\tilde{\sigma}_{c,i}^2$ is drawn from the uniform distribution between $10^{-0.1\alpha^{(j)}_{h}}$ and $10^{-0.1\alpha^{(j)}_{l}}$. Hence, $\mathbf{N}_j$ can be described by the \textit{training SNR} range $[\alpha_{l}^{(j)},\alpha_{h}^{(j)}]$. $\mathbf{Y}_j$ is then fed into the rate-matched TAE decoder to calculate the soft estimation of $\mathbf{U}_j$, i.e., $\hat{\mathbf{U}}_j\in\mathbb{R}^{b\times k_j}$. Finally, the total loss $J$ is calculated by $J=\frac{1}{q}\sum_{j=1}^{q}\mathcal{L}(\mathbf{U}_j,\hat{\mathbf{U}}_j)$, where $\mathcal{L}(\cdot,\cdot)$ denotes binary cross entropy (BCE) loss function.
+
+We follow the same training schedule as \cite{jiang2019turbo}, which iteratively trains encoder and decoder. This helps avoid getting stuck in the local minima, and performs better than joint training. During each training epoch, the iterative training first optimizes the encoder $T_{\text{enc}}$ times by fixing the decoder parameters, and then optimizes the decoder $T_{\text{dec}}$ times by fixing the encoder parameters.
+
+The training process for rate-matched TAE has two phases. First, coarse training is performed in which the model is trained from scratch for $E_{\text{cor}}$ epochs with a batch size of $B_{\text{cor}}$ and a learning rate $\ell_{\text{cor}}$. Second, we perform fine tuning in which the trained model from coarse training is used as initialization, and the model is trained for $E_{\text{fine}}$ epochs with a larger batch size $B_{\text{fine}}$ and a smaller learning rate $\ell_{\text{fine}}$.
+
+
+\subsection{Training SNRs}
+Similarly to train TAE in \cite{jiang2019turbo}, the encoder and decoder of rate-matched TAE are trained with different training SNRs. 
+For a $q$-rate rate-matched TAE, the training SNR hyper-parameters are specified by $(\alpha^{(j)}_{\text{enc},l},\alpha^{(j)}_{\text{enc},h},\alpha^{(j)}_{\text{dec},l},\alpha^{(j)}_{\text{dec},h})$, for $j=1,...,q$. 
+As can be seen, the hyper-parameter tuning becomes too complicated for large values of $q$. 
+Therefore, we choose to reduce the number of hyper-parameters related to training SNRs by using the simplification in \cite{jamali_productae}: 
+$\alpha^{(j)}_{\text{enc},l}=\alpha^{(j)}_{\text{enc},h}=\gamma^{(j)}$, $\alpha^{(j)}_{\text{dec},l}=\gamma^{(j)}-2.5$, and $\alpha^{(j)}_{\text{dec},h}=\gamma^{(j)}+1$.
+% \begin{align*}    \alpha^{(j)}_{\text{enc},l}&=\alpha^{(j)}_{\text{enc},l}=\gamma^{(j)},
+% \end{align*}
+% \begin{align*}
+%     \alpha^{(j)}_{\text{dec},l}&=\gamma^{(j)}-2.5,
+% \end{align*}
+% \begin{align*}
+%     \alpha^{(j)}_{\text{dec},h}&=\gamma^{(j)}+1.
+% \end{align*}
+With this setting, the encoder training SNR for rate $j$ becomes a point at $\gamma^{(j)}$ dB, while the decoder training SNR for rate $j$ is an interval with length 3.5 dB whose boundaries are calculated based on $\gamma^{(j)}$. This setting is based on an observation of the optimized training SNR for a well-trained TAE in \cite{jiang2019turbo}. The above setting reduces the training SNR optimization to a $q$-dimensional searching space $\left(\gamma^{(1)},\ldots, \gamma^{(q)}\right)$.
+
+As reported in~\cite{jamali_productae} and~\cite{jiang2019turbo}, the training SNRs are vital for a well-performed AE. %Based on the observation of training $r=k/3k$ TAE in \cite{jiang2019turbo}, 
+To determine $(\gamma^{(1)},\ldots \gamma^{(q)})$, we propose a heuristic algorithm that uses the test loss after coarse training as a metric.
+%that delivers a well-performed rate-matched TAE. 
+We denote the test loss of rate $j$ after coarse training by $L^{(j)}_{\text{cor}}$, which is the BCE between an input batch $\mathbf{U}_j$ and corresponding $\hat{\mathbf{U}}_j$ after coarse training of rate-matched TAE with channel SNR $\gamma^{(j)}$ dB. The proposed algorithm finds $\left(\gamma^{(1)},\ldots \gamma^{(q)}\right)$ such that after coarse training, the test loss of all rates are in the designated range $[\epsilon_\text{l}, \epsilon_\text{r}]$. 
+
+The algorithm starts with a randomly selected $(\gamma^{(1)},\ldots, \gamma^{(q)})$. At each iteration, coarse training is performed, and test loss are calculated. For all the rates $j$, $j=1,\ldots,q$, if the test loss $L^{(j)}_{\text{cor}}$ is in the desired range, $\gamma^{(j)}$ keeps unchanged. Otherwise, $\gamma^{(j)}$ is updated, i.e., if $L^{(j)}_{\text{cor}}<\epsilon_{\text{l}}$, $\gamma^{(j)}$ is decreased ; if  $L^{(j)}_{\text{cor}}>\epsilon_{\text{r}}$ , $\gamma^{(j)}$ is increased. This process is repeated until all $L_{\text{cor}}^{(1)},L_{\text{cor}}^{(2)},\ldots,L_{\text{cor}}^{(q)}$ fall into the designated range.
+%The details of the algorithm are presented in Algorithm \ref{alg: snr_search}. 
+Note that the proposed algorithm  doesn't guarantee the optimal $(\gamma^{(1)},\ldots \gamma^{(q)})$. However, it gives a rate-matched TAE with a satisfying performance. 
+
+The intuition behind using the test loss function as a searching metric is that test loss reflects the noise level for encoder and decoder training SNRs. 
+Both very large and very small noise variances in the training process will   fail to train a model with excellent error correction performance.  
+% The loss that is too small and too large is not desired, as they indicate inappropriate noise levels.
+We found that, for the TAE with $k=100$ and $n=300$, a well-performed model can be trained when the test loss is around $9*10^{-4}$ after coarse training. Hence, we relax the observed test loss to the range $[0.7,1.1]*10^{-3}$. It is noteworthy that tuning one $\gamma^{(j)}$ by fixing all other values could affect the performance of all rates since it changes the gradient calculation of the whole rate-matched TAE model. However, there is no deterministic relationship on how tuning one $\gamma^{(j)}$ impacts all other rates. 
+
+
+\begin{figure}[t] 
+    \centering
+      \includegraphics[width=0.5\linewidth]{figures/BER_75_300.pdf}
+      \caption{The BER performance of rate-matched TAE that supports $k\in\{75, 100\}$ and $n=300$. The BER performance of mismatched TAE is also given for comparison.}
+      \label{fig: FER_75_300}
+\end{figure}
+\begin{figure}[t] 
+    \centering
+      \includegraphics[width=0.5\linewidth]{figures/puncturing_invest.pdf}
+      \caption{Test loss of rate-matched TAE with head, tail, and uniform puncturing after coarse training. The simulation results show that head puncturing delivers the best performance.}
+      \label{fig: Validation_Loss}
+\end{figure}
+\begin{figure}[t] 
+    \centering
+      \includegraphics[width=0.5\linewidth]{figures/BER_size_1.eps}
+      \caption{BER performance of the rate-matched TAE (dashed curves) and mismatched TAE (solid curves)  at all 9 code rates. The simulation results show that rate-matched TAE performs better at high rates.}
+     \label{fig: BER_size_1}
+\end{figure}
+
+\section{Simulation Results}\label{sec: simulation}
+%
+In this section, we evaluate the performance of the rate-matched TAE. The mother code dimensions are $k=100$ and $n=300$. We train the rate-matched TAEs that support various rates, and compare them with the mismatched TAE that is specifically trained for $k=100$ and $n=300$. To ensure fair comparison, the rate-matched TAE and mismatched TAE have the same model size with $l_{\text{enc}}=2$, $\l_{dec}=5$, 
+$s_{\text{enc}}=s_{\text{dec}}=5$, $f_{\text{enc}}=f_{\text{dec}}=100$, and $f=5$. The training hyper-parameters are listed below.
+\input{figures/training_sechdule.tex}
+
+We first consider a rate-matched TAE with $q=2$ rates, for $k\in\{75,100\}$ and $n=300$. The BER result in  Fig. \ref{fig: FER_75_300} shows that the rate-matched TAE outperforms the mismatched TAE for $k=75$, while having similar performance to the rate-matched TAE for $k=100$. 
+
+We investigate the effect of different puncturing patterns for rate-matched TAE. The three puncturing patterns presented in Section \ref{sec: rm_tae_structure}, head puncturing, tail puncturing, and uniform puncturing, are considered in the rate-matched TAE training. All three puncturing patterns use the training SNRs in the above table.
+We evaluate the rate-matched TAE with different puncturing patterns using the test loss of all 9 rates under the training SNRs $(\gamma^{(1)},\ldots,\gamma^{(9)})$ after the coarse training. The test loss is shown in Fig. \ref{fig: Validation_Loss}. As can be seen, the head puncturing delivers the smallest test loss for most rates. Uniform puncturing has the worst performance, especially at higher rates. The reason for its poor performance is that, when $n<300$, the information is scattered onto each of the three output branches. For a small $n$, there are too many punctured symbols on each branch, which makes the decoding success less likely. On the other hand, the head and the tail puncturing aggregate information into one branch, which facilitates decoding.
+\input{figures/comparison_size_1.tex}
+Fig. \ref{fig: BER_size_1} shows the BER performance of rate-matched TAE and mismatched TAE for all 9 rates. As shown, mismatched TAE has a better decoding performance at lower rates where $r\leq 0.4$. When $r\leq 0.3$, each symbol is repeated at least once, and the average operation in the receiver reduces the noise power. Hence, it is expected that a well-trained mismatched TAE also delivers good performance at low rates. For the $r=0.4$, even though 50 code symbols are punctured, the mismatched TAE still shows a good performance.
+% For the case where $r\leq 0.4$, the average operation in the receiver end reduces the noise power to those symbols that are repeated in the transmitter. Hence, a well-performed mismatched TAE also performs well for a larger $n'$ value. 
+As more symbols are punctured, the performance of the mismatched TAE degrades severely. In particular, the mismatched TAE shows early error floors for $r>0.5$. On the other hand, the rate-matched TAE performs significantly better at high rates without any error floor.
+%s when the BER is larger than $10^{-4}$. 
+%In conclusion, the rate-matched TAE delivers good decoding performances by considering all the code rates of interest in the training process.
+
+Table \ref{tab: comp_size_1} provides the SNRs at which the rate-matched and mismatched TAE reach BER of $10^{-4}$ for nine considered code rates. The SNR gap between the two codes is also given, where the negative value indicates that the rate-matched TAE has worse performance. When $r>0.5$, the gaps between the rate-matched TAE and mismatched TAE become very large due to the error floors of  the mismatched TAE. 
+
+
+
+
+\section{Conclusion}\label{sec: conclusion_5}
+A rate-matched TAE framework was proposed to match the code rate of a mother ($3k$, $k$) TAE to a set of multiple rates with parameters $\left\{(n^*,k^*)\right\}$, where $k^*\leq k$. Rate matching of the proposed framework is realized by the using a combination of the following operations: freezing message bits, repeating code symbols, and puncturing code symbols. The rate-matched TAE is trained to jointly optimize the performance across all rates. 
+Two vital hyper-parameters for the rate-matched TAE were investigated: puncturing patterns and training SNRs. For puncturing patterns, the performances of rate-matched TAE with head, tail, and uniform puncturing were evaluated. The simulation results favored the head puncturing. For the training SNRs, a heuristic algorithm was proposed that employs the test loss as a metric and determines the training SNRs for all code rates.  Our simulation results show that the rate-matched TAE for $k=100$ and rates $r\in \{0.1,0.2,\ldots,0.9\}$ provides material gain over the mismatched TAE for $r>0.4$.
 
 \bibliographystyle{uclathes}
 %\bibliographystyle{thesis}
