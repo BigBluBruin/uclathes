@@ -8,45 +8,45 @@ Warning--to sort, need author or key in cls_tool
 UCLA thesis.bst Version 0.92 BETA (3/28/91).
 Bugs to wales@CS.UCLA.EDU
 Warning--empty author in 80211spec
-You've used 73 entries,
+You've used 112 entries,
             2546 wiz_defined-function locations,
-            981 strings with 18523 characters,
-and the built_in function-call counts, 36523 in all, are:
-= -- 3582
-> -- 1858
-< -- 35
-+ -- 729
-- -- 533
-* -- 2953
-:= -- 5511
-add.period$ -- 218
-call.type$ -- 73
-change.case$ -- 484
-chr.to.int$ -- 64
-cite$ -- 78
-duplicate$ -- 1512
-empty$ -- 2560
-format.name$ -- 789
-if$ -- 7479
-int.to.chr$ -- 10
+            1187 strings with 24962 characters,
+and the built_in function-call counts, 53796 in all, are:
+= -- 5307
+> -- 2675
+< -- 45
++ -- 1037
+- -- 759
+* -- 4359
+:= -- 8189
+add.period$ -- 341
+call.type$ -- 112
+change.case$ -- 714
+chr.to.int$ -- 102
+cite$ -- 117
+duplicate$ -- 2221
+empty$ -- 3804
+format.name$ -- 1141
+if$ -- 10967
+int.to.chr$ -- 11
 int.to.str$ -- 0
-missing$ -- 143
-newline$ -- 366
-num.names$ -- 213
-pop$ -- 541
+missing$ -- 222
+newline$ -- 561
+num.names$ -- 330
+pop$ -- 766
 preamble$ -- 1
-purify$ -- 703
+purify$ -- 1050
 quote$ -- 0
-skip$ -- 1376
+skip$ -- 1992
 stack$ -- 0
-substring$ -- 2174
-swap$ -- 367
-text.length$ -- 35
-text.prefix$ -- 186
+substring$ -- 3219
+swap$ -- 477
+text.length$ -- 45
+text.prefix$ -- 273
 top$ -- 2
-type$ -- 580
+type$ -- 880
 warning$ -- 3
-while$ -- 347
-width$ -- 78
-write$ -- 940
+while$ -- 509
+width$ -- 118
+write$ -- 1447
 (There were 3 warnings)

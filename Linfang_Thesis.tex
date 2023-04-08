@@ -26,10 +26,21 @@
 \usepackage{multicol}
 \usepackage{tikz}
 \usepackage{cooltooltips}
+\usepackage{array}
+
 \def\cool{\texttt{cool}}
 \definecolor{mygreen}{rgb}{0.1,.6,0.1}
 \DeclareMathOperator*{\argmax}{argmax} 
 \DeclareMathOperator*{\argminB}{argmin}   % Jan Hlavacek
+\usepackage{multirow}
+\usepackage{amsthm}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{example}{Example}
+\newtheorem*{remark}{Remark}
+\usepackage{arydshln}
+\usepackage{mathtools}                                                         
+
 %%------Tikz Package------
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows}
@@ -95,8 +106,8 @@
 
 
  
-\dedication     {\textsl{To my parents, Genqi and Xiangqun \ldots \\
-                To my wife, my dear Hanzhi (Stephanie) \ldots \\}}
+\dedication     {\textsl{To my parents, Genqi and Xiangqun. \\
+                To my wife, my dear Hanzhi (Stephanie). \\}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -621,7 +632,11 @@ the joint p.m.f between code bit $X$ and incoming message combination $\mathbf{T
 \begin{align}
     P^v_{out}(X,\mathbf{T})=P^{ch}(X,T)\boxdot P^c(X,T)^{\boxdot(d_v-1)},
 \end{align}
-Similarly, for irregular LDPC codes with variable edge degree distribution $\lambda(x)=\sum_{i=2}^{d_{v,max}}\lambda_ix^{i-1}$, $P^v_{out}(X,\mathbf{T})$ is given by:
+Similarly, for irregular LDPC codes with variable edge degree distribution 
+\begin{align}
+    \lambda(x)=\sum_{i=2}^{d_{v,max}}\lambda_ix^{i-1},
+\end{align}
+$P^v_{out}(X,\mathbf{T})$ is given by:
 \begin{align}
      P^v_{out}(X,\mathbf{T})=P^{ch}(X,T)\boxdot \sum_{i=2}^{d_{v,max}}\lambda_i P^c(X,T)^{\boxdot(d_v-1)}.
 \end{align}
@@ -673,7 +688,6 @@ $\mathcal{N}(c_i)$ denotes the set of VNs that are neighbors of $c_i$.  For a QC
   \caption{ Two layered decoders. Fig. (a) uses the same RCQ parameters for each layer as with the  \textit{msRCQ} design for a flooding decoding in \cite{Wang2020-RCQ}. Fig. (b) shows the proposed \textit{layer-specific msRCQ} decoder in \cite{Terrill2021-ec}, which features  separate RCQ parameters for each layer.
   The main difference is that msRCQ decoder uses iteration specific parameters while L-msRCQ decoder considers layer-and-iteration parameters.
   }
-  \label{fig: gradient_explosion} 
 \end{figure}
 
 \subsection{Representation Mismatch Problem}
@@ -895,14 +909,14 @@ Besides, the precursor works of literature are mainly focused on the short-block
 However, as demonstrated in \cite{Abotabl2019-wt,wang2021ISTC}, it is possible to train neural decoders by only using CPUs on personal computers for very long-blocklength codes if resources are handled more efficiently. 
 
 \subsection{Contribution}
-This paper combines the recent neural decoding with RCQ decoding paradigm and proposes a weighted RCQ (W-RCQ) decoder. Unlike RCQ decoder, whose quantizers/dequantizers  change in each layer and iteration, the W-RCQ decoder limits the number of quantizer/quantizer pairs to a very small number, for example, three. However, the W-RCQ decoder weights check-to-variable node messages using dynamic parameters optimized via a quantized NN (QNN). The proposed W-RCQ decoder uses fewer parameters than the RCQ decoder, requiring much fewer LUTs. 
+This paper combines the recent neural decoding with RCQ decoding paradigm and proposes a weighted RCQ (W-RCQ) decoder. Unlike RCQ decoder, whose quantizers/dequantizers  change in each layer and iteration, the W-RCQ decoder limits the number of quantizer and dequantizer pairs to a very small number, for example, three. However, the W-RCQ decoder weights check-to-variable node messages using dynamic parameters optimized via a quantized NN (QNN). The proposed W-RCQ decoder uses fewer parameters than the RCQ decoder, requiring much fewer LUTs. 
 
 The novelties and contributions of this paper are summarized as follows:  
 \begin{itemize}
     \item \textit{Posterior Joint Training Method.} This paper identifies the gradient explosion issue when training neural LDPC decoders. A posterior joint training method is proposed in this paper to address the gradient explosion problem. Simulation results show that posterior joint training delivers a better decoding performance than simply clipping large-magnitude gradients to some threshold value.
      \item \textit{Node-Degree-Based Weight Sharing}. 
      This paper illustrates that the weight values of the N-NMS decoder are strongly related to check node degree, variable node degree, and iteration index. As a result, this paper proposes node-degree-based weight-sharing schemes that assign the same weight to the edges with the same check and/or variable node degree.
-     \item \textit{Neural-2D-MinSum decoder}. By employing the node-degree-based weight-sharing schemes on the N-NMS and N-OMS decoder, this paper proposes the N-2D-NMS decoder and N-2D-OMS decoder. \emph{2D} represents for 2-dimensional and implies that the weights are shared based on two dimensions, i.e., check node degree and variable node degree.
+     \item \textit{Neural-2D-MinSum decoder}. By employing the node-degree-based weight sharing  on the N-NMS and N-OMS decoder, this paper proposes the N-2D-NMS decoder and N-2D-OMS decoder. \emph{2D} represents for 2-dimensional and implies that the weights are shared based on two dimensions, i.e., check node degree and variable node degree.
      Simulation results on the (16200,7200) DVBS-2 LDPC code show that the N-2D-NMS decoder can achieve same decoding performance as N-NMS decoder. 
     \item  \textit{W-RCQ Decoder.} This paper proposes the W-RCQ decoding paradigm.  Our simulation result for a (9472,8192) LDPC code on a field-programmable gate array (FPGA) device shows that the 4-bit W-RCQ decoder delivers comparable FER performance but with much fewer hardware resources, compared with the 4-bit RCQ decoder and the 6-bit offset MinSum decoder.
 \end{itemize}
@@ -1277,6 +1291,734 @@ For the neural decoders such as W-RCQ decoder and N-NMS decoder, assigning disti
 This paper proposes various node-degree-based weight sharing schemes with  lossless or lossy performance for the neural decoders, depending on whether the weight sharing considers both check and variable node degree or only one of them. 
 
 Additionally, this paper discusses the issues when training neural LDPC decoders. First, training the neural LDPC decoders for long blocklength code using Pytorch or TensorFlow could raise memory issue. This paper shows that the memory for training neural MinSum decoders can be saved by storing feed-forward messages compactly. Second, this paper identifies gradient explosion problem in the neural decoder training and proposes a  posterior jointly training method that addresses this problem. 
+
+
+\chapter{Probabilistic Shaping for Trellis-Coded Modulation with CRC-Aided List Decoding}
+
+\section{Introduction}
+This paper explores reliable communications over the additive white Gaussian noise (AWGN) channel with high spectral efficiency for short block lengths.  To closely approach theoretical limits, it is helpful to use shaping so that signal points are not equally likely, not equally spaced, or both \cite{gallager1968information,ForneyShaping,forney1992trellis,Kschischangoptimaldist,laroia1994optimal,fragouli2001,xiao2021finite}.  Recently, a new technique called  probabilistic amplitude shaping (PAS) \cite{pas_bocherer_1,pas_bocherer_2} employs a distribution matcher (DM) \cite{CCDM_schulte} before the forward error correction (FEC) encoder and channel-signaling mapping function to accomplish optimal or almost optimal shaping.
+
+A PAS system as in \cite{pas_bocherer_1,pas_bocherer_2} decomposes a channel input sequence into a magnitude symbol sequence and a sign sequence. The magnitude symbol sequence is generated by a DM.  The output of the DM is provided as input to a systematic FEC code where the parity check bits indicate the signs of the channel inputs. A channel-signaling mapping function maps the amplitude symbol sequence and the sign-bit sequence to the corresponding sequence of transmitted signal points.
+
+A distribution matcher \cite{CCDM_schulte,SMDM_amjad,ccdm_smdm_comp_schulte,patrick,pikus2019arithmetic,fehenberger2018multiset} maps a binary  input sequence onto a symbol sequence that determines the magnitudes of the transmitted symbols. The  binary input sequence typically has equally likely ones and zeros. However, the output symbols from  the distribution matcher are not equally likely. Specifically, the distribution matcher is designed such that the PAS system can generate channel inputs with a capacity-approaching probability mass function (PMF). 
+
+Even though it is well-known that 
+a continuous Gaussian probability density function (PDF) is a
+capacity-achieving distribution for the power-constrained additive Gaussian white noise (AWGN) channel, a carefully designed  finite-cardinality PMF  can deliver performance that is almost indistinguishable from that of a Gaussian PDF and facilitates practical implementation.  In \cite{Kschischangoptimaldist}, Kschischang \emph{et. al.} use Maxwell-Boltzmann distribution to optimize the PMF of equally-spaced pulse-amplitude modulation (PAM) or quadrature amplitude modulation (QAM) constellations. Xiao \emph{et. al.} use dynamic Blahut-Arimoto (DAB) to identify  minimum-cardinality capacity-approaching input PMFs for PAM constellations\cite{xiao2021finite}. 
+%Because the optimal channel input distribution is symmetric, the magnitude distribution can be calculated correspondingly.
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=1\linewidth]{figures/CRC_TCM_PAS_v2.eps }
+    \caption{Diagram of the CRC-TCM-PAS transmitter. In the diagram, $\mathbf{s}\in\mathbb{F}_2^{k}$, $\mathbf{a}\in\mathcal{C}_{\mathrm{DM}}\subseteq\mathcal{A}^{\length}$, $\mathbf{g}\in\mathbb{F}_2^{\ccinnum \length}$,   $\mathbf{h}\in\mathbb{F}_2^{\ccinnum \length+m}$, $\mathbf{x}\in\mathcal{X}^{\outlen}$, and $n=\length+\frac{m}{\ccinnum}$. The transmission rate of the system is $\frac{k}{n}$ bits/real channel use. The TCM in this figure uses a rate-$\frac{2}{3}$ TBCC.}
+    \label{fig: transmitter}
+\end{figure*}
+
+
+The empirical distribution of the output symbols of a good distribution matcher will closely resemble the target PMF as determined, for example, according to \cite{xiao2021finite}. The shell-mapping (SM) DM  \cite{SMDM_amjad,ccdm_smdm_comp_schulte}  is optimal in termes of normalized Kullback-Leibler (KL) divergence.  Schulte \emph{et al.} in \cite{CCDM_schulte} propose an asymptotically optimal distribution matcher, the constant composition (CC) DM. 
+One advantage of CCDM is that it supports online encoding. 
+Some other distribution matchers include those of  \cite{patrick,pikus2019arithmetic,fehenberger2018multiset}.
+
+As in \cite{pas_bocherer_1,pas_bocherer_2}, the output of the distribution matcher is provided as input to a systematic FEC code where the parity check bits indicate the signs of the channel inputs. The channel-signaling mapping function maps the amplitude-bit sequence of the DM and the sign-bit sequence of the FEC to the corresponding sequence of transmitted signal points.
+
+The second module in the PAS transmitter is a coded modulator. Coded modulation is a combination of error correction code and modulation. A well know coded modulation is Underboeck's trellis-coded modulation (TCM)\cite{ungerboeck1982channel}.   The coded modulation in the PAS transmitter \cite{pas_achievablerate_bocherer} comprises a systematic error correction code and a channel-signal mapping function.
+
+An important design choice for a PAS system is the selection of an FEC code. In the long blocklength regime, B{\"o}cherer \emph{et. al.} in \cite{pas_bocherer_1} use low-density parity-check (LDPC) codes for the PAS system. In the short blocklength regime, Coşkun \emph{et. al.} in \cite{cocskun2019efficient} investigate PAS systems with various FEC choices including binary LDPC codes, non-binary LDPC codes and polar codes. 
+
+Recently, convolutional codes with cyclic redundancy code (CRC)-aided list decoding have shown excellent performance in the short blocklength regime \cite{Liang_tbcccrc,yang2018serial,yang2019list,9709319}. Yang \textit{et al.} in \cite{Liang_tbcccrc} show that a tail-biting convolutional code (TBCC) with CRC-aided list decoding can achieve frame error rate (FER) performance very close to the short-blocklength random coding union (RCU) bound \cite{polyrcu}. King.  \textit{et al.} in \cite{king2022crc} provide an example where a TBCC outperforms a polar code in the AWGN channel when both are decoded using CRC-aided list decoding.
+
+\subsection{Contributions}
+
+In this paper, we propose a PAS system designed for the AWGN channel in the short-blocklength regime. The proposed PAS system uses a CRC-aided, rate-$\frac{\ccinnum}{\ccinnum+1}$, systematic, recursive TBCC as the FEC code. The TBCC and the channel-signal mapping function constitute the TCM \cite{ungerboeck1982channel}.  
+We refer to the proposed PAS system as CRC-TCM-PAS. Fig. \ref{fig: transmitter} describes the transmitter of the CRC-TCM-PAS  system.
+A CRC-TCM-PAS system can be designed as follows:
+\begin{enumerate}
+    \item Using \cite{Kschischangoptimaldist} or \cite{xiao2021finite}, identify the capacity-approaching PMF for the PAM constellation under AWGN,  which induces the PMF for the corresponding magnitudes.
+    \item Assuming an ideal distribution matcher that generates magnitude sequences whose symbols are independent and identically distributed (i.i.d.) according to the distribution calculated in 1), optimize the CRC and TBCC using the FER upper bound developed in Section \ref{sec:tfbound}. 
+    \item Replace the ideal distribution matcher with a practical one.
+\end{enumerate}
+The contributions of this chapter are summarized as follows:
+\begin{itemize}
+    \item \textit{CRC-TCM-PAS transmission system.} This chpter presents the paradigm of the  CRC-TCM-PAS  system.
+    \item \textit{Multi-composition distribution matcher (MCDM).} 
+    MCDM, which can be seen as a collection of CCDMs, is proposed in this chapter. We note that the proposed distribution matcher is a generalization of the MCDM in \cite{MCDM}, which limits the cardinality of the output alphabet to 2. We investigate two rules to select the CCDMs, which are related to high-probability sets and typical sets in information theory.
+    \item \textit{CRC-TCM-PAS  Decoder.} We propose automorphism enabled decoding \cite{geiselhart2022automorphism} to achieve near-maximum-likelihoood performance with low time complexity.
+    \item \textit{Properties of CRC-TCM-PAS transmission system.} This chapter proves that, asymptotically, the sign values produced by the TCM are equally likely to be positive or negative. This yields channel input symbols that have a symmetric capacity-approaching distribution.
+    \item \textit{Optimization of CRC-TCM-PAS parameters.} This chapter derives an upper bound on the FER of CRC-TCM-PAS systems and uses this bound as an objective function to jointly optimize the CRC and TBCC. The optimized CRC-TCM-PAS systems achieve FERs below the random coding union (RCU) bound in AWGN and outperform the short-blocklength PAS systems with various other forward error correction codes studied in \cite{cocskun2019efficient}. Simulation results show that the optimized CRC-TCM-PAS systems can exceed RCU bound and outperforms PAS systems with various other FEC codes explored in \cite{cocskun2019efficient}.
+\end{itemize}
+
+\subsection{Organization}
+The remainder of this chapter is organized as follows: Section \ref{sec: DM} reviews CCDM and presents MCDM. 
+The performance of these distribution matchers are compared in this section. 
+Section  \ref{sec: Prop} presents CRC-TCM-PAS system architecture.  Section \ref{sec: property} proves the symmetric capacity-approaching distribution of the output of the CRC-TCM-PAS system. Section \ref{sec:tfbound} derives the FER upper bound, and Section \ref{sec: simu} presents the simulation results of CRC-TCM-PAS systems with different input lengths and transmission rates. Section  \ref{sec: conclusion_3} concludes our work.
+ 
+\subsection{Notation}
+In this chapter, we use the italic upper case letter $A$ to denote a random variable. We use $A^l=[A_1,\ldots,A_l]$ to denote a random vector. 
+We use the italic lowercase letter $a$ to denote a realization of $A$ or a variable. 
+We use the straight bold lowercase letter $\mathbf{a}$ to denote either a realization of $A^l$ or a column vector. Specifically, $[\mathbf{a}]_m$ is a vector that contains last $m$ elements in $\mathbf{a}$.   
+Finally, we use the straight, bold upper case letter $\mathbf{A}$ to denote a matrix.
+
+\subsection{Preliminaries}
+Let $S$ be a random variable that obeys $\text{Bernoulli}\left(\frac{1}{2}\right)$, and  Denote the random sequence of $S$ with length $\numbits$ by $S^\numbits$, and the random sequence of $A$ with length $\length$ by $A^\length$. Specifically, $S^{\numbits}=[S_1,\dots,S_\numbits]$ and $A^{\length}=[A_1,\                               \dots,A_\length]$. Let $A$ be a random variable with alphabet $\mathcal{A}=\{0,1,\ldots,|\mathcal{A}|-1\}$.
+
+A fixed-to-fixed  distribution matcher is an injective function $f_{DM}$ that maps a  binary length-$\numbits$ source sequence $\soursymsqe\in\mathbb{F}_2^{\numbits}$ to a length-$\length$ symbol sequence $\dmou\in\mathcal{A}^{\length}$, i.e., 
+\begin{align}
+    f_{DM}: \{0,1\}^\numbits\rightarrow \mathcal{A}^\length.
+\end{align}
+$\mathcal{A}=\{0,1,\ldots,|\mathcal{A}|-1\}$ is the output symbol set. In this chapter, we limit $\log_2|\mathcal{A}|=k$ to be some integer. 
+The range of $f_{\mathrm{DM}}$ is the codebook of the distribution matcher, which is denoted by $\mathcal{C}_{\mathrm{DM}}$.
+Note that $ \mathcal{C}_{\mathrm{DM}}\subseteq  \mathcal{A}^\length$. 
+Because $f_{\mathrm{DM}}$ is an one-to-one mapping, it has $|\mathcal{C}_{\mathrm{DM}}|={2^k}$.
+Additionally, because the input bits of the DM are equally likely, it has $P_{A^l}(\mathbf{a})=2^{-k}$, for $\mathbf{a}\in\mathcal{C}_{\mathrm{DM}}$.
+Let $P(\bar{A})$ be the empirical distribution of a DM with codebook $\mathcal{C}_{\mathrm{DM}}$.
+$P(\bar{A})$ is calculated as follows:
+\begin{align}
+    P_{\bar{A}}(i)&=\frac{1}{{2^\numbits\length}}\sum_{\dmou\in\mathcal{C}_{\text{DM}}}\sum_{j=0}^{\length-1}\mathbbm{1}(a_j=a),~ a=0,...,|\mathcal{A}|-1.
+\end{align}
+A good distribution matcher has a $P(\bar{A})$ that is close to the desired distribution, $P(\hat{A})$. 
+
+The quality of a DM can be measured as its KL divergence with a \textit{theoretically} optimal DM, which is referred to as a random DM. The random DM uses the construction method of Shannon's random code \cite{thomas2006elements}.  Given the desired probability $P(\hat{A})$, in each transmission, the random DM randomly generates a codebook that contains $2^k$ codewords of length $\length$ according to the distribution $P_{\hat{A}^\length}(\mathbf{a})=\prod^{\length}_{i=1}P_{\hat{A}}(a_i)$. 
+%and always uses the first codeword for transmission. 
+The KL divergence between a practical DM with $\mathcal{C}_{\mathrm{DM}}$ and a random DM   is calculated by\cite{CCDM_schulte}: 
+\begin{align} D_{\mathrm{KL}}\left(P(A^\length)||P(\hat{A}^\length)\right)=\frac{1}{2^k}\log_2\left(\sum_{\mathbf{a}\in\mathcal{C}_{\mathrm{DM}}}\frac{1}{P_{\hat{A}^{\length}}(\mathbf{a})}\right)-k,
+\end{align}
+In this paper, we follow the convention in \cite{CCDM_schulte}, and use the normalized KL divergence, $\frac{1}{\length}D_{\mathrm{KL}}\left(P(A^\length)||P(\hat{A}^\length)\right)$, as the metric to evaluate the distribution matcher.
+
+A DM with a small normalized KL divergence is desired.
+One well-known DM with simple encoding and decoding algorithm is CCDM, whose codebook, $\mathcal{C}_{\text{CCDM}}$, contains the sequences that have the same \textit{type}, which is defined as follows\cite[Chapter~11]{thomas2006elements}: 
+
+\begin{definition}[]\label{def: types}
+    The type  (or empirical distribution) ${P}_{\dmou}$ of a sequence $\dmou=[ a_0,a_1,\ldots,a_{\length-1}]$ is the relative proportion of occurrence of each symbol in $\mathcal{A}$, i.e., ${P}_{\dmou}(i)=\frac{\sum_{j=0}^{\length-1} \mathbbm{1}(a_j=i)}{\length}$, $i\in\mathcal{A}$. Define the set of sequences of length $l$ and type $P$ as set class of $P$, denoted by   $\mathcal{T}_{P}^{\length}$:
+    \begin{align}
+        \mathcal{T}_{P}^{\length}=\{\dmou\in\mathcal{A}^\length: P_{\mathbf{a}}=P\}.
+    \end{align}
+\end{definition}
+
+Based on Definition \ref{def: types}, the codebook of CCDM is a subset of a set class of some type $P$. The type $P$ is chosen such that $2^{k}\leq |\mathcal{T}_{P}^{\length}|$, and normalized KL divergence  is minimized in the meanwhile. Because all codewords in $\mathcal{C}_{\mathrm{CCDM}}$ have the same type $P$, the empirical distribution of CCDM $P(\bar{A})=P.$  There are two major advantages to CCDM. First, the CCDM is asymptotically optimal, i.e.,  $\lim_{l\rightarrow\infty}\frac{1}{\length}D_{\mathrm{KL}}\left(P(A^\length)||P(\hat{A}^\length)\right)=0$.  Second, a CCDM can use arithmetic coding to sequentially generate the  codewords in $\mathcal{C}_{\mathrm{CCDM}}$ \cite{CCDM_schulte}. However, the normalized KL-divergence of CCDM is large in the short-blocklength regime\cite{CCDM_schulte}.
+
+
+\subsection{Multi-Composition Distribution Matcher }
+In this section, we propose a multi-composition distribution matcher (MCDM) that delivers a small normalized KL divergence in the short blocklength regime. The MCDM codebook can been seen as a union of multiple CCDM codebooks. 
+%MCDM requires much fewer memory than SMDM to store the codebook information. 
+%\input{HDM_Encoding}
+The codebook of an MCDM, $\mathcal{C}_{\mathrm{MCDM}}$, has the following properties: 
+\begin{enumerate}
+    \item $\mathcal{C}_{\mathrm{MCDM}}$ is a union of $\tau$ disjoint children codebooks, i.e., $\mathcal{C}_{\mathrm{MCDM}}=\bigcup_{i=1}^{\tau} \mathcal{C}_i,$ and $\mathcal{C}_i\bigcap \mathcal{C}_j = \emptyset$, for $i\neq j$.
+     \item The codewords in a child codebook have the same type, i.e., $\mathcal{C}_{i}\subseteq \mathcal{T}^{\length}_{P_{A_i}}$, $ i = 1,2,\ldots,\tau$. No two different children codebooks share the same type. 
+    \item Let $k_i=\left\lfloor\log_2(\mathcal{T}_{P_{A_i}})\right\rfloor$ for $i=1,\ldots,\tau$, then $\left|\mathcal{C}_i\right|=2^{k_i}$, for $ i=1,2,\ldots,\tau-1$, and  $|\mathcal{C}_\tau|=2^\numbits-\sum_{i=1}^{\tau-1}2^{k_i}$.
+\end{enumerate}
+
+Hence, the MCDM encoding consists of two steps: choose $\mathcal{C}_i$ and perform arithmetic encoding with type $P_{A_i}$.
+Let $b_i$ be the cardinality of the union of the first $i$ codebooks, i.e., $b_i=\sum_{m=1}^{i}|\mathcal{C}_i|$, where $i=1,\ldots,\tau$. Specifically, define $b_0=0$. 
+%Use $\mathbf{b}_i$ to denote the binary representation of $b_i$. 
+Given a binary input $\mathbf{s}$, the encoding algorithm for MCDM is  summarized as follows. First, choose the child CCDM $\mathcal{C}_i$ associated with input sequence $\mathbf{s}$, 
+%By treating $\mathbf{s}$ as a binary number, 
+$i$ is selected such that ${b}_{i-1}\leq{s}<{b}_{i}$, where $s$ is the decimal representation of  $\mathbf{s}$. Second, Calculate the child CCDM input as $\mathbf{c} =  [\soursymsqe-{\mathbf{b}_{i-1}}]_{k_i}$, where $\mathbf{b}_i$ to denote the binary representation of $b_i$ and the operator $[\cdot]_{k_i}$ returns last $k_i$ bits. Finally, Perform CCDM encoding with the child CCDM $\mathcal{C}_i$ using input $\mathbf{c}$, and generate the output sequence.
+
+The MCDM decoding process is as follows: For any $\dmou\in\mathcal{A}^{\length}$, the decoder first checks whether
+the type of $\mathbf{a}$ is one of the types in $\mathcal{C}_{\mathrm{MCDM}}$.  
+If so, the decoder checks whether $\dmou$ is in $\mathcal{C}_{\mathrm{MCDM}}$. 
+Otherwise, the decoder declares that $\dmou\notin \mathcal{C}_{\mathrm{MCDM}}$.
+
+An important design question regarding MCDM is the selection of children codebooks $\mathcal{C}_i$, $i=1,...,\tau$. Given a target distribution $P(\hat{A})$, we investigate two rules for choosing $\mathcal{C}_i$, namely, high-probability rule and typical-set rule:
+
+\emph{Rule 1: High-probability Rule}:
+\begin{align} 
+    P(A_i)=\argmax_{P(A^*)\in\mathcal{P}\setminus \{P(A_1),..,P(A_{i-1})\}}\sum_{a=1}^{|\mathcal{A}|} P_{A^*}(a)\log P_{\hat{A}}(a).
+\end{align}
+
+\emph{Rule 2: Typical-set Rule}:
+\begin{align}   
+    P(A_i)=\argminB_{P(A^*)\in\mathcal{P}\setminus \{P(A_1),..,P(A_{i-1})\}}{D_\mathrm{KL}}(P(A^*)||P(\hat{A})).
+\end{align}
+
+
+$\mathcal{P}$ is the set of all possible types of length-$\length$ symbol sequences. Rule 1 chooses the types whose sequences occur with the highest probability according to $P(\hat{A})$. On the other hand, rule 2 chooses the types that are most similar to $P(\hat{A})$. The codebooks built using rules 1 and 2 are related to the concept of high-probability set and typical set in information theory\cite [Chapter 3.3] {thomas2006elements}, respectively. 
+We use $\mathcal{C}_{\mathrm{HP}}$ and $\mathcal{C}_{\mathrm{TS}}$ to denote the codebooks built using high-probability and typical-set rules, respectively. 
+\input{figures/dm_comp.tex}
+
+\subsection{Comparison}
+In this subsection, we compare the performance of various distribution matchers in terms of the normalized KL divergence and required memory. We design the distribution matcher with $96$ input bits and $63$ output symbols from an $4$-ary alphabet. The target distribution is $P({\hat{A}})=(0.072,0.165,\allowdisplaybreaks 0.321,0.442)$. 
+
+
+
+Additional to the MCDM and CCDM, we also consider a DM called enumerative sphere shaping (ESS) \cite{amari2019ess}. ESS has an excellent performance in the short block length regime. Given a symbol sequence $\mathbf{a}=[a_1\ldots a_\length]$, the energy of $\mathbf{a}$ is defined as $\sum_{i=1}^{\length}a_i^2$. ESS considers the sequences whose energies are less than or equal to a threshold $E_{\text{max}}$ as codeword candidates of the distribution matcher. Given an $E_{\text{max}}$, ESS indexes the qualified sequences lexicographically, and an energy-bounded trellis is built to index the sequences. 
+
+Table \ref{tab: dm_comp} gives the normalized KL divergence of CCDM, MCDM, and ESS. CCDM delivers the largest normalized KL divergence, while ESS delivers the smallest normalized KL divergence. The MCDM with $\mathcal{C}_{\mathrm{HP}}$ delivers a comparable normalized KL divergence with ESS, and the MCDM with $\mathcal{C}_{\mathrm{TS}}$ is slightly larger than that of MCDM with $\mathcal{C}_{\mathrm{HP}}$.
+
+
+
+We also compare the required memories for these four DMs. For the CCDM, it suffices to only store the type of codewords. For the ESS, the node values in the trellises are needed\cite{amari2019ess}. The MCDM needs to store all of the types of children CCDMs and the binary thresholds $\mathbf{b}$. As shown in Table \ref{tab: dm_comp}, CCDM only needs 24 bits for storing the codeword type.  The MCDM with $\mathcal{C}_{\mathrm{HP}}$ requires a little bit less memory than ESS. The memory for the MCDM with $\mathcal{C}_{\mathrm{TS}}$ is an order of magnitude smaller than the memory for the MCDM with $\mathcal{C}_{\mathrm{HP}}$, because it uses fewer children CCDMs. In this example, $\mathcal{C}_{\mathrm{HP}}$ requires 2535 children CCDMs and $\mathcal{C}_{\mathrm{TS}}$ requires 327.
+
+\section{CRC-TCM-PAS System}\label{sec: Prop}
+
+This section presents the transmitter structure and the decoding algorithms for the proposed CRC-TCM-PAS transmission system.
+
+
+\subsection{CRC-TCM-PAS Transmission System Structure}
+Fig. \ref{fig: transmitter} illustrates the diagram of the proposed CRC-TCM-PAS transmitter. 
+As shown in Fig. \ref{fig: transmitter}, CRC-TCM-PAS takes $\numbits$ bits and generates $\outlen$ real-valued channel input symbols. Hence, the transmission rate is $\numbits/\outlen$ bits per channel use. 
+The CRC-TCM-PAS system consists of three encoding procedures. 
+First, a length-$\numbits$ binary source sequence $\soursymsqe\in\mathbb{F}_2^{\numbits}$ is encoded to a length-$\length$ symbol sequence $\dmou\in\mathcal{C}_{\mathrm{DM}}$ by a distribution matcher. 
+Then, the binary representation $\crcinb$ of $\dmou$ with $k_0$ bits per symbol, $\crcinb\in\mathbb{F}^{\ccinnum\length}_2$, is encoded by a systematic $m$-bit CRC with generator polynomial $p(x)$. The proposed system implicitly requires that $\ccinnum$ divides $m$.
+Finally, the TCM module encodes the CRC output and maps the encoded bits to a length-$\outlen$ channel input sequence $\mathbf{x}\in\mathcal{X}^n$, where $\mathcal{X}$ denotes the AM constellation set and $n=l+\frac{m}{\ccinnum}$.   
+The  TCM module includes a systematic, rate-$\frac{\ccinnum}{\ccinnum+1}$  TBCC, and a channel-signal mapping function which maps  each $\ccinnum+1$ encoded bits onto one of $2^{\ccinnum+1}$ symbols in the AM constellation set $\mathcal{X}$.
+
+The transmission rate of the CRC-TCM-PAS system is $\frac{k}{n}$ bits/real channel use. The remainder of this subsection introduces TBCC and  the channel-signal mapping function for TCM.
+
+\subsubsection{Tail Biting Convolutional Code}
+A  convolutional code with $\nu$ memory elements that takes a $\ccinnum$-bit input symbol and generates a $\ccoutnum$-bit output symbol in one stage is denoted by an $(\ccoutnum,\ccinnum,\nu)$ convolutional code. We refer to each input symbol as a \textit{data frame}, and each output symbol as a \textit{code frame}.  This paper is focused on $(\ccinnum+1,\ccinnum,\nu)$ convolutional code.
+The convolutional code in Fig. \ref{fig: transmitter} has $\ccinnum=2$. 
+Let $\mathcal{U}=\{0,1,\dots,2^{\ccinnum}-1\}$ be the set of input symbols and $\ccoutputset=\{0,1,\dots,2^{\ccoutnum}-1\}$ be the set of output symbols. 
+Denote the input symbol and output symbol in stage $t$ by $u_t$ and $\ccoutputrealize_t$, respectively.
+A convolutional code with $\outlen$ data frames can be described as an $\outlen$-stage trellis. 
+Denote the set of vertices (or states) at time instant $t$ by $\mathcal{V}_t$. Let $v_t$ be the state at time $t$.
+Denote an edge that starts with $v_t$, ends at $v_{t+1}$ and has an output $\ccoutputrealize_t$ by a 3-tuple $(v_t, \ccoutputrealize_t,v_{t+1})$. 
+Let $\mathcal{E}_t$ be the set of edges in stage $t$.
+In this paper, we let $\mathcal{\mathcal{V}}_t=\mathcal{V}=\{0,1,\dots,2^\nu -1 \}$, and $\mathcal{E}_t=\mathcal{E}$. Let the sequence ($v_0$, $\ccoutputrealize_0$, $v_1$, $\ccoutputrealize_1$, \dots, $\ccoutputrealize_{\outlen-1}$, $v_{\outlen}$) be a valid path in the trellis, a tail-biting path requires $v_0=v_{\outlen}$. Denote the TBCC trellis by $\mathcal{T}$, and denote the TBCC sub-trellises whose starting and ending state are $i$, $i\in\mathcal{V}$, by $\mathcal{T}_i$. This chapter considers recursive, rate-$\frac{\ccinnum}{\ccinnum+1}$, systematic TBCCs. 
+
+\begin{figure}[t] 
+    \centering
+  \subfloat[]{%
+  \includegraphics[width=0.5\linewidth]{figures/Set_Partition_Rule_2.eps}}
+   \\
+  \subfloat[]{%
+  \includegraphics[width=0.5\linewidth]{figures/set_partitioning_coset_perspective.eps}}
+        \hfill
+\caption{Labeling of 8-AM channel signals from (a) magnitude perspective and (b) coset perspective.   The least significant two bits identify the coset. The most significant two bits indicate the magnitude.  The exclusive-or of all three bits indicates the sign.} \label{fig: 8-AM-set-partition}
+\end{figure}
+
+\subsubsection{Mapping Rule}
+In order to maximize free Euclidean distance (ED) of TCM, Ungerboeck in \cite{ungerboeck1982channel} proposed a mapping rule called "mapping by set partitioning". 
+Ungerboeck's set partitioning mapping rule follows from the successive partitioning of a channel-signal set into subsets with increasing minimum distance between the signals in these subsets.  With set partitioning, the coded bits serve as coset labels so that "uncoded errors" are guaranteed to have at least minimum distance between elements in the same coset.
+
+Our design has an additional requirement that the systematic bits identify the magnitude of the symbol as produced by the distribution matcher.
+Fig. \ref{fig: 8-AM-set-partition} gives binary labels for the equidistant 8-AM constellation set using a labeling that achieves both of these objectives.  In this labeling, the sign is negative when the exclusive-or of all three bits is one. The two most significant bits are the systematic bits that identify the magnitude, and one may view the least significant bit as selecting the sign.  The two least significant bits identify the coset, and one may view the most significant bit as selecting the sign. 
+
+\subsection{Decoding Algorithms}
+The channel observation at the receiver over an AWGN channel is  $\mathbf{y}=\chaninsy+\mathbf{z}$, where $\mathbf{z}\sim\mathcal{N}(\mathbf{0},\sigma^2\mathbf{I})$ is the noise vector and $\sigma^2$ is the noise variance. This subsection introduces various decoding algorithms with varied complexity and error correction performance.
+We first give the definition of the codeword of a CRC-TCM-PAS system:
+
+\begin{definition}
+    $\chaninsy\in\mathcal{X}^\outlen$ is a \textit{CRC-TCM-PAS codeword} if it satisfies all of the following conditions:
+    \begin{enumerate}
+        \item $\chaninsy$ is a codeword of TCM.
+        \item The dataword of TCM that generates $\chaninsy$, $\crcoutb$, passes the CRC check.
+        \item The information bits $\crcinb$ of the CRC codeword $\crcoutb$, are the binary representation of a codeword in $\mathcal{C_{\mathrm{DM}}}$.
+    \end{enumerate}
+\end{definition}
+Denote the codebook of CRC-TCM-PAS by $\mathcal{C}_{\mathrm{CTP}}$, which has cardinality $|\mathcal{C}_{\mathrm{CTP}}|=2^\numbits$. 
+\subsubsection{Maximum Likelihood (ML) Decoder}  For AWGN, the ML decoder finds $\hat{\chaninsy}\in\mathcal{C}_{\mathrm{CTP}}$ that has smallest Euclidean distance with $\mathbf{y}$, i.e.:
+\begin{align}\label{equ: MLD}
+    \hat{\chaninsy}=\argminB_{\chaninsy\in\mathcal{C}_{\mathrm{CTP}}}||\chaninsy-\mathbf{y}||_2^2.
+\end{align}
+The ML decoder minimizes the FER, i.e., the probability of a codeword error, in AWGN.  The decoding rule of \eqref{equ: MLD} can be realized by serial list Viterbi decoding (SLVD)\cite{seshadri1994list}.
+SLVD first finds the most likely path in tail-biting trellis $\mathcal{T}$. If the
+constellation point sequence corresponding to this path is not a codeword in $\mathcal{C}_{CTP}$, then SLVD is used again to find the next most likely path. If a path belongs to the sub-trellis $\mathcal{T}_i$, the  trellis-tree algorithm (TTA) \cite{soong1990fast} for $\mathcal{T}_i$ is used for tracing back that path.
+
+
+The ML decoding complexity can be decomposed into two parts. First, the initialization step calculates the metrics of local best paths in each of $2^\nu$ sub-trellises. Second, if a path in $\mathcal{T}_i$ needs to be traced back, a data set of TTA for 
+ $\mathcal{T}_i$ needs to be constructed and maintained \cite{soong1990fast}.
+
+ \subsubsection{$\beta$-States Decoder}  
+ One solution to reduce the complexity of ML decoder is to consider only a subset of $2^\nu$ states as the possible start/end states. We denote the subset by $\Tilde{\mathcal{V}}\subseteq\mathcal{V}$ and the cardinality of  $\Tilde{\mathcal{V}}$ by $|\tilde{\mathcal{V}}|$. In this paper, we refer to a $\beta$-States decoder as a decoder that considers $\beta$ states as start/end states, i.e., $|\Tilde{\mathcal{V}}|=\beta$. Let $v(\chaninsy)$ be the TBCC initial state of  the codeword $\chaninsy$.  The $\beta$-States decoder solves the following problem:
+\begin{align}\label{equ: bSD}
+    \hat{\chaninsy}=\argminB_{\substack{{\chaninsy}\in\mathcal{C}_{\mathrm{CTP}}\\v(\chaninsy)\in\Tilde{\mathcal{V}}} }||\chaninsy-\mathbf{y}||_2^2.
+\end{align}
+The set $\Tilde{\mathcal{V}}$ is identified using one iteration of the wrap-around Viterbi algorithm (WAVA)\cite{rosewava}. 
+
+\begin{figure*}[t] 
+    \centering
+      \includegraphics[width=1\linewidth]{figures/AED_structure_2.eps}
+      \caption{The diagram of an AE decoder with $M$ parallel $\beta$-States decoders, i.e., AED($M$,$\beta$). }
+      \label{fig: AED_str}
+\end{figure*}
+
+\subsubsection{Automorphism Ensemble (AE) Decoder}
+Ensemble decoding algorithms \cite{geiselhart2022automorphism} employ $M$ parallel independent and identical sub-optimal decoders, with each proposing a codeword estimate.  From among these $M$ proposed codewords, the ensemble decoder selects the most likely candidate as the decoder output \cite{geiselhart2022automorphism}. One category of ensemble decoding utilizes automorphism groups. An automorphism group is a set of permutations such that the permuted sequence of any codeword is still a codeword.  When an automorphism group of the codes is known, identical constituent decoders decoding permuted versions of the channel output may be used, yielding the so-called Automorphism Ensemble (AE) decoding \cite{geiselhart2022automorphism}. 
+ 
+The cyclic shifts $\delta_i$, $i=0,...,\outlen-1$, are elements of an automorphism group of the TBCC, where  $\delta_i$ indicates the cyclic shift of a sequence by $i$ positions. Hence, as illustrated in Fig. \ref{fig: AED_str}, an AE decoder for the CRC-TCM-PAS system is constructed by employing $M$ parallel $\beta$-States decoders for the channel observations that are cyclic-shifted by  $\{\delta_{i_1},\ldots,\delta_{i_M}\}$. The $i^{th}$ $\beta$-States decoder either provides a shifted estimation candidate or declares an erasure. The final decoding result of the AE decoder is the candidate that has the smallest Euclidean distance from the channel observation. We denote an AE decoder with M parallel decoders with cyclic  shifts $\{{i_1},\ldots,{i_M}\}$, where each decoder utilizes $\beta$ starting states obtained by WAVA as the decoder AED($M$, $\beta$). In this paper, the cyclic shifts  $\{{i_1},\ldots,{i_M}\}$ are uniformly sampled from $\{0,\ldots,\outlen-1\}$. 
+
+The $M$ independent $\beta$-States decoders of AED($M$, $\beta$) can be run in parallel, so the AED($M$, $\beta$) has the same time complexity with a single $\beta$-States decoder but provides  more potential codewords. However, the AED($M$, $\beta$) requires more hardware resources than a single $\beta$-States decoder.
+
+\section{Channel Input Distribution of CRC-TCM-PAS System }\label{sec: property}
+This section proves that the distribution of the channel input $X$ of the CRC-TCM-PAS system is symmetric, i.e., $P_X(x)=P_X(-x)$ for $x\in\mathcal{X}$, where $\mathcal{X}$ is the PAM constellation set. We begin the proof with a theorem that shows the CRC check bits in the CRC-TCM-PAS system are asymptotically uniform, even though the input bits of the CRC encoder are not.
+
+\subsection{Uniformity of CRC bits}
+Denote the random variable that represents a DM output symbol by $\bar{A}$ with PMF  $P(\bar{A})$. Because the cardinality of output symbol set is $2^{k_0}$, $\bar{A}$ can be represented by $k_0$ bits, which are denoted by $B_i$, $i=0,\ldots,\ccinnum-1$.
+Since $\bar{A}$ is not uniform,  $B_i$, $i=0,\ldots,\ccinnum-1$, may have different distributions. Let $a\in\mathcal{A}$ be a realization of $\bar{A}$, and  let $\mathbf{b}(a)=[b_{k_0-1}(a),\dots, b_{1}(a),~b_{0}(a)]\in\mathbb{F}_2^{k_0}$ be the binary representation of $a$.  The PMF of $B_i$ is calculated by:
+\begin{align}\label{equ: distribution}
+    P_{B_i}(b)=\sum_{a=0}^{|\mathcal{A}|-1}P_{{\bar{A}}}(a)\mathbbm{1}\left(b_i(a)=b\right),
+\end{align}
+
+$b=0,1,~i=0,1,...,k_0-1$. $\mathbbm{1}(\cdot)$ is the indicator function. As shown in Fig. \ref{fig: transmitter}, the binary converter maps a length-$\length$ symbol sequence to a length-$\ccinnum\length$ binary sequence.  Let $G^{\ccinnum\length}=[G_0,\ldots,G_{\ccinnum \length -1}]$ be the random vector representing the binary sequence. Assume that the DM generates i.i.d. symbols, the $G_i$'s that correspond to the same symbol bit position have the same distribution, i.e.:
+\begin{align}\label{equ: prob_gi}
+    P(G_i)=P(B_{i\pmod{\ccinnum}} )~,i=0,\ldots,\ccinnum\length-1.
+\end{align}
+Let $\mathbf{g}\in\mathbb{F}_2^{\ccinnum\length}$ be a realization of $G^{\ccinnum\length}$, and denote the polynomial form of $\crcinb$ by $g(x)=\sum_{i=0}^{k_0\length-1}g_ix^i$.
+
+An $m$-bit CRC is specified by a degree-$m$ binary polynomial $p(x)=\sum_{i=0}^mp_{i}x^i$. 
+Let the polynomial form of the output of the CRC encoder be $h(x)=\sum_{i=0}^{k_0\length+m-1}h_ix^i$. $h(x)$ is calculated by
+\begin{align}\label{equ: CRC_encoding}
+    h(x)=x^mg(x)+x^m g(x)\pmod{p(x)}.
+\end{align}
+
+
+The following theorem proves that the CRC check bits, $h_i$, $i=0,\ldots,m-1$, can be arbitrarily close to be  equally likely, with a proper choice of $l$.
+
+\begin{theorem}\label{the: uniform_bits}
+    For a length-$\length$ random vector $A^\length$ whose elements $A_i$, $i=0,\dots,\length-1$, are i.i.d. random variables with alphabet $|\mathcal{A}|=\{0,1,2,\dots,2^{k_0}-1 \}$ and distribution $P(A)$. Let $G^{k_0 \length}$ be the binary representation of $A^\length$ and $H^{k_0\length+m}$ be the CRC output sequence by encoding $G^{k_0\length}$  with some degree-m CRC polynomial $p(x)$. For any $0<\epsilon<0.5$, there exists an $l$ such that
+    \begin{align*}
+        |P_{H_i}(0)-0.5|<\epsilon,~i=0,1,\dots,m-1.
+    \end{align*}
+\end{theorem}
+
+\begin{proof}
+Define the set of random variables in $G^{\ccinnum \length}$ that belong to the $j^{th}$ symbol bit position by $\mathcal{G}_j$, i.e.,
+$\mathcal{G}_j=\{G_{\ccinnum i+j},i=0,\ldots,\length-1\}$,
+$j=0,\dots,\ccinnum-1$. Based on \eqref{equ: prob_gi}, the random variables in the same set have same distribution. Let $P_{G_i}(0)=p_j$, if $G_i\in\mathcal{G}_j$.
+
+
+A CRC code is a linear block code. Let $\mathcal{I}_i$,  $i=0,\dots,m-1$,  be the set of information bits that are constrained by $i^{th}$ parity check.
+Let $J_{i,j}$ be the number of the elements belonged to both $\mathcal{I}_i$ and $\mathcal{G}_j$, i.e., $J_{i,j}=\left|\mathcal{I}_i\bigcap \mathcal{G}_j \right|$, where $i=0,\dots m-1$ and $j=0,\dots, k_0-1$. The PMF of $i^{th}$ parity check bit, $P(H_i)$,  can be calculated by:
+$P(H_i)=\circledast_{G_j\in\mathcal{G}_i}P(G_j)$, where $\circledast$ denotes circular convolution.
+Using the discrete Fourier transform, $P_{H_i}(0) = \frac{1}{2}+\frac{1}{2}\prod_{j=0}^{\ccinnum -1}(1-2p_j)^{J_{i,j}}$.
+$P_{H_i}(0)$ is calculated by:
+\begin{align}
+     P_{H_i}(0) &= \frac{1}{2}+\prod_{j=0}^{\ccinnum -1}(1-2p_j)^{J_{i,j}}.
+\end{align}
+Because $|1-2p_j|<1$, and $J_{i,j}$ gets larger with the increase of $l$, there exists an $l$ such that for $i=0,...,m-1$, $\left|\prod_{j=0}^{\alpha-1}(1-2p_j)^{J_{i,j}}\right|<\epsilon$.
+\end{proof}
+
+Note that Theorem \ref{the: uniform_bits} can be generalized to any systematic linear block code, and it validates the uniform check bit assumption in \cite{pas_bocherer_1}.
+
+\begin{example}
+    Let P(A)=(0.072,0.165,0.321,0.442).  For a degree-5 CRC with $p(x)=x^5+x^4+x^2+1$, the minimum $l$ that gives $|P_{H_i}(0)-0.5|<10^{-4},~i=0,\dots,4,$ is 20. 
+\end{example}
+\begin{remark}
+Theorem \ref{the: uniform_bits} can be generalized to any systematic linear block code, and it validates the uniform check bit assumption in \cite{pas_bocherer_1}. 
+\end{remark}
+
+\subsection{Symmetry of Channel Input Distribution}
+Consider a length-$\outlen$, rate-$\frac{\ccinnum}{\ccinnum+1}$, systematic, and recursive TBCC with $\nu$ memory elements.
+Denote the input symbol in stage $t$ by $u_t\in\mathcal{U}$, $t=0,...,\outlen-1$ , and denote the state at time instant $t$ by $v_t\in\mathcal{V}$, $t=0,\ldots,\outlen$.
+Let $\mathbf{u}_t\in\mathbb{F}_2^{k_0\times1}$ and $\mathbf{v}_t\in\mathbb{F}_2^{\nu\times 1}$ be the binary representation of $u_t$ and $v_t$, respectively.
+Based on the state-space representation of convolutional code\cite{weiss2001code,fragouli1999convolutional}, $\mathbf{v}_{t+1}$ is a function of $\mathbf{v_t}$ and  $\mathbf{u_t}$, i.e., $\mathbf{v}_{t+1}=\mathbf{A}\mathbf{v}_t+\mathbf{B}\mathbf{u}_t$, where $\mathbf{A}\in\mathbb{F}_2^{\nu\times\nu}$ and $\mathbf{B}\in\mathbb{F}_2^{\nu\times k_0}$. 
+The initial state $\mathbf{v}_0$ of a recursive TBCC codeword can be determined by the following equation:
+\begin{align}\label{equ: initial_state}
+    \mathbf{v}_0=(\mathbf{A}^{\outlen}+\mathbf{I}_\nu)^{-1}\mathbf{v}_\outlen^{[zs]},
+\end{align}
+where $\mathbf{I}_\nu$ is a size $\nu$ identity matrix and $\mathbf{A}^\outlen+\mathbf{I}_{\nu}$ is an invertible matrix\cite{weiss2001code}. The term $\mathbf{{v}}_N^{[zs]}$ is referred to as zero-state solution and is the final state by encoding the dataword with initial state ${0}$.  The encoding of tail-biting convolutional code has two steps: 
+
+\begin{enumerate}
+    \item Run encoding process first time by setting $v_0=0$ and record ${{v}}_\outlen^{[zs]}$.
+    \item Run encoding process second time by setting ${v}_0$ using \eqref{equ: initial_state} and generate output symbols.
+\end{enumerate}
+
+Therefore, in order to study the distribution of the output symbols of a recursive TBCC, we need to know the distribution of ${{v}}_\outlen^{[zs]}$ by analyzing the first encoding process. 
+
+For the CRC-TCM-PAS system, the data frames, i.e., input symbols,  of TBCC are the outputs of CRC encoder. Because the CRC encoder is systematic, the first $n-\frac{m}{k_0}$ input symbols of TBCC have DM output symbol distribution $P(\bar{A})$. Based on Theorem \ref{the: uniform_bits}, the last $\frac{m}{k_0}$ input symbols have uniform distributions. This subsection uses state-space representation of convolution code in \cite{weiss2001code,fragouli1999convolutional} to analyze the PMF of the state in time instant $t$, $V_t$. The PMF of $V_t$, is calculated by:
+\begin{align}
+    P_{V_t}(v_t)
+    =\sum_{v_{t-1}\in\mathcal{V}}P(v_{t-1})\sum_{(v_{t-1},\ccoutputrealize_t},v_t)\in\mathcal{E} P(\ccoutputrealize_t,v_{t}|v_{t-1}).\label{equ: state_equ}
+\end{align}
+Let $ {u}_t= g^{-1}\left(v_{t-1},\ccoutputrealize_t,v_t\right)\in \mathcal{U}$ be the input symbol that associates to the edge $(v_{t-1},\ccoutputrealize_t,v_t)$.
+Hence, $P(\ccoutputrealize_t,v_t|v_{t-1})=P_{U_t}\left(g^{-1}\left(v_{t-1},\ccoutputrealize_t,v_t\right)\right)$. If the convolution code is systematic, the input corresponded to $(v_{t-1},\ccoutputrealize_t,v_t)$ can be solely determined by $\\ccoutputrealize_t$, we use $g^{-1}(\ccoutputrealize_t)=g^{-1}\left(v_{t-1},\ccoutputrealize_t,v_t\right)$ as a simplification.
+Define the matrix $\mathbf{C}_{t-1}\in\mathbb{R}^{|\mathcal{V}|\times|\mathcal{V}|}$ as follows:
+\begin{align}\label{equ: sto_mat}
+    \mathbf{C}_{t-1}(v_{t},v_{t-1})=P(v_t|v_{t-1})=\sum_{(v_{t-1},\ccoutputrealize_t,v_t)\in\mathcal{E}} P(\ccoutputrealize_t,v_{t}|v_{t-1}).
+\end{align}
+Let $\mathbf{p_t}=\left[P_{V_t}(0)\dots P_{V_t}(2^{\nu}-1)\right]^T$, \eqref{equ: state_equ} can be rewritten as:
+\begin{align}\label{equ: state_pmf}
+    \mathbf{p}_t=\mathbf{C}_{t-1}\mathbf{p}_{t-1}= \left(\prod_{i=0}^{t-1} \mathbf{C}_{i}\right)\mathbf{p}_0, ~t=1,2,...,\outlen.
+\end{align}
+
+\eqref{equ: sto_mat} implies that $\mathbf{C}_{t-1}$ is a left stochastic matrix, i.e., each column in $\mathbf{C}_{t-1}$ is a probability vector. Moreover, $\mathbf{C}_{t-1}$ is also right stochastic, meaning that each row has a sum of 1. To see this, for the trellis of a convolutional code, for each $v_{t}\in\mathcal{V}$, there are $2^{k_0}$ edges that connect $v_t$ and each edge associates a distinct input in $\mathcal{U}$. As a result, $\mathbf{C}_{t-1}$ is a doubly stochastic matrix.
+
+\begin{theorem}\label{the: uinform_state}
+    For an $(\ccoutnum,\ccinnum,\nu)$ convolutional code with any initial state distribution $P(V_0)$, if the data frames are i.i.d. random variables with PMF $P(U)$ and $P_U(u)>0$ for any $u\in\mathcal{U}$. Let $V_t$ be the state at time instant $t$, then the random sequence $V_0,V_1,\ldots$ converges in distribution to a uniform random variable ${V}_{\mathrm{uni}}$, i.e., $V_t\xrightarrow{d}{V}_{\mathrm{uni}}$.
+\end{theorem}
+
+\begin{proof}
+    Because all the data frames have the same distribution, it has $\mathbf{C}_t=\mathbf{C}$. Hence, \eqref{equ: state_pmf} can be rewritten as
+    %\begin{align}\label{equ: state_pmf_2}
+    $\mathbf{p}_{t}=\mathbf{C}^{t}\mathbf{p}_0$.
+    %\end{align}
+    $\mathbf{C}$ is not only a doubly stochastic matrix but also a regular matrix.
+    For a convolutional code, any state $v_i \in \mathcal{V}$ can always reach any state $v_j\in\mathcal{V}$ with a finite-length path. $\mathbf{C}$ retains this property, because $P_U(u)>0$, for any $u\in\mathcal{U}$.
+    As a result, $\mathbf{C}$ is regular.
+    Based on Perron-Frobenius theorem\cite{gantmakher2000theory}, the non-negative and regular matrix $\mathbf{C}$ has the following properties:
+    \begin{enumerate}
+        \item  $\mathbf{C}$ has $\lambda_1=1$  as an eigenvalue of multiplicity 1, and the normalized right eigenvector corresponded to eigenvalue 1 is $\mathbf{q}^*=\left[\frac{1}{\sqrt{2^\nu}}~\frac{1}{\sqrt{2^\nu}}\ldots\frac{1}{\sqrt{2^\nu}}\right]^{T}$.
+        \item For all other eigenvalues $\lambda_j$, $j=2,...,q$, it has $|\lambda_j|$ is \emph{strictly} smaller than 1,  i.e., $|\lambda_j|<1$.
+    \end{enumerate}
+
+    Let $\mathbf{J}=\mathbf{Q}^{-1}\mathbf{C}\mathbf{Q}$ be the  Jordan canonical form   of $\mathbf{C}$. Based on Perron-Frobenius theorem,
+    $\mathbf{J}=\text{diag}(1,\mathbf{J}_2,\dots,\mathbf{J}_q),$
+    where $\mathbf{J}_2,\ldots,\mathbf{J}_q$ are Jordan block matrices that correspond to eigenvalues $\lambda_2,\ldots$,$\lambda_q$, respectively.
+    Let $\mathbf{Q}=[\mathbf{q}_1\dots\mathbf{q}_{2^\nu}]$ and, $\mathbf{q}_1$ is the eigenvector associated to eigenvalue 1, $\mathbf{q}_1= \alpha\mathbf{q}_1^*$, $\alpha\in\mathbb{R}$.
+    Let $\mathbf{p}_0=\sum_{i=1}^{2^\nu}c_i\mathbf{q}_i=\mathbf{Q}\mathbf{c}$, it has $\mathbf{p}_t=\mathbf{C}^t\mathbf{p}_0=\mathbf{Q}\mathbf{J}^t\mathbf{c}$.
+    Because
+    $\lim_{t\rightarrow \infty}\mathbf{J}_i=\mathbf{0}$ for $j=2,\ldots, 2^{\nu}$, it has $\lim_{t\rightarrow \infty} \mathbf{p}_t = c_1\alpha\mathbf{q}_1^* =\left[\frac{1}{2^\nu}\dots \frac{1}{2^\nu}\right]^T$.
+    % \begin{align}
+    %     \lim_{t\rightarrow \infty} \mathbf{p}_t &= c_1\alpha\mathbf{q}_1^* =\left[\frac{1}{2^\nu}\dots \frac{1}{2^\nu}\right]^T\label{equ: final_uniform}.
+    % \end{align}
+    %\eqref{equ: final_uniform} follows the fact that $\mathbf{p}_N$ is a valid distribution.
+    %Thus, when $\outlen$ is large enough, $P(V_\outlen)$ converges to uniform distribution.
+\end{proof}
+
+\begin{example}
+    Consider the (3,2,3) convolution code shown in Fig. \ref{fig: transmitter}. Let the initial state be 0 and $P(U)=(0.5742,0.3188, 0.01642,0.09048)$.  When $t=12$, $|P_{V_{12}}(v)-\frac{1}{8}|<10^{-4}$, $v=0,\ldots,7$.
+\end{example}
+
+Besides, if the state distribution at time $t$ is  uniform, the state distribution at time $t+1$ is also uniform, no matter what $P(U_t)$ is. Hence, the zero-state solution, as well as the initial state of TBCC,  have a uniform distribution.
+As indicated in \eqref{equ: initial_state}, the TBCC initial state is a one-to-one mapping of zero-state solution, thus the initial state of TBCC  has uniform distribution. 
+As a result, the states at all $\outlen+1$ time instants in second encoding process have uniform distribution.
+
+
+Now, we show that if the state at time instant $t$ is uniform, then the ($k_0+1,k_0,\nu$) systematic recursive TBCC generates an equally likely parity check bit in stage $t$. First of all, the following theorem gives that distribution of output symbol in stage $t$.
+
+
+\begin{theorem}\label{the: sym_dist}
+Consider a $(k_0+1,k_0,\nu)$ systematic recursive  convolutional code that is defined by state set $\mathcal{V}$, edge set $\mathcal{E}$, input set $\mathcal{U}$, and output set $\ccoutputset$. If the state distribution at time instant $t$ is uniform, i.e., $\mathbf{p}_t=\left[\frac{1}{2^\nu}\frac{1}{2^\nu}\dots \frac{1}{2^\nu}\right]^T$, then the output symbol distribution in stage $t$, $P_{O_t}(\ccoutputrealize_t)=\frac{1}{2} P_{U_t}\left(g^{-1}(\ccoutputrealize_t)\right)$, $\forall \ccoutputrealize_t\in\ccoutputset$.
+\end{theorem}
+
+\begin{proof}
+Define matrix $\mathbf{D}_t\in\mathbb{R}^{|\ccoutputset|\times|\mathcal{V}|}$ with $\mathbf{D}_t(\ccoutputrealize_t,v_{t-1})=P(\ccoutputrealize_t|v_{t-1})$, where $\ccoutputrealize_t\in\ccoutputset$ and $v_{t-1}\in\mathcal{V}$. Define $\mathbf{q}_{t}=[P_{O_t}(0) \dots P_{O_t}(|\ccoutputset|-1)]^T$. $\mathbf{q}_{t}$ can be calculated by $\mathbf{q}_t=\mathbf{D}_{t-1}\mathbf{p}_t$.
+
+Because the TBCC is systematic, $\mathbf{D}_t(\ccoutputrealize_t,v_{t-1})=P_{U_t}(g^{-1}(\ccoutputrealize_t))$.  Hence, one property of $\mathbf{D}_t$ is that the non-zero elements in each row have the same value.
+
+The other property  is that $\mathbf{D}_t$ contains $2^{\nu-1}$ non-zero elements for each row, 
+i.e., given any output $\ccoutputrealize_t\in\ccoutputset$, there are only $2^{\nu-1}$ possible states from which $\ccoutputrealize_t$ can be generated. This is because for a rate-$\frac{\ccinnum}{\ccinnum+1}$, systematic, recursive convolution code, the register adjacent to the output is determined by $\ccoutputrealize_t$,  hence the freedom of $v_{t-1}$ is reduced by 1. Based on the two properties of $\mathbf{D}$, for any $\ccoutputrealize_t\in\ccoutputset$,  it has: $P_{O_t}(\ccoutputrealize_t) = \sum_{i=1}^{2^\nu}\mathbf{D}(l,i)P_{V_t}(i)=\frac{1}{2}P_{U_t}(g^{-1}(\ccoutputrealize_t))$.
+\end{proof}
+
+Theorem \ref{the: sym_dist} implies that, if the state distribution at time $t$ is uniform, then the parity bit generated by the convolutional code at stage $t$ is uniform. Because the sign value of the channel input symbol at stage $t$, $X_t$, is determined by parity bit, it has $P_{X_t}(x)=P_{X_t}(-x)$, for $x\in\mathcal{X}$.
+Note that one rule of channel-signal mapping function in CRC-TCM-PAS is that information bits indicate magnitude and parity check bit indicates sign.
+
+
+Because the states of each time instant of TBCC have uniform distribution, the channel inputs in each stage have symmetric distributions. Besides, the magnitude distributions of first $\outlen-\frac{m}{k_0}$ and last $\frac{m}{k_0}$ channel inputs follow $P(\bar{A})$ and uniform distribution, respectively.
+
+\section{FER Upper Bound for CRC-TCM-PAS System}\label{sec:tfbound}
+In this section, we derive the  FER upper bound for the CRC-TCM-PAS system with the specified CC, CRC, and an ideal distribution matcher that generates length-$l$ symbol sequences with the desired distribution $P(\hat{A}^ \length)$. 
+The upper bound is computed using the generating function of an equivalent convolutional code whose error events correspond exactly
+to the undetectable error events of the concatenation of the original CRC and CC. 
+
+\subsection{Equivalent Code for CRC-Aided Convolutional Code}\label{sec: equ_code}
+As shown in Fig. \ref{fig: transmitter}, the binary representation  of the symbol sequence generated by a  distribution matcher is encoded by a CRC and a TBCC serially. We begin our analysis by replacing the CRC and convolutional encoder with a single convolutional encoder whose input is the quotient of dividing the CRC codeword by the CRC polynomial.
+
+Let $\mathbf{h}$ be a length-$(\equl+m)$ CRC codeword with polynomial form $h(x)=\sum_{t=0}^{\equl+m+1} h_tx^{t}$. Based on the notation in Fig. \ref{fig: transmitter}, $\equl=\ccinnum\length$. For a rate-$\frac{\ccinnum}{\ccinnum+1}$ convolutional code, there are $\ccinnum$ input branches. Let the input of the $i^{th}$ branch be $\mathbf{h}^{(i)}$, and let the corresponding polynomial be $h^{(i)}(x)$. $\mathbf{h}^{(i)}=[h_i~h_{\ccinnum i}\ldots h_{\equl+m-\ccinnum+i}]$ is obtained by sampling $\mathbf{h}$ every $\ccinnum$ positions starting from $i^{th}$ position, and $h^{(i)}(x)=\sum_{t=0}^{(\equl+m)/\ccinnum -1}{h}_{\ccinnum t+i}x^{t}$, $i=0,\ldots,k_0-1.$ 
+
+ 
+
+Let $\crcquot$ be the quotient of dividing the CRC output by the CRC polynomial. The polynomial form of $\mathbf{q}$, $q(x)$, is calculated by 
+\begin{equation}\label{equ: quotient}
+  \crcquotel(x):= h(x)/p(x).
+\end{equation}
+
+
+\begin{theorem}
+    Consider an $m$-bit CRC encoder which is specified by an $m$-degree polynomial $p(x)$. Let the number of input bits be $\equl$. Let $\ccinnum$ be an integer that divides $m+\equl$. Then for any codeword polynomial $h(x)$, its $\ccinnum$-split polynomial vector, $\mathbf{h}_{\ccinnum}(x)$ can be calculated by $\mathbf{h}_{\ccinnum}(x) = \mathbf{q}_{\ccinnum}(x) \peq(x)$.
+    \begin{align}
+        \mathbf{h}_{\ccinnum}(x) = \mathbf{q}_{\ccinnum}(x) \peq(x),
+    \end{align}
+    where $\mathbf{q}_{\ccinnum}(x)$ is the $\ccinnum$-split polynomial vector of $q(x)=h(x)/p(x)$  and $\mathbf{P}_{\mathrm{eq}}(x)\in\mathbb{F}_2[x]^{k_0\times k_0}$ is a $k_0\times k_0$ square binary polynomial matrix.
+\end{theorem}
+
+\begin{proof}
+Based on the relationship $h(x)=p(x)q(x)$, the $t^{th}$ bit of $\mathbf{h}^{j}$, $h^{(j)}_t$ is calculated by:
+\begin{align}
+    h_t^{(j)}
+    &= h_{k_0t+j} = \sum_{s=0}^m q_{k_0t+j-s}p_s\\
+    &= q_{k_0t+j}p_0+ \sum_{\ell = 0}^{ m/k_0  - 1} \sum_{s'=1}^{k_0} q_{k_0t+j-k_0\ell-s'} p_{k_0\ell+s'}\\
+    &= \sum_{\ell = 0}^{ m/k_0  - 1} \sum_{i=0}^j q_{k_0(t-\ell)+i} p_{k_0\ell+j-i}+\sum_{\ell = 1}^{ m/k_0}\sum_{i=j+1}^{k_0-1} q_{k_0(t-\ell)+i} p_{k_0\ell+j-i}+q_{k_0t+j-m}p_m
+\end{align}
+Let $p^{(i)}_t = p_{kt+i}$, $h^{(j)}_t$ can be rewritten as:
+\begin{align}
+    h_t^{(j)} &= \sum_{i=0}^j \sum_{\ell = 0}^{ m/k_0  - \mathbbm{1}(i\neq j)} \crcquotel^{(i)}_{t-\ell} p^{(j-i)}_{\ell} \nonumber \\&+ \sum_{i=j+1}^{k_0-1} \sum_{\ell = 0}^{ m/k_0  - 1} \crcquotel^{(i)}_{t-\ell-1} p^{(j-i+k_0)}_{\ell+1}.
+\end{align}
+Define $p^{(i)}(x)=\sum_{t=0}^{m/\ccinnum-\mathbbm{1}(i=0)}p_{\ccinnum t+i}x^{t}$. The $h^{(j)}(x)$ can be calculated by: 
+% \begin{align}
+% p^{(i)}(x) = 
+%     \begin{cases}
+%       \sum_{t=0}^{m/{\ccinnum}-1} p_{\ccinnum t+i}x^{t}, & i\neq 0\\
+%      \sum_{t=0}^{m/\ccinnum} p_{\ccinnum t}x^{t}, & i=0.
+%     \end{cases}
+% \end{align}
+% we have
+\begin{align}\label{equ: uj_x}
+    h^{(j)}(x) =& \sum_{i=0}^j \crcquotel^{(i)}(x)p^{(j-i)}(x)+ \sum_{i=j+1}^{\ccinnum  -1} x\crcquotel^{(i)}(x) p^{(j-i+\ccinnum)}(x)\,.
+\end{align}
+\eqref{equ: uj_x} implies that, by choosing the polynomial of $i^{th}$ row and $j^{th}$ column of $\peq(x)$ as:
+\begin{align}\label{equ: peq2}
+\peq(x)_{i,j} = p^{(j-i)}(x)\mathbbm{1}(i\leq j)+xp^{(j-i+\ccinnum)}(x)\mathbbm{1}(i > j),
+    % \begin{cases}
+    %   p^{(j-i)}(x) & i\leq j \\
+    %  xp^{(j-i+\ccinnum)}(x) & i > j 
+    % \end{cases},
+\end{align}
+it has 
+\begin{align}
+\mathbf{h}_{\mathrm{split}}(x) = \crcquotsplit \peq(x).
+\end{align}
+\end{proof}
+As a result, the concatenation of a CRC with generator polynomial $p(x)$ and a rate-$\frac{\ccinnum}{\ccinnum+1}$ convolutional code with generator matrix $\convc(x)$ is equivalent to a  convolutional code with generator matrix $\ceq(x)$, which is defined as follows:
+\begin{equation}\label{eq:ceqdef}
+\ceq(x) = \peq(x) \convc(x).
+\end{equation}
+The error events of the equivalent convolutional code correspond exactly to the error events of the original concatenation of CRC and convolutional code.
+Because the concatenation of a CRC expurgates the original TBCC by removing the codewords whose corresponding messages do not pass the CRC, the remaining codewords all meet the tail-biting condition so that the equivalent convolutional code is still tail-biting. 
+
+\subsection{FER Upper Bound} \label{subsec: fer_upperbound}
+This subsection bounds the FER for the CRC-TCM-PAS system. Based on the analysis in the previous subsection, the CRC-aided TBCC can be replaced by an equivalent TBCC with the generator matrix given in $\eqref{eq:ceqdef}$. The final computation of FER requires the output symbol distributions.  For the purposes of this analysis, we assume a  distribution matcher that generates $\length$ i.i.d. symbols with the target symbol distribution $P(A)$.  After the distribution matcher, $n-\length$ CRC symbols are appended to the sequence.  Based on Theorem \ref{the: uniform_bits}, these CRC symbols should be approximated as having a uniform distribution rather than $P(A)$.  
+The output symbol distributions for the analyzed system of the equivalent TBCC with the generator matrix given in $\eqref{eq:ceqdef}$ with our idealized distribution matcher are thus $\length$ output symbols distributed according to $P(A)$ and $n-\length$ output symbols distributed according to a uniform distribution. 
+%Let the codeword length be $\outlen$, the magnitude distributions of first $\length$ and last $n-\length$ output symbols are $P(A)$ and uniform distribution, respectively.} 
+
+Let $\mathcal{C}_{\mathrm{T}}\subset\mathcal{X}^{\outlen}$ be the codebook of TCM. 
+%Let $\mathbf{u}\in\mathcal{A}^{\outlen}$ be the input symbol sequence of TBCC. 
+Let $\mathbf{x}_c\in\mathcal{C}_{\mathrm{T}}$ be the transmitted codeword, and let $\mathbf{y}$ be the channel observation over AWGN channel. Let $\errorevent$ denote the event that, given observation $\mathbf{y}$, an ML decoder selects  $\hat{\x} \neq \xc$. Let $\PEE$ denote the event that, given $\y$,  codeword $\xe$ is more likely than codeword $\xc$. The FER of CRC-TCM-PAS transmission system $P_e$  is upper bounded by the union bound:
+\begin{align}
+    P_e&=\sum_{\mathbf{x}_c\in\mathcal{C}_{\mathrm{CT}}}P(X^\outlen=\mathbf{x})P\left(\errorevent\right)\\
+    &=\sum_{\mathbf{x}_c\in\mathcal{C}_{\mathrm{CT}}}P(X^\outlen=\mathbf{x})P\left(\bigcup_{\substack{\mathbf{x}_e\in\mathcal{C}_{\mathrm{CT}}\\\mathbf{x}_c\neq\mathbf{x}_e}}\PEE\right)\\
+    &\leq \sum_{\mathbf{x}_c\in\mathcal{C}_{\mathrm{T}}}P(X^\outlen=\mathbf{x}_c)\sum_{\substack{\mathbf{x}_e\in\mathcal{C}_{\mathrm{T}}\\\mathbf{x}_e\neq\mathbf{x}_c}}P\left(\PEE\right)\label{equ:PEPbound}.
+\end{align}
+
+The probability $\PEP$ is referred as the pairwise error probability (PEP). 
+With the assumption of i.i.d. symbols of distribution matcher, and based on the analysis on CRC bits and channel inputs, 
+Because the input symbols are independent, it has $P(X^\outlen=\mathbf{x})=\prod_{i=0}^{\outlen}P(X_i=x_i)$. 
+Not that the distributions of $P(X_i)$, $i=0,...,\length-1$ can be derived from $P(\bar{A})$ and last $\frac{m}{k_0}$ symbols in $\mathbf{x}$ have uniform distribution.
+
+Because $P(X^n)$ is non-uniform\footnote{In a practical CRC-TCM-PAS system, the codewords are uniform, specifically, $P_{X^n}(\mathbf{x})=\frac{1}{2^k}\mathbbm{1}(\mathbf{x}\in\mathcal{X}_{\mathrm{CTP}}).$ }, choosing the codeword that has the smallest Euclidean distance with the channel observation is no longer optimal. Let $\uc,\ue$ denote the convolutional inputs corresponding to outputs $\xc, \xe$, $\PEE$ happens if $P_{X^\outlen|Y^\outlen}\left(\xe | \y\right) > P_{X^\outlen|Y^\outlen}\left(\xc | \y\right)$, this condition is equivalent to:
+\begin{align}
+    &\log\left(f(\y | \xe ) P_{X^\outlen}(\xe) \right) > \log\left(f(\y | \xc)P_{X^\outlen}(\xc) \right)\label{equ: log_ineq}\\
+    \iff& ||\xc-\y||_2^2 - ||\xe-\y||_2^2 > 2\noisestd^2 \log\left(\frac{P_{X^\outlen}(\xc)}{P_{X^\outlen}(\xe)}\right)\\
+    %\label{equ:PEPcond0}
+    \iff&2\left\langle \y - \xc, \xe - \xc \right\rangle- ||\xc-\xe||_2^2 > 2\noisestd^2 \log\left(\frac{P_{X^\outlen}(\xc)}{P_{X^\outlen}(\xe)}\right).\label{equ:PEPcond0}
+\end{align}
+$\langle\cdot,\cdot\rangle$ represents the inner product and $||\cdot||_2$ represents $l^2$-norm.  
+
+Define $z'$ as follows:
+\begin{align}
+    \label{equ:yprimedef}
+    z' = \frac{\langle \y-\xc, \xe - \xc \rangle}{||\xc - \xe ||_2},
+\end{align}
+it can be proved that $z'\sim\mathcal{N}(0,\sigma^2)$. Manipulating \eqref{equ:PEPcond0} reveals that $\PEE$ occurs if the following inequality is satisfied: 
+\begin{align}
+    \label{equ:PEPcond1}
+    z' &> \frac{1}{2}||\xc - \xe ||_2 + \frac{\noisestd^2}{||\xc - \xe ||_2}\log\left(\frac{P_{X^\outlen}(\xc)}{P_{X^\outlen}(\xe)}\right) \\ &\triangleq  \frac{1}{2}\dplain(\xc, \xe).
+\end{align}
+Note that $\dplain$ is not a metric as $d(\xc,\xe)\neq d(\xe,\xc)$.
+
+Applying (\ref{equ:PEPcond1}) yields
+\begin{equation}
+    \label{equ:PEPcond2}
+    \PEP = Q\left(\frac{\sqrt{d^2\left(\xc, \xe\right)}}{2\noisestd}\right),
+\end{equation}
+where
+\begin{align}
+    \label{equ:dnewdef}
+    \dplain^2(\xc, \xe) = & ||\xc - \xe ||_2^2   + 4\noisestd^2 \log\left(\frac{P_{X^\outlen}(\xc)}{P_{X^\outlen}(\xe)}\right) + \left(\frac{2\noisestd^2}{||\xc - \xe ||_2}\log\left(\frac{P_{X^\outlen}(\xc)}{P_{X^\outlen}(\xe)}\right)\right)^2.
+\end{align}
+
+Define $\da^2(\xc, \xe)$ by neglecting the last squared term in \eqref{equ:dnewdef}, i.e.:
+\begin{equation}
+    \label{equ:dadef}
+    \da^2(\xc, \xe) = ||\xc - \xe ||_2^2 + 4\noisestd^2 \log\left(\frac{P_{X^\outlen}(\xc)}{P_{X^\outlen}(\xe)}\right).
+\end{equation}
+ Because $\da^2(\xc, \xe) \leq \dplain^2(\xc, \xe)$, the PEP $P(\PEE)$ is upper bounded by:
+\begin{align}
+    P(\PEE) = Q\left(\frac{\sqrt{\dplain^2{(\xc,\xe)}}}{2\sigma}\right) \leq Q\left(\frac{\sqrt{\da^2{(\xc,\xe)}}}{2\sigma}\right).
+\end{align}
+
+Hence, $P_e$ is further bounded by:
+\begin{align}\label{equ: PEPbound2}
+P_e\leq\sum_{\mathbf{x}_c\in\mathcal{C}_{\mathrm{T}}}P(X^\outlen=\mathbf{x}_c)\sum_{\substack{\mathbf{x}_e\in\mathcal{C}_{\mathrm{T}}\\\mathbf{x}_e\neq\mathbf{x}_c}} Q\left(\frac{\sqrt{\da^2{(\xc,\xe)}}}{2\sigma}\right).
+\end{align}
+
+Based on the ideal DM assumption and our analysis of CRC and TBCC encoding, the output symbols of the CRC-TCM-PAS system are independent of each other. Hence, 
+\begin{align}
+\da^2(\xc, \xe) = \sum_{i=1}^n\da^2\left(x_{c,i},x_{e,i}\right),
+\end{align} 
+
+where $x_{c,i}$ and $x_{e,i}$ are the $i^{th}$ element in $\mathbf{x}_c$ and $\mathbf{x}_e$, respectively, and
+\begin{align}\label{equ: symbolwise_da}
+    \da^2\left(x_{c,i},x_{e,i}\right)=(x_{c,i}-x_{e,i})^2+4\sigma^2\log\frac{P_{X_i}(x_{c,i})}{P_{X_i}(x_{e,i})}.
+\end{align}
+Besides, the omitted term
+\begin{equation}
+    \left(\frac{2\noisestd^2}{||\xc - \xe ||_2}\log\left(\frac{p(\uc)}{p(\ue)}\right)\right)^2\sim \left(\noisestd^2\right)^2.
+\end{equation}
+As a result, $\da^2$ approaches $d^2$ quadratically with SNR.
+
+\subsection{Generating Function with State-Reduction Method}
+This subsection derives the generating function of non-uniform-input TCM using Biglieri's product state method \cite{biglieri1984productstate}, with state-reduction method as described in \cite{wesel2004statereduction}. The product state diagram\cite{biglieri1984productstate} is built by replacing each state in the error state diagram with a complete encoder state diagram. Hence, for a convolutional code that has $\nu$ memory elements, there are totally $2^{2\nu}$ states in the product state diagram. Wesel in \cite{wesel2004statereduction} reduces the total number of states by proposing an "equivalence-class encoder" with $\nu_x$ memory elements.  Because $\nu_x<\nu$, the state-reduction method requires fewer states than the product state diagram. 
+% , by observing that same symbol error results in the same Euclidean distance for the constellation points that belong to the same equivalent class. 
+% As a result, the encoder state diagram in the product state diagram can be replaced by a equivalent class encoder diagram, resulting in $2^{\nu+\nu_x}$ states in total. Because $\nu_x<\nu$, Wesel's method delivers a diagram with less number of states.
+
+For an equivalence-class encoder, denote the set of output by $\ccoutputset_\text{eq}$. Let $q\in\ccoutputset_\text{eq}$ be an output of the equivalent-class encoder. Let $\erro\in\ccoutputset$ be a symbol error. As a reminder, $\ccoutputset$ is the set of TBCC output symbols. Let $x_q$, $x_{q\erro}$ be any constellation point that belongs to equivalent class $q$ and the constellation point that $x_q$ moves to because of $\erro$.  We define $\da^2(q,\erro)$ as follows:
+\begin{align}
+    \da^2\left(q,\erro\right)=(x_{q}-x_{q\erro})^2+4\sigma^2\log\frac{P_{X}(x_{q})}{P_{X}(x_{q\erro})}.
+\end{align}
+
+We follow the notations in \cite{wesel2004statereduction} to describe the state-reduced product state diagram. Denote the set of equivalence-class encoder states and the set of error states by $\mathcal{S}_{q}$ and $\mathcal{S}_e$, respectively. 
+The pair $(s_q,s_e)\in\mathcal{S}^*=\mathcal{S}_q\times\mathcal{S}_e$ describes where the states "should be" if there is no error occurs, and where the state is "drifted to" because of some error event. The notation "$\times$" means Cartesian product. Let $(\eqstart,\errstart),(\eqend,\errend)\in\mathcal{S}^*$, we label the state transition $(\eqstart, \errstart) \to (\eqend, \errend)$ with 
+\begin{equation}
+    \label{equ:branchlabel}
+    P\left(\eqstart \to \eqend\right)
+    \sum_{ \erro } \sum_{\tilde{\eq}} P\left(\tilde{\eq} | \eqstart \to \eqend\right)\, W^{\da^2(\tilde{\eq}, \erro)},
+\end{equation}
+where $\eqstart\rightarrow \eqend$ is the event that the state of the equivalent class encoder transits from $\eqstart$ to $\eqend$. 
+The first summation is over   all possible symbol error $e_0$ due to error state diagram transition $\errstart \to \errend$, and the second summation is over   all possible equivalent class $q'$ due to equivalent-class encoder state diagram transition $\eqstart \to \eqend$.
+
+Based on the channel-signal mapping rule, the  constellation of TCM output is symmetric with respect to 0 and the equivalence class is determined by the systematic bits.  Thus, one generator polynomial matrix of the minimal equivalent-class encoder for the rate-$\frac{k_0}{k_0+1}$, systematic TBCC in TCM is simply a size-$k_0$ identity matrix. Thus, by Theorem 1 in \cite{wesel2004statereduction},  it is sufficient to use the error state diagram to compute the transfer function, and the label of transition $\errstart \rightarrow \errend$ is $\sum_{ \erro } \sum_{\eq\in\ccoutputset_\text{eq}}P\left(\eq\right)\, W^{\da^2(\eq, \erro)}$. The equivalent class $q$ of  the constellation of TCM output is associated with the magnitude of the constellation point, which has either capacity-approaching distribution $P({A})$ for the first $n-l$ output symbols or uniform distribution for the last $l$  output symbols.
+In the proposed transmission system, the magnitudes of the channel inputs are provided by either distribution matcher or CRC bits. Hence, $P(q)$ is either the empirical distribution of distribution matcher $P(\bar{A})$ or the uniform distribution $P_{\mathrm{uni}}$, depending on whether $q$ is correspond to the  distribution matcher symbols or the CRC symbols.
+
+Define $|\mathcal{S}_e|\times|\mathcal{S}_e|$ matrices $\bigmat_A(W)$ and $\bigmat_{\text{uni}}(W)$ that enumerate all possible state transitions with equivalent-class PMFs of  $P(A)$ and uniform distribution as follows:
+\begin{align}
+    \bigmat_{{A}}(W)_{\errstart, \errend} = \sum_{\erro} \sum_{\eq} P_{{A}}(q) W^{\da^2(\eq, \erro)}, \\ \bigmat_{\text{uni}}(W)_{\errstart, \errend} = \sum_{\erro} \sum_{\eq} \frac{1}{|\mathcal{A}|} W^{\da^2(\eq, \erro)}.
+\end{align}
+We define the generating function as 
+\begin{align}
+\tbcc(W) = -1 +
+    \sum_{i=0}^{\errcnt}
+    % \mathbf{1}_{\eqcnt}
+    \mathbf{e}_i
+    \bigmat_A^{\length}(W)\bigmat_{\text{uni}}^{n-l}(W)
+    \mathbf{e}_i^{\mathrm{T}},
+\end{align} 
+where $\mathbf{e}_i$ is a length $|\errcnt|$ indicator vector where ${e}_{i,j}=\mathbbm{1}(j=i)$. For the TBCC, the error events must be tail-biting paths, $\mathbf{v}_i$ selects the starting/ending state of the error events.
+
+Define the free distance, $\dfree = \min_{\xc,\xe \in \mathcal{C}_{\mathrm{T}}} \da \left(\xc, \xe\right)$. With the inequality:
+
+\begin{align}\label{equ: inequality}
+\begin{split}
+Q\left(\frac{\sqrt{\da^2{(\xc,\xe)}}}{2\sigma}\right)\leq Q\left(\frac{\sqrt{\dfree^2}}{2\sigma}\right)\exp\left(\frac{\dfree^2-\da^2{(\xc,\xe)} }{8\noisestd^2}\right),
+\end{split}
+\end{align}
+$P_e$ in \eqref{equ: PEPbound2} is further bounded by:
+\begin{align}
+\begin{split}
+    \label{equ:Qapprox}
+    &P_e \leq Q\left(\frac{\sqrt{\dfree^2}}{2\noisestd}\right) \exp\left(\frac{\dfree^2}{8\noisestd^2}\right)\times\\&\sum_{\mathbf{x}_c\in\mathcal{C}_{\mathrm{T}}}\sum_{\substack{\mathbf{x}_e\in\mathcal{C}_{\mathrm{T}}\\\mathbf{x}_e\neq\mathbf{x}_c}}\prod_{i=1}^{\outlen} \left[\exp\left(-\frac{\da^2\left( x_{c,i}, x_{e,i} \right)}{8\noisestd^2}\right)P_{X_i}(x_{c,i})\right]\,.
+\end{split}
+\end{align}
+
+Note the \eqref{equ: inequality} can be proved by $Q(\sqrt{x+y})\leq Q(\sqrt{x})e^{-\frac{y}{2}}$, for $x,y\geq 0$.
+The double summation term in \eqref{equ:Qapprox} can be rewritten as follows:
+\begingroup
+\allowdisplaybreaks
+\begin{align}
+    &\sum_{\mathbf{x}_c\in\mathcal{C}_{\mathrm{T}}}\sum_{\substack{\mathbf{x}_e\in\mathcal{C}_{\mathrm{T}}\\\mathbf{x}_e\neq\mathbf{x}_c}} \left[\exp\left(-\frac{\da^2\left(\xc,\xe\right)}{8\noisestd^2}\right)P_{X^n}\left(\xc\right)\right],\\
+    =& \sum_{\mathbf{x}_c\in\mathcal{C}_{\mathrm{T}}}\sum_{\substack{\mathbf{x}_e\in\mathcal{C}_{\mathrm{T}}\\\mathbf{x}_e\neq\mathbf{x}_c}} \left[W^{\da^2\left(\xc,\xe\right)} P_{X^n}\left(\xc\right)\right]\Bigr|_{W=e^{-\frac{1}{8\sigma^2}}},\\
+    =& \sum_{\mathbf{x}_c,\mathbf{x}_e\in\mathcal{C}_{CT}} \left[W^{\da^2\left(\xc,\xe\right)} P_{X^n}\left(\xc\right)\right]\Bigr|_{W=e^{-\frac{1}{8\sigma^2}}}- \sum_{\mathbf{x}_c\in\mathcal{C}_{CT}} \left[W^{\da^2\left(\xc,\xc\right)} P_{X^n}\left(\xc\right)\right]\Bigr|_{W=e^{-\frac{1}{8\sigma^2}}}\\
+    =& \sum_{\mathbf{x}_c,\mathbf{x}_e\in\mathcal{C}_{CT}} \left[W^{\da^2\left(\xc,\xe\right)} P_{X^n}\left(\xc\right)\right]\Bigr|_{W=e^{-\frac{1}{8\sigma^2}}}- \sum_{\mathbf{x}_c\in\mathcal{C}_{\mathrm{CT}}} \left[W^0 P_{X_i}\left(x_{c,i}\right)\right]\\
+    =& \sum_{\mathbf{x}_c,\mathbf{x}_e\in\mathcal{C}_{T}} \left[W^{\da^2\left(\xc,\xe\right)} P_{X^n}\left(\xc\right)\right]\Bigr|_{W=e^{-\frac{1}{8\sigma^2}}}- 1,\\
+    =&\sum_{\substack{\mathbf{q}\in\ccoutputset_\text{eq}^{\outlen}\\\mathbf{e}\in\mathcal{C}^n_{\mathrm{T}}}}\prod_{i=1}^{\outlen}\left[W^{\da^2(q_i,e_i)}P(q_i)\right]\Bigr|_{W=e^{-\frac{1}{8\sigma^2}}}-1,\\
+    =& \sum_{i=0}^{|\errcnt|} \mathbf{e}_i \bigmat_A^{\length}(W)\bigmat_{\text{uni}}^{n-\length}(W) \mathbf{e}_i^{\mathrm{T}}\Bigr|_{W=e^{-\frac{1}{8\sigma^2}}}-1.
+\end{align}
+\endgroup
+As a result, the FER upper bound can be calculated using the generating function  by
+\begin{align}
+    P_e \leq Q\left(\frac{\sqrt{\dfree^2}}{2\noisestd}\right) \exp\left(\frac{\dfree^2}{8\noisestd^2}\right)\tbcc\left(W=e^{-\frac{1}{{8\noisestd^2}}}\right)\,.
+\end{align}
+
+\section{Simulation results} \label{sec: simu} 
+
+\input{figures/optimized_cc_crc}
+
+This section evaluates the performance of the CRC-TCM-PAS system over AWGN channel with different DMs and decoding methods.  The CRC-TCM-PAS systems use degree-2 CRCs and rate-${2}/{3}$ TBCCs. The channel inputs are equidistant 8-PAM symbols. We use the magnitudes  (0.449, 1.348, 2.247, 3.146) with the PMF (0.5877, 0.3120, 0.0144, 0.0859) that is optimized for an SNR of 8 dB using a version of DAB that constrains the points to be equally spaced\cite{xiao2021finite}.
+The capacity-approaching amplitude distribution $P(\hat{A})$ that DMs target is optimized using the DAB algorithm \cite{xiao2021finite} at an SNR of  8 dB. 
+
+Fig. \ref{fig: Optimization} considers a  CRC-TCM-PAS system with $k=87$ input bits and $n=65$ output symbols. We use the FER upper bound derived in Section \ref{sec:tfbound} as an objective function to jointly optimize the CRC and TBCC. As a baseline, we adopt the convolutional codes optimized in Ungerboeck's paper \cite{ungerboeck1982channel}, and the CRC is optimized by fixing the convolutional code. We consider the number of memory elements of the convolutional code $\nu=3$, $5$, and $7$. Table \ref{tab:OptimCodes} lists the optimized TBCCs and CRCs in octal form. All the parameters are optimized for an SNR of 11 dB. Table \ref{tab:OptimCodes} also provides the FER upper bounds at 11 dB. For the joint optimization, the optimized CRC polynomial is $p(x)$ and the optimized TBCC generator matrix is 
+\begin{equation}
+    \left[\begin{array}{c c:c}
+    1 & 0 &  {H^2(D)}/{H^0(D)} \\ 
+    0 & 1 &  {H^1(D)}/{H^0(D)}
+    \end{array} \right].
+\end{equation}
+%     \[ \left[
+% \begin{array}{c c:c}
+% 1 & 0 &  {H^2(D)}/{H^0(D)} \\ 
+% 0 & 1 &  {H^1(D)}/{H^0(D)}
+% \end{array} \right]. \]
+\begin{figure}[t] 
+    \centering
+      \includegraphics[width=0.6\linewidth]{figures/Figure_1_analytical.eps}
+      \caption{The upper bounds and FER simulations of the simplified CRC-TCM-PAS system with a degree-2 CRC. The simplified system takes length-64 i.i.d. 4-ary amplitude symbol sequences and generates length-65 8-AM symbol sequences.  }
+      \label{fig: unionbound}
+\end{figure}
+
+\begin{figure}[t] 
+    \centering
+      \includegraphics[width=0.6\linewidth]{figures/Figure_2_Simulation.eps}
+      \caption{The FER curves of the practical  CRC-TCM-PAS transmission system that uses MCDM with $\mathcal{C}_{\mathrm{HP}}$. This system takes 87 input bits and generates 65 8-AM symbols. }
+      \label{fig: fer_1}
+\end{figure}
+
+\begin{figure}[t] 
+    \centering
+      \includegraphics[width=0.6\linewidth]{figures/remove_CRC.eps}
+      \caption{The FER curves and RCU bounds of the CRC-TCM-PAS system and TCM-PAS system. The gap between the two curves indicates the contribution of the 2-bit CRC. This system takes 87 input bits and generates 65 8-AM symbols. }
+      \label{fig: remove_crc}
+\end{figure}
+
+Fig. \ref{fig: unionbound} presents analytical upper bounds and simuulation results that compare FERs for the optimized convolutional codes to  Ungerboeck's convolutional codes for a CRC-TCM-PAS system that assumes an ideal DM.  Hence, the system input "messages" are length-64 i.i.d. magnitude symbol sequences according to the PMF $P(\hat{A})$. The magnitude sequences are encoded and modulated by CRC-aided TCM to length-65 8-AM symbol sequences. Simulation results show that maximizing the FER upper bound finds slightly better convolutional codes  than those in Ungerboeck's paper.  Note that in both cases the FER upper bound was used to optimize the CRC polynomial.
+
+The system uses TBCCs and CRCs from Table \ref{tab:OptimCodes}.
+ The receiver uses an ML decoder. 
+%Fig. \ref{fig: fer_1} uses the CC and CRC parameters optimized in Fig. \ref{fig: unionbound}.
+Shannon's 1959 sphere packing (SP) bound \cite{shannon1959probability}  and Polyanskiy's random coding union (RCU) bound \cite{polyrcu} are also shown. Note that the last channel input of the CRC-TCM-PAS system is uniform \cite{wang2021achieving}. When calculating the RCU bound, we assume all channel inputs have the DM output distribution.  Fig. \ref{fig: fer_1} shows that, when a practical DM is considered,  the optimized convolutional codes deliver a slightly better performance than Ungerboeck's convolutional codes. When $\nu=7$, the FER performance  of  the CRC-TCM-PAS system with optimized CRC and TBCC is better than RCU bound by 0.55 dB at the FER of $10^{-6}$. Note that the FER curves from the simulation with the ideal DM in Fig. \ref{fig: unionbound} are similar to those with the real DM in Fig. \ref{fig: fer_1}.
+
+Fig. \ref{fig: remove_crc} evaluates the contribution of the 2-bit CRC of the CRC-TCM-PAS system with $\nu=7$ TBCC in  Fig. \ref{fig: fer_1}. We refer to the system without CRC as the TCM-PAS system.
+Hence, the TCM-PAS system takes 87 input bits and generates 64 8-AM symbols.
+The FER curve and the RCU bound for the two systems are given in Fig. \ref{fig: remove_crc}.  It can be seen that the  CRC-TCM-PAS system outperforms the TCM-PAS system by about 0.3 dB at the FER of $10^{-5}$, which implies the importance of the 2-bit CRC.
+
+\begin{figure}[htp] 
+    \centering
+  \subfloat[\label{fig: fer_sub_decoder}]{%
+       \includegraphics[width=0.5\linewidth]{figures/DM_FER.eps}}
+   \\
+  \subfloat[\label{fig: ls_sub_decoder}]{%
+        \includegraphics[width=0.5\linewidth]{figures/DM_listsize.eps}}
+  \caption{ The performance of a CRC-TCM-PAS transmission system with various DMs and decoders. The system takes 96 input bits and generates 64 output symbols. Fig. (a) and (b) give the FER and expected list size, respectively.} \label{fig: sub}
+\end{figure}
+
+
+\begin{figure}[htp]
+    \centering
+    \subfloat[\label{fig: final_comp}]{%
+        \includegraphics[width=0.5\linewidth]{figures/various_code_comparison.eps}}
+    \\
+    \subfloat[\label{fig: various_rate}]{%
+        \includegraphics[width=0.5\linewidth]{figures/various_rates.eps}}
+    \caption{(a): The FER curves of PAS systems with different FECs. All the PAS systems generate 64 8-AM symbols with a transmission rate of 1.5 bit/real channel use.  The CRC-TCM-PAS system utilizes CCDM and MCDM with $\mathcal{C}_{\mathrm{TS}}$ as the DM. The decoder of the CRC-TCM-PAS system is AED(5,2) with a maximum list size of 100. (b): The FER curves of CRC-TCM-PAS systems with various rates. The CRC-TCM-PAS systems generate 64 8-AM symbols, with  transmission rates of 1.25, 1.5, and 1.75 bit/real channel use, respectively.
+    }
+\end{figure}
+
+Fig. \ref{fig: sub} investigates the CRC-TCM-PAS system that uses various DMs and two decoders, ML decoding and a sub-optimal but less complex AED(5,2) decoder. The system in Fig. \ref{fig: sub} has $k=96$ input bits and $n=64$ output symbols, and the transmission rate is $1.5$ bits/real channel use. The CRC-aided TCM uses the jointly optimized $\nu=7$, rate-$2/3$ TBCC, and the 2-bit CRC in Table \ref{tab:OptimCodes}. Fig. \ref{fig: fer_sub_decoder} and \ref{fig: ls_sub_decoder} give the FER performances and expected list sizes, respectively. 
+
+
+
+We first investigate the performances of the CRC-TCM-PAS systems with various DMs and the ML decoder. The simulation results show that the four considered distribution matchers, i.e., ESS, CCDM, MCDM with $\mathcal{C}_{\text{HP}}$ and $\mathcal{C}_{\text{TS}}$  deliver similar FER performances under ML decoding. However, the CCDM requires more list size than the other three DMs. Fig. \ref{fig: sub} also presents the FER performance when the AED(5,2) is used. The maximum list size of all $2$-States decoders in AED(5,2) is 100. As shown in Fig. \ref{fig: sub}, when AED(5,2) is used as the decoder, the CRC-TCM-PAS system with CCDM delivers the worst FER and largest expected list size. On the other hand, the  CRC-TCM-PAS systems that use the MCDM with $\mathcal{C}_{\mathrm{HP}}$ and $\mathcal{C}_{\mathrm{TS}}$ deliver the near-optimal FER performance and outperform the system that uses ESS.
+
+Fig. \ref{fig: final_comp} compares the decoding performance of CRC-TCM-PAS system with other PAS systems that use various FEC codes in \cite[Fig.14]{cocskun2019efficient}. All systems have 96 input bits, and the transmission rate is $1.5$ bits/real channel use. 
+For the CRC-TCM-PAS, two distribution matchers are considered, i.e., MCDM with $\mathcal{C}_{\mathrm{TS}}$ and CCDM. The decoder uses AED(5,2) with a maximum list size of 100.
+The details of  other PAS systems are described in   \cite{cocskun2019efficient}. The simulation results show that the CRC-TCM-PAS system with MCDM delivers the best performance and outperforms the CRC-Polar-PAS system by nearly 1dB.  Since the CRC-Polar-PAS system uses CCDM as the distribution matcher, the gain of CRC-TCM-PAS over CRC-Polar-PAS can come from two factors: the choice of DM or the coded modulation scheme. As shown in Fig. \ref{fig: final_comp}, with CCDM as the distribution matcher, the CRC-TCM-PAS system still outperforms the CRC-Polar-PAS system but does not perform as well as CRC-TCM-PAS with MCDM. Notably, the CRC-TCM-PAS system doesn't display the error floor of the CRC-Polar-PAS system, which shows an error floor at FER of $10^{-5}$. Hence, the gap between the FER curves of the CRC-TCM-PAS with CCDM and the CRC-Polar-PAS with CCDM can be treated as the gain of CRC-TCM code over CRC-Polar code, and the gap between the FER curves of the CRC-TCM-PAS with CCDM and the MCDM can be treated as the gain of MCDM over CCDM.
+
+The error floor seen in the CRC-Polar-PAS with CCDM could be due to a variety of factors.  One factor is the sub-optimality in the decoder. Serial list Viterbi decoding of CRC-TBCC either chooses the ML codeword or reports an erasure with each growing list size.  In contrast,  successive cancellation list (SCL) decoding of CRC-polar codes sometimes selects non-ML codewords with a fixed list size of 32.
+Thus, CRC-polar codes decoded using adaptive list sizes will display an error floor if the initial list size is small.
+If the list size is fixed at a value such as 32, then performance will be limited by that small list size.
+For polar codes, list sizes larger than 32 are typically not considered because of complexity limitations.
+The error floor could also be due to a CRC that is too short, not optimized for high SNR, or otherwise sub-optimal.
+
+Fig. \ref{fig: various_rate} evaluates the CRC-TCM-PAS system with various transmission rates. We design three CRC-TCM-PAS systems that take 80, 96, and 112 information bits, respectively, and generate 64 8-AM symbols. The resultant transmission rates are 1.25, 1.50, and 1.75 bits/real channel use, respectively. We design the MCDM with $\mathcal{C}_{\text{HP}}$ for all three transmission rates as distribution matcher. All three transmission rates employ the $\nu=7$ CC and the 2-bit CRC in Table \ref{tab:OptimCodes}. AED(5,2) with a maximum list size of 100 is used as the decoder.
+%for all transmission rates. 
+Fig. \ref{fig: various_rate} gives the FER curves, as well as the RCU bound and Shannon's 59 SP bound, of all three transmission rates. The simulation result shows that the FER curves for all three rates lie between the RCU and the SP bound, which indicates excellent decoding performance.
+
+\section{Conclusion}\label{sec: conclusion_3}
+Shannon's proof of the channel coding theorem \cite{shannon1948mathematical} generates a random codebook that has an optimal distribution and then performs an expurgation to improve the codebook.  The CRC-TCM-PAS system described in this paper follows that paradigm.  The DM plays the role of random codebook generation and the selection of that TCM and CRC polynomials expurgates that code to make it stronger. While there are many recent PAS systems, CRC-TCM-PAS allows the use of the tight FER upper bound derived in this paper for a precise expurgation of the codebook produced by the DM.  The TCM and CRC can be jointly selected to optimize FER performance.  This also paper proposes a new multi-composition DM (MCDM), which allows codewords with different compositions.  The new MCDM provides a significant benefit when decoding complexity is limited.
+%The magnitude symbol sequences generated by the DM are then encoded and modulated by a CRC-aided TCM. 
+%The TCM module includes a rate-$\frac{\ccinnum}{\ccinnum+1}$, systematic TBCC, and a channel-signal mapping function. This paper proves that, asymptotically, the distribution of the sign values produced by the TCM is equally likely. Hence, the channel inputs of the CRC-TCM-PAS system have a symmetric capacity-approaching distribution.
+%Additionally, various decoders for the CRC-TCM-PAS system are studied in this paper.
+Simulation results show that the optimized CRC-TCM-PAS system with MCDM exceeds the RCU bound for a variety of rates and outperforms the PAS systems with various FEC codes studied in \cite{cocskun2019efficient}.
 
 
 \bibliographystyle{uclathes}
