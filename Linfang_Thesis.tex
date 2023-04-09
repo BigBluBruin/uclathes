@@ -116,12 +116,12 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\vitaitem   {2016}
-{B.S. in Telecommunications Engineering, \\
-    Harbin Institute of Technology, Weihai, China.}
-\vitaitem   {2018}
-{M.S. in Telecommunications Engineering, \\
-    Harbin Institute of Technology, Harbin, China.}
+% \vitaitem   {2016}
+% {B.S. in Telecommunications Engineering, \\
+%     Harbin Institute of Technology, Weihai, China.}
+% \vitaitem   {2018}
+% {M.S. in Telecommunications Engineering, \\
+%     Harbin Institute of Technology, Harbin, China.}
 \vitaitem   {2018-2023}
 {Graduate Research Assitant, \\
     University of California, Los Angeles}
@@ -148,16 +148,51 @@
     Mediatek.}        
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\publication    {\textsl{MADHOUS Reference Manual.}
-                Stanford University, Dean of Student Affairs
-                (Residential Education Division), 1978.
-                Technical documentation for the MADHOUS
-                software system used to assign students to
-                on-campus housing.}
+\publication    {
+\textbf{L. Wang}, D. Song, F. Areces, T. Wiegart and R. D. Wesel, "Probabilistic Shaping for Trellis-Coded Modulation With CRC-Aided List Decoding," in \textit{IEEE Transactions on Communications}, vol. 71, no. 3, pp. 1271-1283, March 2023.
+
+D. Song, F. Areces, \textbf{L. Wang} and R. Wesel, "Shaped TCM with List Decoding that Exceeds the RCU Bound by Optimizing a Union Bound on FER," \textit{IEEE Global Communications Conference (GLOBECOM)}, Rio de Janeiro, Brazil, Dec. 4-8 2022.    
+
+\textbf{L. Wang}, C. Terrill, M. Stark, Z. Li, S. Chen, C. Hulse, C. Kuo, R. Wesel, G. Bauch, R. Pitchumani, "Reconstruction-Computation-Quantization (RCQ): A Paradigm for Low Bit Width LDPC Decoding," in \textit{IEEE Transactions on Communications},  vol. 70, no. 4, pp. 2213-2226, April 2022.\\
+
+J. Nguyen, \textbf{L. Wang}, C. Hulse, S. Dani, A. Antonini , T. Chauvin , D. Dariush, R. Wesel, "Neural Normalized Min-Sum Message-Passing vs. Viterbi Decoding for the CCSDS Line Product Code." \textit{IEEE International Conference on Communications (ICC)}, Seoul, South Korea, May 16–20, 2022.\\
+
+\textbf{L. Wang}, S. Dan, F. Areces, and R. D. Wesel. "Achieving Short-Blocklength RCU bound via CRC List Decoding of TCM with Probabilistic Shaping." \textit{IEEE International Conference on Communications (ICC)}, Seoul, South Korea, May 16–20, 2022.\\
+
+\textbf{L. Wang}, S. Chen, J. Nguyen, D. Dariush, and R. Wesel, "Neural-Network-Optimized Degree-Specific Weights for LDPC MinSum Decoding", \textit{IEEE 11th International Symposium on Topics in Coding (ISTC)}, Aug.30 - Sept. 3, virtual conference, 2021. \\
+
+C. Terrill, \textbf{L. Wang}, S. Chen, C. Hulse, C. Kuo, R. Wesel, and D. Divsalar, "FPGA Implementations of Layered MinSum LDPC Decoders Using RCQ Message Passing", \textit{IEEE Global Communications Conference (GLOBECOM)}, Madrid, Spain, Dec. 7-11, 2021.\\
+
+J. Nguyen, E. Liang, \textbf{L. Wang}, T. Drullinger, T. Chauvin, and R. D. Wesel, "Comparison of Integrated and Independent RF/FSO Transceivers on a Fading Optical Channel", \textit{Asilomar Conference on Signals, Systems, and Computers}, Pacific Grove, CA, USA, Nov. 1-5, 2020.\\
+
+D. Xiao, \textbf{L. Wang}, D. Song, and R. D. Wesel, "Finite-Support Capacity-Approaching Distributions for AWGN Channels", \textit{IEEE Information Theory Workshop (ITW)}, Riva del Garda, Italy, April 11-15, 2021.\\
+
+\textbf{L. Wang}, R. D. Wesel, M. Stark, and G. Bauch, "A Reconstruction-Computation-Quantization (RCQ) Approach to Node Operations in LDPC Decoding", \textit{IEEE Global Communications Conference (GLOBECOM)}, Taipei, Taiwan, Dec. 8-10, 2020.\\
+
+M. Stark, \textbf{L. Wang}, G. Bauch, and R. D. Wesel, (2020). "Decoding Rate-Compatible 5G-LDPC Codes with Coarse Quantization Using the Information Bottleneck Method", \textit{IEEE Open Journal of the Communications Society}, vol. 1, pp. 646-660, 2020.\\
+
+H. Yang, \textbf{L. Wang}, V. Lau, and R. D. Wesel, "An Efficient Algorithm for Designing Optimal CRCs for Tail-Biting Convolutional Codes", \textit{IEEE International Symposium on Information Theory (ISIT)}, Los Angeles, USA, Jun. 22-26, 2020.\\
+
+M. Stark, \textbf{L. Wang}, G. Bauch, and R. D. Wesel, "Information bottleneck decoding of rate-compatible 5G-LDPC codes", \textit{IEEE International Conference on Communications (ICC)}, virtual conference, June 7-11, 2020.
+ }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\abstract       {(Abstract omitted for brevity)}
+\abstract   {
+This disseration invesitigates three topics in channel coding theory: 1) low-complexity decoder design for low-dentisy parity-check (LDPC) codes; 2) reliable communication in the short blocklength regime; 3) Deep-neural-network based channel codes.
+ 
+For the frist topic, we propose a finite-precision decoding method that features the three steps of Reconstruction, Computation, and Quantization (RCQ). The parameters of the RCQ decoder, for both the flooding-scheduled and the layered-scheduled, can be designed efficiently by using discrete density evolution featuring hierarchical dynamic quantization (HDQ). To further reduce the hardware usage of the RCQ decoder, we propose a second RCQ framework called weighted-RCQ (W-RCQ). Unlike RCQ decoder, whose quantization and reconstruction parameters  change in each layer and iteration, the W-RCQ decoder limits the number of quantizer/quantizer pairs to a very small number, for example, three or four. However, the W-RCQ decoder weights check-to-variable node messages using dynamic parameters optimized via a quantized NN (QNN). The proposed W-RCQ decoder uses fewer parameters than the RCQ decoder, thus requiring much fewer LUTs.
+For the second topic, we apply probabilistic amplitude shaping (PAS) to cyclic redundancy check (CRC)-aided tail-biting trellis-coded modulation (TCM). CRC-TCM-PAS produces practical codes for short block lengths on the additive white Gaussian noise (AWGN) channel.  In the transmitter, equally likely message bits are encoded by a distribution matcher (DM) generating amplitude symbols with a desired distribution.
+A CRC is appended to the sequence of amplitude symbols, and this sequence is then encoded and modulated by TCM to produce real-valued channel input signals.
+We prove that the sign values produced by the TCM are asymptotically equally likely to be positive or negative. 
+The CRC-TCM-PAS scheme can thus generate channel input symbols with a symmetric capacity-approaching probability mass function. 
+We also provide an analytical upper bound on the frame error rate of the CRC-TCM-PAS system over the AWGN channel.  This FER upper bound is the objective function used for jointly optimizing the CRC and convolutional code. Additionally, this paper proposes a multi-composition DM, which is a collection of multiple constant-composition DMs. The optimized CRC-TCM-PAS systems achieve frame error rates below the random coding union (RCU) bound in AWGN and outperform the short-blocklength PAS systems with various other forward error correction codes studied in \cite{cocskun2019efficient}.
+
+For the last topic, we study the rate-matching problem for TAE and proposes a rate-matched TAE framework. The rate-matched TAE is a single auto-encoder model that can be used for multiple code rates. It matches the  code rate of a mother ($3k, k$) TAE to a desired code of parameters $(n^*,k^*)$ by using a combination of freezing message bits, repeating code symbols, and puncturing code symbols. 
+We refer to the conventional TAE with message word length $k$ and code length $3k$ as mismatched TAE.
+The rate-matched TAE shares the same encoder and decoder structure with mismatched TAE but is trained to jointly optimize the performance across multiple rates. 
+We study two important hyper-parameters for the rate-matched TAE: puncturing pattern and training signal-to-noise ratio (SNR) for constituent rates. Three puncturing patterns, namely, head, tail, and uniform puncturing are proposed and evaluated. Training SNRs are determined according to a heuristic method that uses test loss as a performance metric. Our simulation results show that the rate-matched TAE for $k=100$ and rates $r\in \{0.1,0.2,\ldots,0.9\}$ significantly outperforms the mismatched TAE when $r>0.4$.
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -181,11 +216,51 @@
 
 \chapter{Introduction}
 
-For text, let's use the first words out of the ispell dictionary.
+Channel coding, which corrects errors in data, is essential for our networked world. Wi-Fi, 5G cell phone communication, and even flash memories and hard disk drives rely on channel codes for reliability. This dessirtation studies the fowlling problems: 
+\begin{enumerate}
+    \item The low-complexity decoder optimization;
+    \item The reliable communication system for short block lengths;
+    \item Deep-Neural-Network based channel codes.
+\end{enumerate}
+
+The first problem focuses on the low-complexity decoder design of the low-density pairty-check (LDPC) codes\cite{gallager1962low}. The LDPC codes has been implemented brodaly, including the NAND flash system and wireless communication system. The belief propagation decoder, which is seen as the most powerful one for the LDPC code, is kept from practical use due to its high computation complexity. The low-complxity arpproximations of BP  decoders, such as the normalized \minsum (NMS) ~decoder and offset \minsum~(OMS) decoder, suffer from the error correction performance loss when the bit width of the messages of the decoder is too small, i.e., less than 5 bits. As a result, the LDPC decoders with a low-complexity and an excellent decoding performance are desired in the real communication systems with limited hardware resources such as area, routing capacity, and powerful utilizations of FPGAs or ASICs. 
+
+In recent years, the extensive research on the non-uniformly quantizated decoders have shown that, by quanzating the messages in the message passing decoders smartly, the decoders can deliver excellent decoder performances with low bit width, i.e., less than 5 bits. There are two popular ideas in the research of the non-uniform quantized decoders. The first type decoders, such as Vasic's finite alphabet iterative decoders (FAID) and Lewandowsky's Information-Bottleneck (IB) decoder, convert all the arithmetic operations the look-up tables (LUTs) with low-bitwith input and output messages. The second type non-uniformly-quantized decoders, designes the non-uniform quantizers and dequantizers for the messages in the decoder, such that, on one hand, the messages have a fine resolution when used for computation and have a quarse resolution when transmitted between the check node units and the variable ndoe units. One famous decoder that uses the second idea is mutual-information-maximization (MIM) quantized belief prpagation (QBP) decoder in \cite{-_Lee2005-MIMQBP}. 
+
+In \textbf{chapter \ref{cpt: rcq}}, we generalize the structure in \cite{Lee2005-RFQThorpe} and propose a finite-precision LDPC decoding method that features the three steps of Reconstruction, Computation, and Quantization (RCQ). Unlike the MIM-QBP, which is an approximation of BP decoder, RCQ decoders can be an approximation of either BP decoders (\textit{bp-RCQ}) or Min-Sum decoders (\textit{ms-RCQ}). Similar to the message passing decoders, the RCQ decoder can be flooding-scheduled or layered-scheduled. In the flooding-scheduled decoder, the reconstruction and quantization modules updates in each iteration; In the layered-scheduled decoder, reconstruction and quantization modules updates in each iteration and layer. This paper also presents using discrete density evolution featuring hierarchical dynamic quantization (HDQ) to design the parameters of RCQ decoder efficiently.
+
+\textbf{chapter \ref{cpt: W_RCQ}} studies how to further reduce the number of parameters required by the RCQ decoder, with the help of degree-specfic weights optimized by a neural network. The layered-RCQ decoder needs to update the parameters of the quatinzation and reconstruction function in each layer at each iteration. It can be imagined that the decoder will need more hardware resources when the code has a large number of layers or needs a lager number iterations. The extra resources required by the RCQ decoder may offset the benefit brought by its low-bitwidth messages. Hence, it is desirable to use the RCQ decoder with small number of quantization and reconstruction pairs. 
+
+The conventional NMS decoder and OMS decoder use a single parameter (or weight) throughout the decoding process. Recent research has shown that the decoding performance of thoses decoders can be boosted by assigning the weight to each edge in each iteration\cite{nachimain_ldpc_neural_decoder}. The weights can be optimized by training the neural network obtained by unfolding the NMS or OMS decoders. However, it is impractical to assign the weight to each message in each iteration. Chapter \ref{cpt: W_RCQ} shows that such decoders can be significantly simplified by assigning the iteration-specific weights based on the check and variable node degree, with the same decoding performance. The simplified decoder is named as the 2-demensional (2D) neural NMS or OMS (N-NMS, N-OMS) decoder.
+
+With the help of 2D-N-NMS decoder, chapter \ref{cpt: W_RCQ} proposes a novel RCQ framework called weighted-RCQ (W-RCQ). Unlike RCQ decoder, whose quantization and reconstruction parameters  change in each layer and iteration, the W-RCQ decoder limits the number of quantizer/quantizer pairs to a very small number, for example, three or four. However, the W-RCQ decoder weights check-to-variable node messages using dynamic parameters optimized via a quantized NN (QNN). The proposed W-RCQ decoder uses fewer parameters than the RCQ decoder, thus requiring much fewer LUTs.  Simulations in chapter \ref{cpt: W_RCQ} for a (9472,8192) LDPC code on a field-programmable gate array (FPGA) device shows that the 4-bit W-RCQ decoder delivers comparable FER performance but with much fewer hardware resources, compared with the 4-bit RCQ decoder and the 6-bit offset MinSum decoder.
+
+
+The second topic this dessertation stuties is reliable communications over the additive white Gaussian noise (AWGN) channel with high spectral efficiency for short block lengths.  To closely approach theoretical limits, it is helpful to use shaping so that signal points are not equally likely, not equally spaced, or both \cite{gallager1968information,ForneyShaping,forney1992trellis,Kschischangoptimaldist,laroia1994optimal,fragouli2001,xiao2021finite}.  Recently, a new technique called  probabilistic amplitude shaping (PAS) \cite{pas_bocherer_1,pas_bocherer_2} employs a distribution matcher (DM) \cite{CCDM_schulte} before the forward error correction (FEC) encoder and channel-signaling mapping function to accomplish optimal or almost optimal shaping. 
 
 
 
-\chapter{Reconstruction-Computation-Quantization (RCQ): A Paradigm for Low Bit Width LDPC Decoding}
+\textbf{Chapter \ref{cpt: CRC_TCM_PAS}} presents a PAS system designed for the AWGN channel in the short-blocklength regime.
+In the PAS system, a DM takes the binary information bits and generates the magnitude symbols with the desired probability mass function. The popular distribution matcher, constant composition DM, has an excellent performance in the long blocklength regime, but not in the short blocklength regime.   This paper proposed a mutli-composition DM, which delivers a satisfying performance for the short blocklength.
+Then, the output of the DM are encoded by a CRC-aided, rate-$\frac{\ccinnum}{\ccinnum+1}$, systematic, recursive TBCC and modulated via a channel-signal mapping function constitute the TCM \cite{ungerboeck1982channel}. The proposed PAS system is also referred as to the CRC-TCM-PAS system. 
+The optimized CRC-TCM-PAS systems achieve FERs below the random coding union (RCU) bound in AWGN and outperform the short-blocklength PAS systems with various other forward error correction codes studied in \cite{cocskun2019efficient}.
+
+
+The study of third topic is because of the rise of deep neural network and artificail intelligence (AI). The classical channel codes design uses the algerbra or graph theory to find a code with large minimum distance. By witenessing the power of AI on the natual langual processing, immage process and computer vision. We are also cuirous: Can AI learn a channel code from scratch? There have been numerous work in the recent years trying to build nural network models as a subsitute of channel codes. One promising framework is called turbo autoencoder (TAE).  TAE replaces the convolutional code encoders and soft-input-soft-output decoders with neural networks. TAE delivers a comparable bit error rate (BER) to the state-of-art codes such as LDPC and Polar codes. 
+
+\textbf{Chapter \ref{cpt: cae}} studies the rate-matching problem of TAE and propose rate matching schemes to optimize the performance across multiple rates. In wireless communication systems, in order to adapt to the channel conditions, rate matching is widely used to match the number of transmitted code symbols to a desired rate. For the linear block codes, rate matching is realized by creating a new code with desired rate from a mother code using one or more bit-level operations such as extending, puncturing, and expurgating\cite{blahut2003algebraic}. It is crucial for the rate matched code to provide excellent error correction performances across different rates. In our proposed framework, the rate-matched TAE employs a ($3k,k$) TAE as the mother code, and adjusts the code rate by using a combination of freezing message bits, repeating code symbols, and puncturing code symbols. Our simulation results show that the rate-matched TAE for $k=100$ and rates $r\in \{0.1,0.2,\ldots,0.9\}$ 
+significantly outperforms the conventional TAE when $r>0.4$.
+
+Finally, \textbf{Chapter \ref{cpt: Con}} the dessertation.
+
+
+
+
+
+
+
+
+\chapter{Reconstruction-Computation-Quantization (RCQ): A Paradigm for Low Bit Width LDPC Decoding}\label{cpt: rcq}
 
 
 \section{Introduction}
@@ -472,7 +547,7 @@ HDQ also provides the joint probability between code bit $X$ and quantized messa
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=14pc]{figures/gss.eps}
+	\includegraphics[width=0.5\linewidth]{figures/gss.eps}
 	\caption{ Illustration of one iteration of golden-section search for finding maximum point of $f(x)$ in the interval $[a_\text{l},a_\text{r}]$. $a'=a_{\text{r}}-\frac{a_\text{r}-a_\text{l}}{\gamma}$ and $a''=a_{\text{l}}+\frac{a_\text{r}-a_\text{l}}{\gamma}$. Because $f(a'')<f(a')$, $[a'',a_\text{r}]$ is truncated and $[a_\text{l},a'']$ becomes the new search interval for the next iteration. 
 	}
 	\label{fig: gss}
@@ -507,33 +582,34 @@ Because $I(\xi)$ is concave in $\xi$, the local maximum can be found using the g
 \end{align}
 
 $B_{j,i}$ is the $i^{th}$ interval length in ${j-1}$ bit level quantization and $\sum_{i=1}^{2^{j-1}}B_{j,i}=B$. Therefore, a $b$-bit quantization on a  $B$-output channel using HDQ can be designed in $\mathcal{O}\left(\frac{2^b}{\log(\gamma)}\log(B)\right)$ time.
-
-\begin{figure}
+\begin{figure}[t]
 	\centering
-	\includegraphics[width=18pc]{figures/trellis.eps}
+	\includegraphics[width=0.5\linewidth]{figures/trellis.eps}
 	\caption{A trellis whose paths represent all 2-bit quantizers for a BI-DMC with 8 outputs. The vertices in column $i$ are possible values for $i^{th}$ threshold $\xi_i$. Each branch in the trellis identifies a quantization region.
 	}
 	\label{fig: trellis}
 \end{figure}
+
 \subsection{Comparing HDQ with Optimal Dynamic Programming}
 Unlike the dynamic programming approach of Kuskoski and Yagi \cite{Kurkoski2014-QuanDMC}, HDQ does not always provide the optimal solution.  
 This subsection provides an example contrasting HDQ with the dynamic programming solution. 
 Following \cite{Kurkoski2014-QuanDMC}, Fig. \ref{fig: trellis} gives a trellis whose paths represent all 2-bit quantizers for a binary input DMC with 8 outputs. The outputs are indexed from 0 to 7 and satisfy \eqref{equ: inq}. The vertices in column $i$ are possible values for $\xi_i$, and each path represents a valid quantizer whose thresholds are determined by the vertices in each column. Each branch in the trellis identifies a quantization region. For example, the branch connecting vertex $\xi_0=0$ to vertex $\xi_1=2$ specifies the leftmost quantization region as \{0,1\}, i.e., $\xi_{\ell} = 0$ and $\xi_r =1$.
-\begin{figure}[t] 
-    \centering
-  \subfloat[\label{fig: quan_result}]{%
-       \includegraphics[width=0.5\linewidth]{figures/quantization_result.eps}}
-    \hfill
-  \subfloat[\label{fig: mi_loss}]{%
-        \includegraphics[width=0.5\linewidth]{figures/mutual_info_loss.eps}}
-  \caption{Fig. (a): Quantization thresholds for dynamic programming, msIB, and HDQ on the BI-AWGNC as a function of $\sigma^2$ for $B=2000$. Fig. (b): Mutual information loss between each sub-optimal quantizer and optimal quantizer for BI-AWGNC as a function of $\sigma^2$ for $B=2000$. }
-\end{figure}
+
+
 
 %  Kurkoski's dynamic programming algorithm searches whole trellis and finds the optimal path that maximizes $I(X;D_1,D_2)$. 
 The dynamic programming algorithm determines vertices of all columns jointly, whereas HDQ identifies the vertices in a greedy way, by first finding the vertex in column 2 to maximize $I(X;D_1)$ and then vertices in column 1 and 4 to maximize $I(X;D_2|D_1=d_1)$.  Hence, the greedy approach of HDQ only searches part of trellis and therefore is sub-optimal. However, our simulations show that HDQ finds the quantizer that perform closely to  the optimal one.
 
 
-
+\begin{figure}[htp] 
+    \centering
+  \subfloat[\label{fig: quan_result}]{%
+       \includegraphics[width=0.5\linewidth]{figures/quantization_result.eps}}
+   \\
+  \subfloat[\label{fig: mi_loss}]{%
+        \includegraphics[width=0.5\linewidth]{figures/mutual_info_loss.eps}}
+  \caption{Fig. (a): Quantization thresholds for dynamic programming, msIB, and HDQ on the BI-AWGNC as a function of $\sigma^2$ for $B=2000$. Fig. (b): Mutual information loss between each sub-optimal quantizer and optimal quantizer for BI-AWGNC as a function of $\sigma^2$ for $B=2000$. }
+\end{figure}
 
 \subsection{Simulation Result}
 This section provides simulation results for quantizing symmetric binary input AWGN channel observations. The simulations compare HDQ to the optimal dynamic programming result as well as to two sub-optimal approaches: mSIB with 20 and 70 trials and the greedy quantization algorithm describe in \cite{Lewandowsky2018-IBRegular}. For all the quantization approaches, the channel observations are first quantized uniformly into $B=2000$ points between $-2$ and $2$. 
@@ -609,17 +685,15 @@ We observe that, in each step, the output of Eq.(\ref{equ: check_recur}) has som
 	\label{fig: OSA}
 \end{figure}
 
+We use $l_s\in[10^{-4},10^{-3}]$ in our simulation. Fig. \ref{fig: OSA} shows an illustration of OSA and a full description of the OSA algorithm is given in Algorithm \ref{alg: OSA}. The following table shows $|\mathbf{T}|$ after we implement OSA and choose different $l_s$. The example we show has the parameter $m=4$, $d_c=8$. The result shows that OSA greatly decreases the output cardinality, and based on our simulation, mutual information losses under these three $l_s$ are all less than $10^{-7}$ bits.
 
-    
-
-We use $l_s\in[10^{-4},10^{-3}]$ in our simulation. Fig. \ref{fig: OSA} shows an illustration of OSA and a full description of the OSA algorithm is given in Algorithm.\ref{alg: OSA}. The following table shows $|\mathbf{T}|$ after we implement OSA and choose different $l_s$. The example we show has the parameter $m=4$, $d_c=8$. The result shows that OSA greatly decreases the output cardinality, and based on our simulation, mutual information losses under these three $l_s$ are all less than $10^{-7}$ bits.
-\begin{table}[hp]
-\centering
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-$l_s$                                                         & $0$           & $10^{-4}$    & $5*10^{-4}$ & $10^{-3}$  \\ \hline
-\begin{tabular}[c]{@{}c@{}}$|\mathbf{T}|$\end{tabular} & $2.68*10^{8}$ & $3.3*10^4$ & $1.7*10^3$  & $1.3*10^3$ \\ \hline
-\end{tabular}
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        $l_s$                                                             & $0$           & $10^{-4}$  & $5*10^{-4}$ & $10^{-3}$  \\ \hline
+        \begin{tabular}[c]{@{}c@{}}$|\mathbf{T}|$\end{tabular} & $2.68*10^{8}$ & $3.3*10^4$ & $1.7*10^3$  & $1.3*10^3$ \\ \hline
+    \end{tabular}
 \end{table}
 
 \subsection{MIM-DDE at variable node}
@@ -679,17 +753,6 @@ Denote the $i^{th}$ CN and $j^{th}$ VN by $c_i$ and $v_j$ respectively. Let $u^{
 $\mathcal{N}(c_i)$ denotes the set of VNs that are neighbors of $c_i$.  For a QC-LDPC code with a long block length, layered decoding is preferable for hardware implementations because  parallel computations of each of \eqref{equ: v-c}, \eqref{equ: c-v}, and \eqref{equ: posteriot_up} exploit the QC-LDPC structure. 
 
 
-\begin{figure}[t] 
-    \centering
-  \subfloat[ \label{fig: nonlayered_RCQ_str}]{%
-      \includegraphics[width=0.5\linewidth]{figures/RCQ_nonlayered.eps}}
-\hfill
-  \subfloat[\label{fig: layered_RCQ_str}]{%
-        \includegraphics[width=0.5\linewidth]{figures/RCQ_layered.eps}}
-  \caption{ Two layered decoders. Fig. (a) uses the same RCQ parameters for each layer as with the  \textit{msRCQ} design for a flooding decoding in \cite{Wang2020-RCQ}. Fig. (b) shows the proposed \textit{layer-specific msRCQ} decoder in \cite{Terrill2021-ec}, which features  separate RCQ parameters for each layer.
-  The main difference is that msRCQ decoder uses iteration specific parameters while L-msRCQ decoder considers layer-and-iteration parameters.
-  }
-\end{figure}
 
 \subsection{Representation Mismatch Problem}
 The RCQ decoding structure in \cite{Wang2020-RCQ} can be used with a layered schedule as discussed in Sec. \ref{sec: QC_layer}. Fig. \ref{fig: nonlayered_RCQ_str} illustrates the paradigm for an msRCQ decoder with a layered schedule. The $Q_\text{v}^{(t)}$ and $R_\text{v}^{(t)}$ are designed by the HDQ discrete density evolution as in \cite{Wang2020-RCQ}. Even though the msRCQ decoder has better FER performance than the standard \minsum decoder under a flooding schedule\cite{Wang2020-RCQ}, under a layered schedule, msRCQ has worse FER performance than standard \minsum and also requires more iterations.  These performance differences are shown below in Fig.  \ref{fig: 8k_performance} of Sec. \ref{sec: simulation result}. This subsection explains how the performance degradation of the RCQ decoder under the layered schedule is caused by the representation mismatch problem. 
@@ -705,6 +768,20 @@ Consider a  regular LDPC code defined by a parity check matrix $H$. In iteration
     \log\frac{P^{(t)}_{(c_i,v_j)}(0,d)}{P^{(t)}_{(c_i,v_j)}(1,d)} = \log\frac{P^{(t)}_{(c_{i'},v_{j'})}(0,d)}{P^{(t)}_{(c_{i'},v_{j'})}(1,d)},~   d\in \{0,...,2^{b^\mathrm{e}}-1\}.
     \label{equ: Assumption_on_MIM_DDE2}
 \end{align}
+
+
+\begin{figure}[tp] 
+    \centering
+  \subfloat[ \label{fig: nonlayered_RCQ_str}]{%
+      \includegraphics[width=0.7\linewidth]{figures/RCQ_nonlayered.eps}}
+\\
+  \subfloat[\label{fig: layered_RCQ_str}]{%
+        \includegraphics[width=0.7\linewidth]{figures/RCQ_layered.eps}}
+  \caption{ Two layered decoders. Fig. (a) uses the same RCQ parameters for each layer as with the  \textit{msRCQ} design for a flooding decoding in \cite{Wang2020-RCQ}. Fig. (b) shows the proposed \textit{layer-specific msRCQ} decoder in \cite{Terrill2021-ec}, which features  separate RCQ parameters for each layer.
+  The main difference is that msRCQ decoder uses iteration specific parameters while L-msRCQ decoder considers layer-and-iteration parameters.
+  }
+\end{figure}
+
  The msRCQ decoder with a flooding schedule obeys (\ref{equ: Assumption_on_MIM_DDE}) and (\ref{equ: Assumption_on_MIM_DDE2})  because the VN messages to calculate different CN messages have the same distribution. Therefore, it is sufficient for a decoder with a flooding schedule  to use the iteration-specific reconstruction function  $R^{(t)}$ for all external CN messages. However, for a decoder with a layered schedule, the VN messages to calculate CN messages from different layers have different distributions. For the decoder with a layered schedule, $l^{(t)}_{v_j\rightarrow c_i}$ is calculated by:
 \begin{align}\label{equ: vari_update_2}
     l^{(t)}_{v_j\rightarrow c_i} = l^{(ch)}_{v_j}&+ \sum_{\{i'|{i'}\in\mathcal{N}(v_j),i'<i\}}u^{(t)}_{c_{i'}\rightarrow v_{j}}+ \sum_{\{i'|{i'}\in\mathcal{N}(v_j),i'>i\}}u^{(t-1)}_{c_{i'}\rightarrow v_{j}},
@@ -805,11 +882,11 @@ The threshold of a layer-specific RCQ decoder given a base matrix with $M$ layer
     \frac{E_b}{N_o}^*=\inf \left\{\frac{E_b}{N_o}:  I^{(I_T,r)}\left(\frac{E_b}{N_o}\right)> 1-\epsilon,\forall  r\in[1,M] \right\}.
 \end{align}
 
-\begin{figure}[t] 
+\begin{figure}[htp] 
     \centering
   \subfloat[Decoders with floating point messages\label{fig: 80211_1}]{%
        \includegraphics[width=0.5\linewidth]{figures/80211_fig1.eps}}
-    \hfill
+\\
   \subfloat[Decoders with fixed point messages\label{fig: 80211_3}]{%
         \includegraphics[width=0.5\linewidth]{figures/80211_fig3.eps}}
   \caption{Fig. (a): FER performance of 4-bit msRCQ and bpRCQ decoders with floating point message representations use at the VNs.  Fig. (b):FER performance of fixed point 4-bit msRCQ decoders, compared with other non-uniform quantization decoders. }
@@ -857,11 +934,11 @@ Fig. \ref{fig: 80211_3} compares msRCQ(4,10) with other non-uniform quantization
 In contrast, for the purposes of HDQ discrete density evolution design process, msRCQ assumes that the internal VN  messages are real-valued. This assumption is an approximation since the internal VN messages will have finite precision in practical implementations. During actual decoding, the reconstruction operation $R(\cdot)$ produces a high-precision representation for use in computations at the VN. We found that assuming real-valued internal messages in the design process introduces negligible loss for practical internal message sizes while greatly simplifying the design. Our simulation results in \ref{fig: 80211_3} confirm that high precision internal messages have FER performance that is very close to real-valued internal messages.
 Actually, for the msRCQ, it is sufficient to have a simple clipping module at variable node, because all reconstructed values are fixed point messages. 
 The RCQ decoder has more efficient memory usage than LUT-based decoders. For the investigated non-uniform LDPC code, 4-bit IB and 4-bit Min-IB require 14.43k and 10.24k bits, respectively, for storing LUTs per iteration, whereas msRCQ(4,12) and msRCQ(4,10) require 165 bits and 135 bits only.   
-\begin{figure}[t] 
+\begin{figure}[hp] 
     \centering
   \subfloat[\label{fig: 8k_FER}]{%
        \includegraphics[width=0.5\linewidth]{figures/8k_fer3.eps}}
-    \hfill
+\\
   \subfloat[\label{fig: 8k_ADIT}]{%
         \includegraphics[width=0.5\linewidth]{figures/8K_ADIT.eps}}
   \caption{Fig. (a): FER performance of fixed point L-msRCQ decoders for (9472, 8192) LDPC code.  Fig.  (b): FER performance of fixed point L-msRCQ decoders for (9472, 8192) LDPC code. } \label{fig: 8k_performance}
@@ -879,7 +956,7 @@ Fig. \ref{fig: 8k_ADIT} shows the average decoding iteration times for some of t
 %The decoding iteration time of OMS(6,8), L-msRCQ(4,8) and L-msRCQ(3,8) are 3.13, 3.20 and 3.44, respectively.
 
 We implemented OMS and layer-specific msRCQ decoders with different bit widths on the programmable logic of a Xilinx Zynq UltraScale+ MPSoC device for comparison. Each design meets timing with a 500 MHz clock. The broadcast method described in \cite{Terrill2021-ec} is used for RCQ design. 
-Table \ref{tab: hardware_usage} summarizes the hardware usage of each decoder. 
+Table \ref{tab: hardware_usage_1} summarizes the hardware usage of each decoder. 
 Simulation result shows that layer-specific msRCQ(4,8) has a similar hardware usage with OMS(5,7), and layer-specific msRCQ(3,8) has more than a $10\%$ reduction in LUTs and routed nets and more than a $6\%$ reduction in registers, compared with OMS(5,7).
 
 \section{Conclusion}\label{sec: conclusion}
@@ -887,7 +964,7 @@ This chapter investigates the decoding performance and resource usage of RCQ dec
 Layer-specific HDQ discrete density evolution is proposed to design parameters for RCQ decoders with a layered schedule. FPGA implementations of RCQ decoders are used to compare the resource requirements of the decoders studied in this paper. 
 Simulation results for a (9472, 8192) QC LDPC code show that a layer-specific \minsum RCQ decoder with 3-bit messages achieves a more than $10\%$ reduction in LUTs and routed nets and a more than $6\%$ register reduction while maintaining comparable decoding performance, compared to a 5-bit offset \minsum~decoder.
 
-\chapter{RCQ LDPC Decoding with Degree-Specific Neural Edge Weights}
+\chapter{RCQ LDPC Decoding with Degree-Specific Neural Edge Weights} \label{cpt: W_RCQ}
 \section{Introduction}
 Low-Density Parity-Check  (LDPC) codes \cite{GallagerPhD1963} have been implemented broadly, including in NAND flash systems and wireless communication systems. In practice, decoders for LDPC codes with low message bit widths are desired when considering the limited hardware resources on the field-programmable gate arrays (FPGAs) or application-specific integrated circuits (ASICs), such as area, routing capabilities, and power utilization. Unfortunately, low-bitwidth decoders with uniform quantizers typically suffer a large degradation in decoding performance\cite{Lee2005-RFQThorpe}. Recently, the non-uniformly quantized decoders  \cite{Planjery2012-FAID,Xiao2020-sb, Lewandowsky2018-IB,Stark2018-IBMA,Stark2019-IBPBRL,Lee2005-RFQThorpe,He2019-RFQCai, Wang2020-kh,terrill2021fpga,wang2022TCOMRCQ}  have shown to deliver excellent performance with very low message precision. One promising decoding paradigm is called reconstruction-computation-quantization (RCQ) decoder \cite{Wang2020-kh,terrill2021fpga,wang2022TCOMRCQ}. 
  
@@ -999,11 +1076,11 @@ The term $\frac{\partial J}{\partial |{u^{(t)*}_{c_i \rightarrow v_j}} |}$ is ca
 Hence, the memory to store the gradients in two consecutive hidden layers, rather than all hidden layers, is sufficient to perform back propagation and calculate $\frac{\partial J}{\partial \beta^{(t)}_{(c_i,v_j)}}$. Note that the compact message format \eqref{equ: min1}-\eqref{equ: pos} is also used in the hardware implementation for the MinSum decoders.
 
 \subsection{Posterior Jointly Training}\label{Sec: gradient_explosion}
-\begin{figure}[t] 
+\begin{figure}[hp] 
     \centering
   \subfloat[\label{fig: gradient_explosion}]{%
       \includegraphics[width=0.50\linewidth]{figures/Gradient_Explosion.pdf}}
-    \hfill
+    \\
   \subfloat[\label{fig: FER-FNNMS-1}]{%
         \includegraphics[width=0.50\linewidth]{figures/posterior_training.pdf}}
   \caption{Fig. (a): The average magnitude of gradients of loss $J$ w.r.t. C2V messages in each decoding iteration. The gradients are calculated by feeding the flooding-scheduled (3096,1032) N-NMS decoder with an input sample and performing backward propagation. Fig. (b): FER curves of the flooding-scheduled N-NMS decoders for a (3096,1032) LDPC code.  Gradient clipping, greedy training and posterior jointly training are used to address gradient explosion issue. The maximum decoding iteration is 50. The belief propagation decoder and NMS decoder with factor 0.7 are presented as comparison.}
@@ -1046,22 +1123,21 @@ Fig. \ref{fig: FER-FNNMS-1} shows the frame error rate (FER) of flooding-schedul
 \section{Node-Degree-Based Weight Sharing}\label{sec: N-2D-NMS}
 
 N-NMS and N-OMS decoder for the long-blocklength LDPC codes are impractical, because the number of parameters of these decoders is proportional to the number of edges in the corresponding Tanner graph. Weight sharing \cite{xie2021weight} solves this problem by assigning one weight to different neurons in the NN. Different weight sharing schemes have been proposed to reduce the number of neural weights in N-NMS and N-OMS decoder. However, simple weight sharing schemes, such as across iterations or edges in \cite{Wang2020-fb,Lian2019-jh}, degrade the decoding performance in different degrees. 
-
-This section proposes node-degree-based weight sharing schemes which assign the same weights to the edges that have same check and/or variable node degree. We call the N-NMS and N-OMS decoder with node-degree-based weight sharing schemes by neural 2-dimensional NMS (N-2D-NMS) and neural 2-dimensional OMS (N-2D-OMS) decoder, respectively,  because they are similar to the 2D-MS decoders in \cite{Juntan_Zhang2005-2dnms,2doms}. Simulation results in Section \ref{sec: Simulation} show that N-2D-NMS decoder can deliver the same decoding performance with N-NMS decoder.
-
-\subsection{Motivation}
-In this subsection, we investigate the relationship between the neural weights of a flooding-scheduled N-NMS decoder and node degrees. 
-The N-NMS decoder is trained for a  (3096, 1032) LDPC code, the same one used in Section  \ref{Sec: gradient_explosion}. The maximum decoding iteration is 10.
-\begin{figure}[t]
+\begin{figure}[hp]
     \centering
   \subfloat[\label{fig: mean-t}]{%
        \includegraphics[width=0.50\linewidth]{figures/beta_mean_vs_iteration.pdf}}
-    \hfill
+    \\
   \subfloat[\label{fig: degree-19-iter4}]{%
         \includegraphics[width=0.50\linewidth]{figures/weight_vn.pdf}}
   \caption{Mean values of messages of a flooding-scheduled N-NMS decoder for a (3096,1032) LDPC code in each iteration show strong correlations to check and variable node degree.}
    \label{fig: weights_evaluation}
 \end{figure}
+This section proposes node-degree-based weight sharing schemes which assign the same weights to the edges that have same check and/or variable node degree. We call the N-NMS and N-OMS decoder with node-degree-based weight sharing schemes by neural 2-dimensional NMS (N-2D-NMS) and neural 2-dimensional OMS (N-2D-OMS) decoder, respectively,  because they are similar to the 2D-MS decoders in \cite{Juntan_Zhang2005-2dnms,2doms}. Simulation results in Section \ref{sec: Simulation} show that N-2D-NMS decoder can deliver the same decoding performance with N-NMS decoder.
+
+\subsection{Motivation}
+In this subsection, we investigate the relationship between the neural weights of a flooding-scheduled N-NMS decoder and node degrees. 
+The N-NMS decoder is trained for a  (3096, 1032) LDPC code, the same one used in Section  \ref{Sec: gradient_explosion}. The maximum decoding iteration is 10.
 
 Define the set of neural weights of N-NMS decoder that are associated to check node degree $d_c$ in the $t^{th}$ decoding iteration by $\mathcal{B}^{(t,d_c)}$, and $\mathcal{B}^{(t,d_c)}=\{\beta^{(t)}_{(c_i,v_j)}|\text{deg}(c_i) = d_c\}$. Let $\bar{\beta}^{(t,d_c)}$ be the mean value of $\mathcal{B}^{(t,d_c)}$. Fig.\ref{fig: mean-t} shows $\bar{\beta}^{(t,d_c)}$ versus decoding iteration $t$ with all possible check node degrees. The simulation result shows a clear relationship between check node degree and $\bar{\beta}^{(t,d_c)}$, i.e. a larger check node degree corresponds to a smaller $\bar{\beta}^{(t,d_c)}$. This difference is significant in the first few iterations.
 Additionally, $\bar{\beta}^{(t,d_c)}$ changes drastically in first few iterations for all check node degrees. 
@@ -1086,6 +1162,7 @@ In the $t^{th}$ iteration, a flooding-scheduled N-2D-NMS decoder update $u^{(t)}
     l^{(t)}_{v_j} &=  l^{ch}_{v_i} + \alpha^{(t)}_{*}  \sum_{c_{i'}\in \mathcal{N}(v_j)} u^{(t)}_{c_{i'}\rightarrow v_j}.
 \end{align}
 \endgroup
+
 
 
 
@@ -1179,11 +1256,11 @@ This paper uses the pair ($b^c$,$b^v$) to denote the bitwidth for fixed-point de
 This section evaluates the performance of the N-2D-NMS decoder and the W-RCQ decoder for LDPC codes with different block lengths and code rates. The LDPC codes used in this section are listed in Table \ref{tab: code_info}. All the encoded bits are modulated by binary phase-shift keying (BPSK) and transmitted through a Additive White Gaussian Noise (AWGN) channel. 
 
 
-\begin{figure}[t]
+\begin{figure}[hp]
     \centering
     \subfloat[\label{fig: dvbs2-fer}]{%
         \includegraphics[width=0.50\linewidth]{figures/fig5_a.pdf}}
-    \hfill
+    \\
     \subfloat[\label{fig: dvbs2-fer2}]{%
         \includegraphics[width=0.50\linewidth]{figures/fig5_b.pdf}}
     \caption{ Fig. (a): The FER performance of
@@ -1191,11 +1268,11 @@ This section evaluates the performance of the N-2D-NMS decoder and the W-RCQ dec
         Fig. (b): The FER performance of the hybrid type-2 N-2D-NMS decoder that uses distinct weights in the first 20 iterations and same weights in the remaining 30 iterations. Simulation result shows that the hybrid type-2 N-2D-NMS decoder has comparable decoding performance with the type-2 N-2D-NMS decoder that assigns distinct weights in each iteration.  }
 \end{figure}
 
-\begin{figure}[t] 
+\begin{figure}[hp] 
     \centering
  \subfloat[\label{fig: beta_iter}]{%
        \includegraphics[width=0.50\linewidth]{figures/Fig_6_a_beta_iter.pdf}}
-  \hfill
+  \\
   \subfloat[\label{fig: alpha_iter}]{%
         \includegraphics[width=0.50\linewidth]{figures/Fig_6_b_alpha_iter.pdf}}
   \caption{ The change of weights of the type-2 N-2D-NMS decoder for (16200, 7200) DVBS-2 LDPC code w.r.t. check node degree, variable node degree and iteration index.
@@ -1210,11 +1287,11 @@ It is shown that the N-NMS decoder (i.e., type-0 decoder) outperforms BP at $1.3
 
 Fig. \ref{fig: dvbs2-fer} also shows that the FER performance degrades if only considering to sharing weights w.r.t. check node degree (type-3) or variable node degree (type-4). Specifically, in this example, type-4 N-2D-NMS decoder outperforms type-3 N-2D-NMS decoder, because the variable node weights of investigated code have a larger dynamic range than check node weights, as shown in Fig. \ref{fig: beta_iter}, and \ref{fig: alpha_iter}. Fig. \ref{fig: beta_iter} and \ref{fig: alpha_iter} give the $\beta^{(t)}_{(\text{deg}({c_i}))}$ and $\alpha^{(t)}_{(\text{deg}({v_j}))}$ of type-2 N-2D-NMS decoder, which agree with our observation in the previous section; i.e., in each decoding iteration, larger degree node corresponds to a smaller value. Besides, as shown in Fig. \ref{fig: beta_iter} and \ref{fig: alpha_iter}, the  weights change negligibly after $20^{th}$ iteration. Thus, the hybrid type-2 N-2D-NMS decoder with $I'=20$ delivers similar performance to the full feed forward decoding structure, as shown in Fig. \ref{fig: dvbs2-fer2}. 
 
-\begin{figure}[t] 
+\begin{figure}[hp] 
     \centering
   \subfloat[\label{fig: fer_8k_1}]{%
        \includegraphics[width=0.50\linewidth]{figures/Fig7_a_8k_1.pdf}}
-    \hfill
+  \\
   \subfloat[\label{fig: fer_8k_2}]{%
         \includegraphics[width=0.50\linewidth]{figures/Fig7_a_8k_2.pdf}}
   \caption{Fig. (a): FER performance of W-OMS-RCQ decoders, RCQ decoders, and 6-bit OMS decoder for a (9472, 8192) QC LDPC code. Fig. (b): FER performance of 3-bit W-OMS-RCQ decoders with two and three quantizer/dequantizer pairs. Simulation result shows that the W-OMS-RCQ decoder with two quantizer/dequantizer pairs has an error error floor at FER of $10^{-7}$. }
@@ -1250,7 +1327,15 @@ subsection{$k=1032$ Protograph-Based Raptor-Like code}
 
 5G LDPC codes have the protograph-based raptor-like (PBRL) \cite{PBRL} structure which offers inherent rate-compatibility and excellent decoding performance. In this subsection, we examine the performance of N-2D-NMS decoders and W-RCQ decoders for a $k=1032$ PBRL LDPC code, whose supported rates are listed in Table \ref{tab:weight_sharing}.  The edge distribution of the lowest-rate code, which corresponds to the full parity check matrix, is also given in Table \ref{tab:weight_sharing}.  All the decoders in this subsection are layer-scheduled with maximum 10 decoding iterations. 
 
-
+\begin{figure}[hp] 
+    \centering
+  \subfloat[\label{fig: pbrl_fer_1}]{%
+       \includegraphics[width=0.50\linewidth]{figures/Fig_9_a_rate_13_12.pdf}}
+  \\
+  \subfloat[\label{fig: pbrl_fer_2}]{%
+        \includegraphics[width=0.50\linewidth]{figures/Fig_9_a_rate_23_89.pdf}}
+  \caption{FER performance of 4-bit W-RCQ decoders for $k=1032$ PBRL code with different code rates. The term "rate-specific" means to design distinct decoders for each code rate; The term "rate-compatible" means to train one decoder that matches all code rates. The 6-bit OMS decoder is given as comparison. }\label{fig: pbrl}
+\end{figure}
 
 
 Fig. \ref{fig: FER1} shows the FER performance of  N-2D-NMS decoder with various weight sharing types for the PBRL code with lowest code rates $\frac{1}{3}$. As a comparison, the decoding performance of the N-NMS (type 0) decoder and the NMS decoder are also given. All of the decoders use floating-point message representation. The simulation results show that N-NMS decoder has a more than 0.5 dB improvement over the NMS decoder. N-2D-NMS decoders with weight sharing types 1-7  are also simulated. 
@@ -1258,15 +1343,7 @@ Fig. \ref{fig: FER1} shows the FER performance of  N-2D-NMS decoder with various
 %The types 1, 2 and 5 have the same decoding performance as the N-NMS decoder, with parameter reduction by 99.7\%, 99.9\% and 99.3\%, respectively. 
 Simulation result shows that the N-2D-NMS decoders with weight-sharing metrics based on check and variable node degree (i.e., type 1 and 2), or based on horizontal and vertical layer  (i.e., type 5) deliver lossless performance w.r.t. N-NMS decoder.  N-2D-NMS decoders with weight sharing types 4 and 6 have a degradation of around 0.05 dB compared with the N-NMS decoder.  N-2D-NMS decoders with weight sharing types 5 and 7 have a degradation of around 0.2 dB compared with the N-NMS decoder. Thus, for this (3096,1032) PBRL LDPC code of Fig. \ref{fig: FER1}, assigning weights based only on check nodes can gain more benefit than assigning weights only based on variable nodes.
 
-\begin{figure}[t] 
-    \centering
-  \subfloat[\label{fig: pbrl_fer_1}]{%
-       \includegraphics[width=0.50\linewidth]{figures/Fig_9_a_rate_13_12.pdf}}
-    \hfill
-  \subfloat[\label{fig: pbrl_fer_2}]{%
-        \includegraphics[width=0.50\linewidth]{figures/Fig_9_a_rate_23_89.pdf}}
-  \caption{FER performance of 4-bit W-RCQ decoders for $k=1032$ PBRL code with different code rates. The term "rate-specific" means to design distinct decoders for each code rate; The term "rate-compatible" means to train one decoder that matches all code rates. The 6-bit OMS decoder is given as comparison. }\label{fig: pbrl}
-\end{figure}
+
 
 Fig. \ref{fig: pbrl} gives the FER performance of fixed-point W-NMS-RCQ decoders for the $k=1032$ PBRL code with rate $\frac{1}{3}$, $\frac{1}{2}$, $\frac{2}{3}$ and $\frac{8}{9}$. The W-NMS-RCQ decoder assigns 4 bits to C2V message and 10 bits to V2C message. Two quantizer/dequantizer pairs are used for W-NMS-RCQ decoder across all investigated rates.
 The first quantizer has $C_1=7$, $\gamma_2=1.7$ and is used for the first 7 iterations. The second quantizer has $C_2=10$, $\gamma_2=2.3$ and is used for last 3 iterations.
@@ -1294,7 +1371,7 @@ This paper proposes various node-degree-based weight sharing schemes with  lossl
 Additionally, this paper discusses the issues when training neural LDPC decoders. First, training the neural LDPC decoders for long blocklength code using Pytorch or TensorFlow could raise memory issue. This paper shows that the memory for training neural MinSum decoders can be saved by storing feed-forward messages compactly. Second, this paper identifies gradient explosion problem in the neural decoder training and proposes a  posterior jointly training method that addresses this problem. 
 
 
-\chapter{Probabilistic Shaping for Trellis-Coded Modulation with CRC-Aided List Decoding}
+\chapter{Probabilistic Shaping for Trellis-Coded Modulation with CRC-Aided List Decoding} \label{cpt: CRC_TCM_PAS}
 
 \section{Introduction}
 This paper explores reliable communications over the additive white Gaussian noise (AWGN) channel with high spectral efficiency for short block lengths.  To closely approach theoretical limits, it is helpful to use shaping so that signal points are not equally likely, not equally spaced, or both \cite{gallager1968information,ForneyShaping,forney1992trellis,Kschischangoptimaldist,laroia1994optimal,fragouli2001,xiao2021finite}.  Recently, a new technique called  probabilistic amplitude shaping (PAS) \cite{pas_bocherer_1,pas_bocherer_2} employs a distribution matcher (DM) \cite{CCDM_schulte} before the forward error correction (FEC) encoder and channel-signaling mapping function to accomplish optimal or almost optimal shaping.
@@ -2022,7 +2099,7 @@ Shannon's proof of the channel coding theorem \cite{shannon1948mathematical} gen
 Simulation results show that the optimized CRC-TCM-PAS system with MCDM exceeds the RCU bound for a variety of rates and outperforms the PAS systems with various FEC codes studied in \cite{cocskun2019efficient}.
 
 
-\chapter{Rate-Matched Turbo Autoencoder: A Deep Learning Based Multi-Rate Channel Autoencoder}
+\chapter{Rate-Matched Turbo Autoencoder: A Deep Learning Based Multi-Rate Channel Autoencoder} \label{cpt: cae}
 
 \section{Introduction}
 Channel codes  are important components of modern digital communication systems since they enhance transmission reliability. Capacity-approaching channel codes, such as low-density parity-check (LDPC) code\cite{gallager1962low}, polar code\cite{Arikan_polar}, and turbo code\cite{turbo}, have been used as standards for fourth-generation (4G) or fifth-generation (5G) wireless communication systems \cite{3gpp.36.212, 3gpp2017study}.
@@ -2251,6 +2328,16 @@ Table \ref{tab: comp_size_1} provides the SNRs at which the rate-matched and mis
 \section{Conclusion}\label{sec: conclusion_5}
 A rate-matched TAE framework was proposed to match the code rate of a mother ($3k$, $k$) TAE to a set of multiple rates with parameters $\left\{(n^*,k^*)\right\}$, where $k^*\leq k$. Rate matching of the proposed framework is realized by the using a combination of the following operations: freezing message bits, repeating code symbols, and puncturing code symbols. The rate-matched TAE is trained to jointly optimize the performance across all rates. 
 Two vital hyper-parameters for the rate-matched TAE were investigated: puncturing patterns and training SNRs. For puncturing patterns, the performances of rate-matched TAE with head, tail, and uniform puncturing were evaluated. The simulation results favored the head puncturing. For the training SNRs, a heuristic algorithm was proposed that employs the test loss as a metric and determines the training SNRs for all code rates.  Our simulation results show that the rate-matched TAE for $k=100$ and rates $r\in \{0.1,0.2,\ldots,0.9\}$ provides material gain over the mismatched TAE for $r>0.4$.
+
+\chapter{Conclusion} \label{cpt: Con}
+This disseration invesitigates three topics in channel coding theory: 1) low-complexity decoder design for low-dentisy parity-check (LDPC) codes (Chapter 2 and 3); 2)reliable communication in the short blocklength regime  (Chapter 4); 3) Deep-neural-network based channel codes (Chapter 5). These three topics cover the practical and theoretical aspects in channel coding theory. Below we discuss the open problems and direction in each topic.
+
+Chapter 3 describle the optimization of degree-specific weights by training associate weights. The theoretical open problems in this topic are: 1) why the neurual network can be used to train the weights? 2) Why the weights asscociated with larger node degrees are smaller? For the second problem, we can intuitively answer that the larger degree a node has, the more uncertainty. Thus, the decoder assign smaller weights to the nodes with larger degree. It would be great if this observation can be mathematically proved. For the W-RCQ decoder, we first fix the quantizer/dequantizer pameters and then train the neural weight. One interesting direction is to joinly optimize the neural weights and the quantizer/dequantizer parameters.
+
+Chapter 4 presents the CRC-TCM-PAS transmission system. One limitation of this system is that the sytem has excellent performance only when the blocklength is short enough. The performance of CRC-TCM-PAS system degrades for the moderate block length, for example, 200. The longer CRC could help improve the decoding performance. However, the searching space of CRC is exponential to the number of CRC length, and besides, the expected list size for the list decoder also grows when increasing the CRC. Hence, to imrpove the performance of CRC-TCM-PAS system for moderate blocklength, an efficient CRC searching algorithm and low-complexity decoders are desired.  
+
+Chapter 5 investigates the rate-matched TAE. Some interesting direction might be consider for the future work: 1)It is known that puncturing pattern is very important to the turbo code. It is intersting to know how different puncturing patterns affect the decoding performance of the rate-matched TAE; 2) Our current  simulation fixes information length $k$ and ranges the code rates from 0.1 to 0.9, what if the rate-matched TAE includes various $k$? 
+
 
 \bibliographystyle{uclathes}
 %\bibliographystyle{thesis}
